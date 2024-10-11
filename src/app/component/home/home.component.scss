@@ -2,3 +2,7 @@
     --bs-tooltip-bg: #0d6efd;
     --bs-tooltip-color: white;
 }
+
+.carousel-control-prev-icon,.carousel-control-next-icon{
+    filter: invert(0) !important;
+}

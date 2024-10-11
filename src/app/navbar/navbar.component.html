@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary rounded m-3 shadow" aria-label="Twelfth navbar example">
+<!-- <nav class="navbar navbar-expand-lg bg-body-tertiary rounded m-3 shadow" aria-label="Twelfth navbar example">
     <div class="container-fluid">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample10" aria-controls="navbarsExample10" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -19,4 +19,37 @@
         </ul>
       </div>
     </div>
-</nav>
+</nav> -->
+
+<div class="w-100 px-4 pt-3 backdrop-blur">
+  <div>
+      <nav class="navbar navbar-expand-xxl bg-body-tertiary rounded navbar-dark shadow">
+          <div class="container-fluid">
+              <a class="navbar-brand home-ani" href="/"><i class="bi bi-grid-fill me-1"></i>BIO</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsCollapse"
+                  aria-controls="navbarsCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarsCollapse">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                      <li class="nav-item m-1 dropdown-center">
+                          <a class="nav-link dropdown-ani rounded cursor-pointer px-3" data-bs-toggle="dropdown">
+                              <i class="bi bi-car-front-fill me-1"></i>Vehicles<i class="bi bi-caret-down-fill ms-1"></i></a>
+                          <ul class="dropdown-menu">
+                              <li><a class="dropdown-item cursor-pointer" (click)="navTo('')">Brands</a></li>
+                              <li><a class="dropdown-item cursor-pointer" (click)="navTo('')">Makes</a></li>
+                              <li><a class="dropdown-item cursor-pointer" (click)="navTo('')">Series</a></li>
+                              <li><a class="dropdown-item cursor-pointer" (click)="navTo('')">Models</a></li>
+                              <li><a class="dropdown-item cursor-pointer" (click)="navTo('')">Vehicle Types</a></li>
+                          </ul>
+                      </li>
+                      <li class="nav-item m-1">
+                          <a class="nav-link dropdown-ani rounded cursor-pointer px-3" (click)="navTo('')">
+                              <i class="bi bi-globe-europe-africa me-1"></i>Sites</a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+      </nav>
+  </div>
+</div>
