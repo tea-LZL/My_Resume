@@ -5,7 +5,6 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
   providedIn: 'root'
 })
 export class StateService {
-    constructor() { }
 
     private loadingSubject = new BehaviorSubject<boolean>(false);
     loading = this.loadingSubject.asObservable();
@@ -18,14 +17,14 @@ export class StateService {
     LoadingOff(){
       this.loadingSubject.next(false);
     }
-    setRoute(route: string = ''){
+    setRoute(route  = ''){
       this.routeSubject.next(route);
     }
 
     time:number = Date.now();
-    success: boolean = true;
-    toastTitle: string = 'Place Holder Title';
-    toastContent: string = 'Place Holder Content';
+    success = true;
+    toastTitle  = 'Place Holder Title';
+    toastContent = 'Place Holder Content';
 
 
     // Toast(success:boolean, title:string, content:string){
@@ -67,6 +66,7 @@ export class StateService {
       // Append the toast to the container
       toastContainer.appendChild(toast);
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       new (window as any).bootstrap.Toast(toast, { delay: 5000 }).show();
 
       toast.addEventListener('hidden.bs.toast', function () {

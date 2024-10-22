@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit{
   ngOnInit(){
     const myCarouselElement = document.querySelector('#carousel')
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
     const carousel = new (window as any).bootstrap.Carousel(myCarouselElement, {
       interval: 2000,
       touch: false

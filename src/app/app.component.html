@@ -2,7 +2,7 @@
     <app-navbar class="navbar navbar-expand-md fixed-top pt-0" style="height: 80px;"></app-navbar>
     <div class=" overflow-y-auto overflow-x-hidden focus-hidden" style="padding-top: 90px;">
         <div class="h-100">
-            <div class="m-4 h-100 rounded"><router-outlet /></div>
+            <div class="m-4 h-100 rounded"><main class="container-xl"><router-outlet /></main></div>
         </div>
     </div>
     <div *ngIf="loading" class="loader d-flex align-items-center justify-content-center">
@@ -18,25 +18,25 @@
     <button class="btn btn-primary py-2 dropdown-toggle d-flex align-items-center text-light" id="bd-theme"
         type="button" aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (auto)">
         <i class="bi"
-            [ngClass]="{'bi-circle-half':theme == 'auto','bi-moon-stars-fill':theme == 'dark','bi-sun-fill':theme == 'light'}"></i>
+            [ngClass]="{'bi-circle-half':theme === 'auto','bi-moon-stars-fill':theme === 'dark','bi-sun-fill':theme === 'light'}"></i>
         <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
     </button>
     <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
         <li>
             <button type="button" class="dropdown-item d-flex align-items-center justify-content-center"
-                [ngClass]="{'active':theme == 'light'}" (click)="setTheme('light')">
+                [ngClass]="{'active':theme === 'light'}" (click)="setTheme('light')">
                 <i class="bi bi-sun-fill me-2"></i>Light
             </button>
         </li>
         <li>
             <button type="button" class="dropdown-item d-flex align-items-center justify-content-center"
-                [ngClass]="{'active':theme == 'dark'}" (click)="setTheme('dark')">
+                [ngClass]="{'active':theme === 'dark'}" (click)="setTheme('dark')">
                 <i class="bi bi-moon-stars-fill me-2"></i>Dark
             </button>
         </li>
         <li>
             <button type="button" class="dropdown-item d-flex align-items-center justify-content-center"
-                [ngClass]="{'active':theme == 'auto'}" (click)="setTheme('auto')">
+                [ngClass]="{'active':theme === 'auto'}" (click)="setTheme('auto')">
                 <i class="bi bi-circle-half me-2"></i>Auto
             </button>
         </li>
