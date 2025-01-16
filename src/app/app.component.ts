@@ -6,11 +6,10 @@ import { StateService } from './services/state.service';
 import { NgClass, NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet,NavbarComponent,NgClass,NgIf],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+    selector: 'app-root',
+    imports: [RouterOutlet, NavbarComponent, NgClass, NgIf],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'project_personal';
