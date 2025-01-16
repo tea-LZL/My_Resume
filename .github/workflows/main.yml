@@ -1,0 +1,130 @@
+name: build
+
+on:
+  push:
+    branches: [ "develop", "uat", "master" ]
+  pull_request:
+    branches: [ "develop", "uat", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.x]
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        path: ./
+   
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: install packages
+      working-directory: ./    
+      run: |
+        npm install -g yarn
+        yarn install
+    - name: PreBuild_Prelive
+      working-directory: ./      
+      if: |
+        github.ref == 'refs/heads/develop'
+        && github.event_name == 'pull_request'
+      run: |
+        ng build --configuration=develop
+    - name: PreBuild_UAT
+      working-directory: ./
+      if: |
+        github.ref == 'refs/heads/uat'
+        && github.event_name == 'pull_request'
+      run: |
+        ng build --configuration=uat
+    - name: PreBuild_Live
+      working-directory: ./
+      if: |
+        github.ref == 'refs/heads/master'
+        && github.event_name == 'pull_request'
+      run: |
+        ng build --configuration=live
+        
+    - name: Checkout publish prelive
+      uses: actions/checkout@v3
+      if: |
+        github.ref == 'refs/heads/develop' &&
+        github.event_name == 'push'
+      with:
+        repository: Zhilong-coding/My_Resume_Publish # optional, default is ${{ github.repository }}
+        ref: refs/heads/develop # optional
+        token: ${{ secrets.API_PUBLISH_TOKEN }} #
+        path: ./publish
+        
+    - name: Checkout publish uat
+      uses: actions/checkout@v3
+      if: |
+        github.ref == 'refs/heads/uat' &&
+        github.event_name == 'push'
+      with:
+        repository: Zhilong-coding/My_Resume_Publish # optional, default is ${{ github.repository }}
+        ref: refs/heads/uat # optional
+        token: ${{ secrets.API_PUBLISH_TOKEN }} #
+        path: ./publish
+        
+    - name: Checkout publish live
+      uses: actions/checkout@v3
+      if: |
+        github.ref == 'refs/heads/master' &&
+        github.event_name == 'push'
+      with:
+        repository: Zhilong-coding/My_Resume_Publish # optional, default is ${{ github.repository }}
+        ref: refs/heads/master # optional
+        token: ${{ secrets.API_PUBLISH_TOKEN }} #
+        path: ./publish
+
+    - name: build_prelive
+      if: |
+        github.ref == 'refs/heads/develop'
+        && github.event_name == 'push'
+      run: |
+        ng build --configuration=prelive
+      working-directory: ./
+      
+    - name: build_uat
+      if: |
+        github.ref == 'refs/heads/uat'
+        && github.event_name == 'push'
+      run: |
+       
+        ng build --configuration=uat
+      working-directory: ./
+      
+    - name: build_live
+      if: |
+        github.ref == 'refs/heads/master'
+        && github.event_name == 'push'
+      run: |
+       
+        ng build --configuration=live
+      working-directory: ./
+            
+    - name: copy
+      if: |
+          (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/uat' || github.ref == 'refs/heads/master') &&
+          github.event_name == 'push'
+      run: |
+        cp -a ./dist/project_personal/. ./publish
+    - name: commit
+      if: |
+          (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/uat' || github.ref == 'refs/heads/master') &&
+          github.event_name == 'push'
+      run: |
+        echo "first LS"
+        cd ./publish
+        git config --global user.email "zhilong.k.liang@gmil.com"
+        git config --global user.name "Zhilong-Github"
+        # git reset --hard
+        # This is only necessary when .git directory is not on the same level as package.json - npm version issue
+        git add .
+        git -c user.email="git@dimensiondata.com" commit -m "Publish - Auto Publish" --allow-empty
+        git push
