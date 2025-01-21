@@ -6,14 +6,14 @@
             advancement of technology and creating functional application. My
             friends call me Kevin and I am excited to learn and grow my
             knowledge base.</p>
-        <div id="carousel" class="carousel slide" data-bs-ride="carousel">
+        <div id="carousel" class="carousel slide" data-bs-ride="carousel" [hidden]="!isImgLoaded">
             <div class="carousel-inner rounded-4">  
                 <!-- <div class="carousel-indicators">
                     <button type="button" *ngFor="let img of arrCarouselImg; index as i"
                     data-bs-target="#carousel" [attr.data-bs-slide-to]="i" [ngClass]="{'active':i==1}" aria-current="true" [attr.aria-label]="'img'+i"></button>
                 </div> -->
                 <div class="carousel-item" [ngClass]="{'active':i===1}" *ngFor="let img of arrCarouselImg; index as i">
-                    <img src="{{img}}" class="d-block w-100" alt="carousel{{i}}">
+                    <img [hidden]="!isImgLoaded" loading="eager" [src]=img class="d-block w-100" alt="carousel{{i}}" (load)="isImgLoaded = true"/>
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">

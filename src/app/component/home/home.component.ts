@@ -1,9 +1,9 @@
-import { NgClass, NgFor } from '@angular/common';
+import {NgClass, NgFor, NgIf} from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
     selector: 'app-home',
-    imports: [NgFor, NgClass],
+    imports: [NgFor, NgClass, NgIf],
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss'
 })
@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit{
     'assets/Kobo_help_jump.GIF',
     'assets/Kobo_help_walk.GIF',
   ]
-
+    isImgLoaded = false;
   ngOnInit(){
     const myCarouselElement = document.querySelector('#carousel')
 
