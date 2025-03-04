@@ -1,9 +1,9 @@
-import {NgClass, NgFor, NgIf} from '@angular/common';
+import {NgClass, NgFor} from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
     selector: 'app-home',
-    imports: [NgFor, NgClass, NgIf],
+    imports: [NgFor, NgClass],
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss'
 })

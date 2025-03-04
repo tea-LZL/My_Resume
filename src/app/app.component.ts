@@ -12,7 +12,7 @@ import { NgClass, NgIf } from '@angular/common';
     styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'project_personal';
+  title = "Zhilong's Resume";
 
   loading = false;
   subLoading: Subscription;
@@ -26,24 +26,24 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.theme = localStorage.getItem('theme') ?? 'auto';
-    this.setTheme(this.theme);
-    localStorage.setItem('theme', this.theme);
+    // this.theme = localStorage.getItem('theme') ?? 'auto';
+    // this.setTheme(this.theme);
+    // localStorage.setItem('theme', this.theme);
     this.state.loading.subscribe(value => {
       this.loading = value;
       this.cdr.detectChanges();
     });
   }
 
-  setTheme(theme:string) {
-    this.theme = theme;
-    localStorage.setItem('theme', theme);
-    if (theme === 'auto') {
-      document.documentElement.setAttribute('data-bs-theme', (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'))
-    } else {
-      document.documentElement.setAttribute('data-bs-theme', theme)
-    }
-  }
+  // setTheme(theme:string) {
+  //   this.theme = theme;
+  //   localStorage.setItem('theme', theme);
+  //   if (theme === 'auto') {
+  //     document.documentElement.setAttribute('data-bs-theme', (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'))
+  //   } else {
+  //     document.documentElement.setAttribute('data-bs-theme', theme)
+  //   }
+  // }
 
   ngOnDestroy():void {
     if (this.subLoading) this.subLoading.unsubscribe();
