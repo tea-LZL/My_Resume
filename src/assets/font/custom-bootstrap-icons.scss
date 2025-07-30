@@ -59,7 +59,8 @@ $bootstrap-icons-map: (
   "file-earmark-pdf":"\F63E",
   "file-earmark-plus":"\F37D",
   "download":"\F30A",
-  "file-earmark-text":"\F38B"
+  "file-earmark-text":"\F38B",
+  "arrow-up-right-square":"\F143"
 );
 
 @each $icon, $codepoint in $bootstrap-icons-map {

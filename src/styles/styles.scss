@@ -69,7 +69,7 @@ input[type=number] {
     color:white;
 }
 
-.btn + .btn:hover + .btn-outline-primary{
+.btn  .btn:hover + .btn-outline-primary{
     color:white !important;
 }
 

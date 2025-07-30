@@ -111,3 +111,7 @@
 .backdrop-blur{
     backdrop-filter: blur(10px) !important;
 }
+
+#bd-theme:hover,#bd-theme:active, #bd-theme.show {
+    color: var(--bs-light) !important;
+}

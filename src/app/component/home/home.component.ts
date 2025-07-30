@@ -1,5 +1,5 @@
 import {NgClass, NgFor} from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, QueryList, Renderer2, ViewChildren } from '@angular/core';
 
 @Component({
     selector: 'app-home',
@@ -7,7 +7,18 @@ import { Component, OnInit } from '@angular/core';
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss'
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit, AfterViewInit{
+  @ViewChildren('transGrow') transGrowElems!: QueryList<ElementRef>;
+
+  constructor(private renderer: Renderer2) {}
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.transGrowElems.forEach(elem => {
+        this.renderer.addClass(elem.nativeElement, 'grow');
+      });
+    }, 275);
+  }
   arrCarouselImg = [
     'assets/Kobo_help_dance1.GIF',
     'assets/Kobo_help_dance2.GIF',
