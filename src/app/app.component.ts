@@ -3,11 +3,11 @@ import { Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { Subscription } from 'rxjs';
 import { StateService } from './services/state.service';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 
 @Component({
     selector: 'app-root',
-    imports: [RouterOutlet, NavbarComponent, NgClass, NgIf],
+    imports: [RouterOutlet, NavbarComponent, NgClass],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })
