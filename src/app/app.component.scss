@@ -1,0 +1,66 @@
+.wave-bg {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.wave-svg {
+    width: 120vw;
+    height: 100vh;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+}
+
+.wave {
+    transform: translateX(0);
+    will-change: transform;
+}
+
+.wave1 {
+    animation: waveMove1 12s linear infinite alternate;
+}
+
+.wave2 {
+    animation: waveMove2 10s linear infinite alternate;
+}
+
+.wave3 {
+    animation: waveMove3 24s linear infinite alternate;
+}
+
+@keyframes waveMove1 {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-60px);
+    }
+}
+
+@keyframes waveMove2 {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-120px);
+    }
+}
+
+@keyframes waveMove3 {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-180px);
+    }
+}

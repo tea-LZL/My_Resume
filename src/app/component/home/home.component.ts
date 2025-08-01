@@ -1,16 +1,20 @@
 import { NgClass } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, OnInit, QueryList, Renderer2, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
+import { Router } from '@angular/router';
+import { ModalComponent } from "../../shared/modal/modal.component";
 
 @Component({
     selector: 'app-home',
-    imports: [NgClass],
+    imports: [NgClass, ModalComponent],
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit, AfterViewInit{
   @ViewChildren('transGrow') transGrowElems!: QueryList<ElementRef>;
-
-  constructor(private renderer: Renderer2) {}
+  @ViewChild('modalComp') modalComp!: ModalComponent;
+  constructor(private renderer: Renderer2,
+    private router: Router
+  ) {}
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -35,5 +39,9 @@ export class HomeComponent implements OnInit, AfterViewInit{
       interval: 2000,
       touch: false
     })
+  }
+
+  viewFile(string: string) {
+    this.modalComp.openPdfModal(string);
   }
 }
