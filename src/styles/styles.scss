@@ -77,6 +77,13 @@ input[type=number] {
     color: white !important;
 }
 
+/* Fix Bootstrap outline button border on iOS/Safari */
+@supports (-webkit-touch-callout: none) {
+    .btn-outline-primary {
+        border: 1px solid #0d6efd !important;
+    }
+}
+
 .fs-10rem{
     font-size: 10rem !important;
 }

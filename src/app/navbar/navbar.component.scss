@@ -117,7 +117,20 @@
 }
 
 
-.btn-bd-primary {
+.btn-bd-linkedin {
+    --bs-btn-font-weight: 600;
+    --bs-btn-color: var(--bs-white);
+    --bs-btn-bg: rgba(141, 50, 171, 0);
+    --bs-btn-border-color: rgba(141, 50, 171, 0);
+    --bs-btn-hover-color: var(--bs-white);
+    --bs-btn-hover-bg: var(--bs-blue);
+    --bs-btn-hover-border-color: var(--bs-blue);
+    --bs-btn-focus-shadow-rgb: var(--bs-blue);
+    --bs-btn-active-color: var(--bs-blue);
+    --bs-btn-active-bg: #{shade-color(var(--bs-blue), 20%)};
+    --bs-btn-active-border-color: #{shade-color(var(--bs-blue), 20%)};
+}
+.btn-bd-github {
     --bs-btn-font-weight: 600;
     --bs-btn-color: var(--bs-white);
     --bs-btn-bg: rgba(141, 50, 171, 0);
@@ -129,4 +142,17 @@
     --bs-btn-active-color: rgb(141 50 171);
     --bs-btn-active-bg: #{shade-color(rgb(141 50 171), 20%)};
     --bs-btn-active-border-color: #{shade-color(rgb(141 50 171), 20%)};
+}
+.btn-bd-theme {
+    --bs-btn-font-weight: 600;
+    --bs-btn-color: var(--bs-white);
+    --bs-btn-bg: rgba(141, 50, 171, 0);
+    --bs-btn-border-color: rgba(141, 50, 171, 0);
+    --bs-btn-hover-color: var(--bs-white);
+    --bs-btn-hover-bg: var(--bs-primary);
+    --bs-btn-hover-border-color: var(--bs-primary);
+    --bs-btn-focus-shadow-rgb: var(--bs-primary);
+    --bs-btn-active-color: var(--bs-primary);
+    --bs-btn-active-bg: #{shade-color(var(--bs-primary), 0%)};
+    --bs-btn-active-border-color: #{shade-color(var(--bs-primary), 0%)};
 }

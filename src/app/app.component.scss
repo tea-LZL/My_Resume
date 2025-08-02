@@ -18,6 +18,20 @@
     z-index: -1;
 }
 
+@media (max-width: 1000px) {
+    .wave-bg {
+        width: 1920px;
+        height: 100vh;
+    }
+
+    .wave-svg {
+        width: 1920px;
+        height: 100vh;
+        min-width: 1920px;
+        min-height: 100vh;
+    }
+}
+
 .wave {
     transform: translateX(0);
     will-change: transform;

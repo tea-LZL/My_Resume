@@ -53,3 +53,27 @@ hr {
     opacity: 1;
     background-color: #1e293b;
 }
+
+:root {
+    --glass-bg-light: rgba(255, 255, 255, 0.7);
+    --glass-bg-dark: rgba(30, 41, 59, 0.7);
+    --glass-text-light: #1e293b;
+    --glass-text-dark: #f8fafc;
+}
+
+[data-bs-theme="light"] .intro-glass {
+    background: var(--glass-bg-light);
+    color: var(--glass-text-light);
+}
+
+[data-bs-theme="dark"] .intro-glass {
+    background: var(--glass-bg-dark);
+    color: var(--glass-text-dark);
+}
+
+.intro-glass {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    transition: background 0.3s, color 0.3s;
+}
