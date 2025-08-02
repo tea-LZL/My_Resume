@@ -28,7 +28,7 @@ jobs:
 
     - name: install packages
       working-directory: ./  
-        bun install -g @angular/cli
+        bun install -g @angular/cli@lastest
         bun install
 
     - name: PreBuild_Prelive
