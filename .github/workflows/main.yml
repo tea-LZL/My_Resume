@@ -30,7 +30,7 @@ jobs:
       working-directory: ./    
       run: |
         bun install -g @angular/cli
-        bun install --production
+        bun install
 
     - name: PreBuild_Prelive
       working-directory: ./      
