@@ -33,3 +33,23 @@ hr {
     background-color: var(--bs-secondary);
     letter-spacing: 5px;
 }
+
+.bg-indicators {
+    background-color: rgba(255, 255, 255, 0.671);
+}
+
+.indicator-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #0d6efd;
+    opacity: 0.5;
+    border: none;
+    margin: 0 4px;
+    transition: opacity 0.2s, background-color 0.2s;
+}
+
+.indicator-dot.active {
+    opacity: 1;
+    background-color: #1e293b;
+}

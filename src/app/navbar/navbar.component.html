@@ -1,60 +1,72 @@
 <div class="w-100 px-4 pt-3 backdrop-blur">
-  <div>
-      <nav class="navbar navbar-expand-xxl bg-body-tertiary rounded navbar-dark shadow">
-          <div class="container-fluid">
-              <a class="navbar-brand home-ani text-light-emphasis" href="/" tabindex="1" role="button"><i class="bi bi-grid-fill me-1"></i>Zhilong Liang</a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsCollapse" (keypress)="navTo('files')" tabindex="2" role="button"
-                  aria-controls="navbarsCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarsCollapse">
-                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                      <!-- <li class="nav-item m-1">
+    <div>
+        <nav class="navbar navbar-expand-xxl bg-body-tertiary rounded navbar-dark shadow">
+            <div class="container-fluid">
+                <a class="navbar-brand home-ani text-light-emphasis" href="/" tabindex="1" role="button"><i
+                        class="bi bi-grid-fill me-1"></i>Zhilong Liang</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsCollapse"
+                    (keypress)="navTo('files')" tabindex="2" role="button" aria-controls="navbarsCollapse"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarsCollapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <!-- <li class="nav-item m-1">
                         <a class="nav-link dropdown-ani rounded cursor-pointer px-3 text-light-emphasis" (click)="navTo('files')" (keypress)="navTo('files')" tabindex="4" role="button">
                             <i class="bi bi-file-earmark-pdf me-1"></i>Files</a>
                       </li> -->
-                      <li class="nav-item m-1 dropdown-center">
-                          <a class="nav-link dropdown-ani rounded cursor-pointer px-3 text-light-emphasis" data-bs-toggle="dropdown"  href="#" tabindex="3" role="button" aria-expanded="false">
-                              <i class="bi bi-person-fill me-1"></i>More About Me<i class="bi bi-caret-down-fill ms-1"></i></a>
-                          <ul class="dropdown-menu">
-                              <li><a class="dropdown-item cursor-pointer" (click)="navTo('timeline')" (keypress)="navTo('timeline')" tabindex="0" role="button">Timeline</a></li>
-                              <!-- <li><a class="dropdown-item cursor-pointer" (click.keypress)="navTo('')">Timeline</a></li>
+                        <li class="nav-item m-1 dropdown-center">
+                            <a class="nav-link dropdown-ani rounded cursor-pointer px-3 text-light-emphasis"
+                                data-bs-toggle="dropdown" href="#" tabindex="3" role="button" aria-expanded="false">
+                                <i class="bi bi-person-fill me-1"></i>More About Me<i
+                                    class="bi bi-caret-down-fill ms-1"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item cursor-pointer" (click)="navTo('timeline')"
+                                        (keypress)="navTo('timeline')" tabindex="0" role="button">Timeline</a></li>
+                                <!-- <li><a class="dropdown-item cursor-pointer" (click.keypress)="navTo('')">Timeline</a></li>
                               <li><a class="dropdown-item cursor-pointer" (click.keypress)="navTo('')">Timeline</a></li>
                               <li><a class="dropdown-item cursor-pointer" (click.keypress)="navTo('')">Timeline</a></li>
                               <li><a class="dropdown-item cursor-pointer" (click.keypress)="navTo('')">Timeline</a></li> -->
-                          </ul>
-                      </li>
-                  </ul>
-                  <div class="dropdown navbar-nav">
-                    <button class="btn btn-outline-primary border-0 py-2 dropdown-toggle d-flex align-items-center text-light-emphasis align-self-center" id="bd-theme"
-                        type="button" aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (auto)">
-                        <i class="bi"
-                            [ngClass]="{'bi-circle-half':theme === 'auto','bi-moon-stars-fill':theme === 'dark','bi-sun-fill':theme === 'light'}"></i>
-                        <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="bd-theme-text">
-                        <li>
-                            <button type="button" class="dropdown-item d-flex align-items-center justify-content-center"
-                                [ngClass]="{'active':theme === 'light'}" (click)="setTheme('light')">
-                                <i class="bi bi-sun-fill me-2"></i>Light
-                            </button>
-                        </li>
-                        <li>
-                            <button type="button" class="dropdown-item d-flex align-items-center justify-content-center"
-                                [ngClass]="{'active':theme === 'dark'}" (click)="setTheme('dark')">
-                                <i class="bi bi-moon-stars-fill me-2"></i>Dark
-                            </button>
-                        </li>
-                        <li>
-                            <button type="button" class="dropdown-item d-flex align-items-center justify-content-center"
-                                [ngClass]="{'active':theme === 'auto'}" (click)="setTheme('auto')">
-                                <i class="bi bi-circle-half me-2"></i>Auto
-                            </button>
+                            </ul>
                         </li>
                     </ul>
+                    <a class="me-3 px-3 border-0 navbar-nav text-light-emphasis btn btn-outline-primary" href="https://www.linkedin.com/in/zhilong-liang-748b641a1" target="_blank"><i class="bi bi-linkedin"></i></a>
+                    <a class="me-3 px-3 border-0 navbar-nav text-light-emphasis btn btn-bd-primary" href="https://github.com/Zhilong-coding" target="_blank"><i class="bi bi-github"></i></a>
+                    <div class="dropdown navbar-nav">
+                        <button
+                            class="btn btn-outline-primary border-0 py-2 dropdown-toggle d-flex align-items-center text-light-emphasis align-self-center"
+                            id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown"
+                            aria-label="Toggle theme (auto)">
+                            <i class="bi"
+                                [ngClass]="{'bi-circle-half':theme === 'auto','bi-moon-stars-fill':theme === 'dark','bi-sun-fill':theme === 'light'}"></i>
+                            <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="bd-theme-text">
+                            <li>
+                                <button type="button"
+                                    class="dropdown-item d-flex align-items-center justify-content-center"
+                                    [ngClass]="{'active':theme === 'light'}" (click)="setTheme('light')">
+                                    <i class="bi bi-sun-fill me-2"></i>Light
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button"
+                                    class="dropdown-item d-flex align-items-center justify-content-center"
+                                    [ngClass]="{'active':theme === 'dark'}" (click)="setTheme('dark')">
+                                    <i class="bi bi-moon-stars-fill me-2"></i>Dark
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button"
+                                    class="dropdown-item d-flex align-items-center justify-content-center"
+                                    [ngClass]="{'active':theme === 'auto'}" (click)="setTheme('auto')">
+                                    <i class="bi bi-circle-half me-2"></i>Auto
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-              </div>
-          </div>
-      </nav>
-  </div>
+            </div>
+        </nav>
+    </div>
 </div>

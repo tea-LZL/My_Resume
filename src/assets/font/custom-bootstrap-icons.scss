@@ -60,7 +60,9 @@ $bootstrap-icons-map: (
   "file-earmark-plus":"\F37D",
   "download":"\F30A",
   "file-earmark-text":"\F38B",
-  "arrow-up-right-square":"\F143"
+  "arrow-up-right-square":"\F143",
+  "github": "\F3ED",
+  "linkedin": "\F472"
 );
 
 @each $icon, $codepoint in $bootstrap-icons-map {

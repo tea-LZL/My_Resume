@@ -21,6 +21,7 @@
 .wave {
     transform: translateX(0);
     will-change: transform;
+    z-index: -1;
 }
 
 .wave1 {
@@ -28,7 +29,7 @@
 }
 
 .wave2 {
-    animation: waveMove2 10s linear infinite alternate;
+    animation: waveMove2 16s linear infinite alternate;
 }
 
 .wave3 {
