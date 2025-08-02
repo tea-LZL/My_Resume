@@ -8,14 +8,13 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [22.x]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         path: ./
+    - uses: oven-sh/setup-bun@v2
+      with:
+        bun-version: 1.2.0
    
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
@@ -25,11 +24,9 @@ jobs:
     - name: install packages
       working-directory: ./    
       run: |
-        npm install -g yarn
-        yarn install
-    - name: Install Angular CLI
-      run: |
-        npm install -g @angular/cli
+        bun install -g @angular/cli
+        bun install --production
+
     - name: PreBuild_Prelive
       working-directory: ./      
       if: |
