@@ -27,8 +27,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: install packages
-      working-directory: ./  
-        bun install -g @angular/cli@lastest
+      working-directory: ./
+      run: |
         bun install
 
     - name: PreBuild_Prelive
