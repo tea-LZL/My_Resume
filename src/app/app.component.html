@@ -21,15 +21,13 @@
       <div class="m-4 h-100 rounded"><main class="container-xl"><router-outlet /></main></div>
     </div>
   </div>
-  @if (loading) {
-    <div class="loader d-flex align-items-center justify-content-center">
-      <div class="card loading-card rounded-3 shadow-lg w-fit-content m-5 align-items-center">
-        <div class="spinner-border text-primary align-item-center" style="width: 5rem; height: 5rem;" role="status">
-        </div>
-      </div>
-    </div>
-  }
 </main>
+
+@if (loading) {
+  <div class="loading">
+    <span class="loader"></span>
+  </div>
+}
 
 
 <!-- <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-4 alway-top">

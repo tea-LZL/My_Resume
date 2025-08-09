@@ -2,7 +2,7 @@
     <div>
         <nav class="navbar navbar-expand-xxl bg-body-tertiary rounded navbar-dark shadow">
             <div class="container-fluid">
-                <a class="navbar-brand home-ani text-light-emphasis" href="/" tabindex="1" role="button"><i
+                <a class="navbar-brand home-ani text-light-emphasis" (click)="navTo('/')" (keyup)="navTo('/')" tabindex="1" role="button"><i
                         class="bi bi-grid-fill me-1"></i>Zhilong Liang</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsCollapse"
                     tabindex="2" role="button" aria-controls="navbarsCollapse"
@@ -10,11 +10,17 @@
                     <span class="bi bi-list text-light-emphasis"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarsCollapse">
+                    <ul class="navbar-nav mb-2 mb-lg-0">
+                        <li class="nav-item m-1 dropdown-center">
+                            <button class="nav-link dropdown-ani rounded px-3 text-light-emphasis btn" tabindex="3" (click)="navTo('/projects')">
+                                <i class="bi bi-terminal-fill me-1"></i>Projects</button>
+                        </li>
+                    </ul>
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item m-1 dropdown-center">
                             <a class="nav-link dropdown-ani rounded cursor-pointer px-3 text-light-emphasis"
-                                data-bs-toggle="dropdown" href="#" tabindex="3" role="button" aria-expanded="false">
-                                <i class="bi bi-person-fill me-1"></i>More About Me<i
+                                data-bs-toggle="dropdown" href="#" tabindex="4" role="button" aria-expanded="false">
+                                <i class="bi bi-person-fill me-1"></i>More<i
                                     class="bi bi-caret-down-fill ms-1"></i></a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item cursor-pointer" (click)="navTo('timeline')"

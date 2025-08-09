@@ -3,7 +3,6 @@ import { Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { Subscription } from 'rxjs';
 import { StateService } from './services/state.service';
-import { NgClass } from '@angular/common';
 
 @Component({
     selector: 'app-root',
@@ -14,7 +13,7 @@ import { NgClass } from '@angular/common';
 export class AppComponent implements OnInit, OnDestroy {
   title = "Zhilong's Resume";
 
-  loading = false;
+  loading = true;
   subLoading: Subscription;
   theme = 'auto';
   constructor(

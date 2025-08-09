@@ -8,6 +8,14 @@
       knowledge base.</p>
   </div>
   <div class="col-lg-6 p-0 z-1 align-content-center">
+    @if (!isImgLoaded) {
+      <div style="height: 600px;" class="h-100 w-100 rounded-4 intro-glass d-flex justify-content-center align-items-center">
+        <div class="spinner-border" style="width: 4rem; height: 4rem; border-width: 6px;" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    }
+
     <div id="carousel" class="carousel slide" data-bs-ride="carousel" [hidden]="!isImgLoaded">
       <!-- <div class="carousel-indicators bg-indicators rounded-pill w-fit-content mx-auto py-1 px-3">
         @for (img of arrCarouselImg; track img; let i = $index) {
