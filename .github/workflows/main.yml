@@ -122,10 +122,9 @@ jobs:
         echo "first LS"
         cd ./publish
         git config --global user.email "zhilong.k.liang@proton.me"
-        git config --global user.name "tea-LZL"
+        git config --global user.name "tea-bot"
         # git reset --hard
         # This is only necessary when .git directory is not on the same level as package.json - npm version issue
         git add .
-        git config user.name="tea-Bot"
         git -c user.email="zhilong.k.liang@proton.me" commit -m "Publish - Auto Publish" --allow-empty
         git push
