@@ -28,9 +28,7 @@ jobs:
 
     - name: install packages
       working-directory: ./
-      run: |
-        bun install -g @angular/cli
-        bun install
+      run: bun ci
 
     - name: PreBuild_Prelive
       working-directory: ./      
@@ -38,29 +36,29 @@ jobs:
         github.ref == 'refs/heads/develop'
         && github.event_name == 'pull_request'
       run: |
-        ng build --configuration=develop
+        bun run build --configuration=develop
     - name: PreBuild_UAT
       working-directory: ./
       if: |
         github.ref == 'refs/heads/uat'
         && github.event_name == 'pull_request'
       run: |
-        ng build --configuration=uat
+        bun run build --configuration=uat
     - name: PreBuild_Live
       working-directory: ./
       if: |
         github.ref == 'refs/heads/master'
         && github.event_name == 'pull_request'
       run: |
-        ng build --configuration=live
-        
+        bun run build --configuration=live
+
     - name: Checkout publish prelive
       uses: actions/checkout@v3
       if: |
         github.ref == 'refs/heads/develop' &&
         github.event_name == 'push'
       with:
-        repository: Zhilong-coding/My_Resume_Publish # optional, default is ${{ github.repository }}
+        repository: tea-LZL/My_Resume_Publish # optional, default is ${{ github.repository }}
         ref: refs/heads/develop # optional
         token: ${{ secrets.API_PUBLISH_TOKEN }} #
         path: ./publish
@@ -71,7 +69,7 @@ jobs:
         github.ref == 'refs/heads/uat' &&
         github.event_name == 'push'
       with:
-        repository: Zhilong-coding/My_Resume_Publish # optional, default is ${{ github.repository }}
+        repository: tea-LZL/My_Resume_Publish # optional, default is ${{ github.repository }}
         ref: refs/heads/uat # optional
         token: ${{ secrets.API_PUBLISH_TOKEN }} #
         path: ./publish
@@ -82,7 +80,7 @@ jobs:
         github.ref == 'refs/heads/master' &&
         github.event_name == 'push'
       with:
-        repository: Zhilong-coding/My_Resume_Publish # optional, default is ${{ github.repository }}
+        repository: tea-LZL/My_Resume_Publish # optional, default is ${{ github.repository }}
         ref: refs/heads/master # optional
         token: ${{ secrets.API_PUBLISH_TOKEN }} #
         path: ./publish
@@ -92,7 +90,7 @@ jobs:
         github.ref == 'refs/heads/develop'
         && github.event_name == 'push'
       run: |
-        ng build --configuration=prelive
+         bun run build --configuration=prelive
       working-directory: ./
       
     - name: build_uat
@@ -101,7 +99,7 @@ jobs:
         && github.event_name == 'push'
       run: |
        
-        ng build --configuration=uat
+         bun run build --configuration=uat
       working-directory: ./
       
     - name: build_live
@@ -110,7 +108,7 @@ jobs:
         && github.event_name == 'push'
       run: |
        
-        ng build --configuration=production
+        bun run build --configuration=production
       working-directory: ./
             
     - name: copy
@@ -126,10 +124,11 @@ jobs:
       run: |
         echo "first LS"
         cd ./publish
-        git config --global user.email "zhilong.k.liang@gmil.com"
-        git config --global user.name "Zhilong-Github"
+        git config --global user.email "zhilong.k.liang@proton.me"
+        git config --global user.name "tea-LZL"
         # git reset --hard
         # This is only necessary when .git directory is not on the same level as package.json - npm version issue
         git add .
-        git -c user.email="git@dimensiondata.com" commit -m "Publish - Auto Publish" --allow-empty
+        git config user.name="tea-Bot"
+        git -c user.email="zhilong.k.liang@proton.me" commit -m "Publish - Auto Publish" --allow-empty
         git push
