@@ -1,0 +1,15 @@
+.intro-glass {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid #f5faf433;
+    border-right: none;
+    border-bottom: none;
+    border-left: none;
+    transition: background 0.3s, color 0.3s;
+    background-color: #2B3035;
+}
+
+.author {
+    font-size: 18px;
+    color: #d3c6aa;
+}

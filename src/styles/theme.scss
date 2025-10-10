@@ -2,6 +2,71 @@
 // scss-docs-start import-stack
 // Configuration
 @import "../../node_modules/bootstrap/scss/functions";
+
+// Everforest Color Scheme
+// Base colors
+$everforest-bg: #2d353b;
+$everforest-bg-dim: #232a2e;
+$everforest-bg-light: #343f44;
+$everforest-fg: #d3c6aa;
+$everforest-red: #e67e80;
+$everforest-orange: #e69875;
+$everforest-yellow: #dbbc7f;
+$everforest-green: #a7c080;
+$everforest-aqua: #83c092;
+$everforest-blue: #7fbbb3;
+$everforest-purple: #d699b6;
+$everforest-grey0: #7a8478;
+$everforest-grey1: #859289;
+$everforest-grey2: #9da9a0;
+
+// Font Configuration
+$font-family-sans-serif: 'JetBrains Mono', 'SFMono-Regular', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
+$font-family-monospace: 'JetBrains Mono', 'SFMono-Regular', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
+$font-family-base: $font-family-sans-serif;
+
+// Bootstrap variable overrides with Everforest colors
+$primary: $everforest-green;
+$secondary: $everforest-grey1;
+$success: $everforest-aqua;
+$info: $everforest-blue;
+$warning: $everforest-yellow;
+$danger: $everforest-red;
+// $light: $everforest-bg-light;
+$dark: $everforest-bg-dim;
+
+// Body and text colors
+$body-bg: $everforest-bg;
+$body-color: $everforest-fg;
+$text-muted: $everforest-grey1;
+
+// Link colors
+$link-color: $everforest-blue;
+$link-hover-color: $everforest-aqua;
+
+// Border and component colors
+$border-color: $everforest-grey0;
+$component-active-bg: $everforest-green;
+$component-active-color: $everforest-bg;
+
+// Card and surface colors
+$card-bg: $everforest-bg-light;
+$card-border-color: $everforest-grey0;
+
+// Navbar colors
+$navbar-dark-color: $everforest-fg;
+$navbar-dark-hover-color: $everforest-green;
+$navbar-dark-active-color: $everforest-aqua;
+$navbar-dark-brand-color: $everforest-green;
+$navbar-dark-brand-hover-color: $everforest-aqua;
+
+// Form colors
+$input-bg: $everforest-bg-light;
+$input-border-color: $everforest-grey0;
+$input-color: $everforest-fg;
+$input-focus-border-color: $everforest-green;
+$input-focus-box-shadow: 0 0 0 0.2rem rgba(167, 192, 128, 0.25);
+
 @import "../../node_modules/bootstrap/scss/variables";
 @import "../../node_modules/bootstrap/scss/variables-dark";
 @import "../../node_modules/bootstrap/scss/maps";

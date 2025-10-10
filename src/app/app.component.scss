@@ -79,3 +79,18 @@
         transform: translateX(-180px);
     }
 }
+
+// Sticky footer styles
+main {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 100% !important;
+}
+
+.flex-grow-1 {
+    flex: 1 0 auto !important;
+}
+
+app-footer {
+    flex-shrink: 0 !important;
+}

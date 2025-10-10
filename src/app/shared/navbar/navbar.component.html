@@ -1,22 +1,30 @@
 <div class="w-100 px-4 pt-3 backdrop-blur">
     <div>
-        <nav class="navbar navbar-expand-xxl bg-body-tertiary rounded navbar-dark shadow">
+        <nav class="navbar navbar-expand-xxl rounded shadow">
             <div class="container-fluid">
-                <a class="navbar-brand home-ani text-light-emphasis" (click)="navTo('/')" (keyup)="navTo('/')" tabindex="1" role="button"><i
+                <a class="navbar-brand home-ani text-light-emphasis font-plaster" routerLink="/" tabindex="1" role="button"><i
                         class="bi bi-grid-fill me-1"></i>Zhilong Liang</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsCollapse"
-                    tabindex="2" role="button" aria-controls="navbarsCollapse"
+                <div id="nav-icon" class="navbar-toggler border-0" (click)="bNav = !bNav; openNavModal()" (keyup)="bNav = !bNav"
+                    tabindex="2" role="button" aria-controls="navbarsCollapse" [ngClass]="{'open':bNav}"
                     aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="bi bi-list text-light-emphasis"></span>
-                </button>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
                 <div class="collapse navbar-collapse" id="navbarsCollapse">
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item m-1 dropdown-center">
-                            <button class="nav-link dropdown-ani rounded px-3 text-light-emphasis btn" tabindex="3" (click)="navTo('/projects')">
+                            <button class="border-0 rounded px-3 btn btn-outline-primary" tabindex="3" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                                <i class="bi bi-terminal-fill me-1"></i>Home</button>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav mb-2 mb-lg-0">
+                        <li class="nav-item m-1 dropdown-center">
+                            <button class="border-0 rounded px-3  btn btn-outline-primary" tabindex="4" routerLink="/projects" routerLinkActive="active">
                                 <i class="bi bi-terminal-fill me-1"></i>Projects</button>
                         </li>
                     </ul>
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <!-- <ul class="navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item m-1 dropdown-center">
                             <a class="nav-link dropdown-ani rounded cursor-pointer px-3 text-light-emphasis"
                                 data-bs-toggle="dropdown" href="#" tabindex="4" role="button" aria-expanded="false">
@@ -27,7 +35,8 @@
                                         (keypress)="navTo('timeline')" tabindex="0" role="button">Timeline</a></li>
                             </ul>
                         </li>
-                    </ul>
+                    </ul> -->
+                    <span class="mx-auto"></span>
                     <a class="me-lg-3 px-3 border-0 navbar-nav text-light-emphasis btn btn-bd-linkedin"
                         href="https://www.linkedin.com/in/zhilong-liang-748b641a1" target="_blank"><i
                             class="bi bi-linkedin"></i></a>
@@ -43,23 +52,23 @@
                             <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="bd-theme-text">
-                            <li>
+                            <li class="py-1 px-3">
                                 <button type="button"
-                                    class="dropdown-item d-flex align-items-center justify-content-center"
+                                    class="dropdown-item rounded-pill d-flex align-items-center justify-content-center"
                                     [ngClass]="{'active':theme === 'light'}" (click)="setTheme('light')">
                                     <i class="bi bi-sun-fill me-2"></i>Light
                                 </button>
                             </li>
-                            <li>
+                            <li class="py-1 px-3">
                                 <button type="button"
-                                    class="dropdown-item d-flex align-items-center justify-content-center"
+                                    class="dropdown-item rounded-pill d-flex align-items-center justify-content-center"
                                     [ngClass]="{'active':theme === 'dark'}" (click)="setTheme('dark')">
                                     <i class="bi bi-moon-stars-fill me-2"></i>Dark
                                 </button>
                             </li>
-                            <li>
+                            <li class="py-1 px-3">
                                 <button type="button"
-                                    class="dropdown-item d-flex align-items-center justify-content-center"
+                                    class="dropdown-item rounded-pill d-flex align-items-center justify-content-center"
                                     [ngClass]="{'active':theme === 'auto'}" (click)="setTheme('auto')">
                                     <i class="bi bi-circle-half me-2"></i>Auto
                                 </button>

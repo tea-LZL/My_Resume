@@ -1,20 +1,20 @@
 import { NgClass } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NavModalComponent } from './nav-modal/nav-modal.component';
 
 @Component({
   selector: "app-navbar",
-  imports: [NgClass],
+  imports: [NgClass, RouterLink, RouterLinkActive],
   templateUrl: "./navbar.component.html",
   styleUrl: "./navbar.component.scss",
 })
 export class NavbarComponent implements OnInit {
-
+  bNav: boolean = false;
   theme = 'auto';
 
-  constructor(private router: Router) {}
-  navTo(path: string) {
-    this.router.navigate([path]);
+  constructor(private modal: NgbModal) {
   }
 
   ngOnInit(): void {
@@ -36,5 +36,18 @@ export class NavbarComponent implements OnInit {
     } else {
       document.documentElement.setAttribute("data-bs-theme", theme);
     }
+  }
+
+  openNavModal() {
+    const modalRef = this.modal.open(NavModalComponent, { centered: true });
+    modalRef.result.then(
+      (result) => {
+        this.bNav = false;
+      },
+      (dismissed) => {
+        this.bNav = false;
+      }
+    );
+    
   }
 }

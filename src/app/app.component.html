@@ -14,13 +14,14 @@
 
 
 <!-- Content Section -->
-<main [attr.data-bs-theme]="theme" class="bg-body pb-5" style="max-height: 100%;">
+<main [attr.data-bs-theme]="theme" class="bg-body d-flex flex-column">
   <app-navbar class="navbar navbar-expand-md fixed-top pt-0" style="height: 80px;"></app-navbar>
-  <div class=" overflow-y-auto overflow-x-hidden focus-hidden" style="padding-top: 90px;">
+  <div class="overflow-y-auto overflow-x-hidden focus-hidden" style="padding-top: 90px;">
     <div class="h-100">
       <div class="m-4 h-100 rounded"><main class="container-xl"><router-outlet /></main></div>
     </div>
   </div>
+  <app-footer class="mt-auto"></app-footer>
 </main>
 
 @if (loading) {

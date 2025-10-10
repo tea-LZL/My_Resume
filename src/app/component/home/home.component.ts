@@ -1,8 +1,6 @@
 import { NgClass } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, OnInit, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
-import { Router } from '@angular/router';
 import { ModalComponent } from "../../shared/modal/modal.component";
-import { StateService } from '../../services/state.service';
 
 @Component({
     selector: 'app-home',
@@ -14,10 +12,9 @@ export class HomeComponent implements OnInit, AfterViewInit{
   @ViewChildren('transGrow') transGrowElems!: QueryList<ElementRef>;
   @ViewChild('modalComp') modalComp!: ModalComponent;
   imgLoadStatus: boolean[] = [];
-  constructor(private renderer: Renderer2,
-    private router: Router,
-    private state: StateService
-  ) {}
+  constructor(private renderer: Renderer2
+  ) {
+  }
 
   ngAfterViewInit(): void {
     setTimeout(() => {

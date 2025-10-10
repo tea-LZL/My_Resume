@@ -1,1 +1,21 @@
-<p>projects works!</p>
+<div id="projectCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" class="" data-bs-target="#projectCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1"
+            aria-current="true"></button>
+        <!-- <button type="button" data-bs-target="#projectCarousel" data-bs-slide-to="1" aria-label="Slide 2" class=""></button>
+        <button type="button" data-bs-target="#projectCarousel" data-bs-slide-to="2" aria-label="Slide 3" class=""></button> -->
+    </div>
+    <div class="carousel-inner rounded shadow">
+        @for (proj of arrProjects; track proj; let i = $index) {
+        <div class="carousel-item" [ngClass]="{'active':i===0}">
+            <img loading="eager" [src]=proj.Cover_Image_URL class="d-block w-100" alt="carousel{{i}}" />
+            <div class="container">
+                <div class="carousel-caption text-end text-white">
+                    <h5>{{ proj.Title }}</h5>
+                    <p><a class="btn btn-light" href="{{ proj.GitHub_Link }}" target="_blank"><i class="bi bi-github"></i></a></p>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>
