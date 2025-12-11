@@ -2,18 +2,24 @@
     <div class="mb-2">
         <button class="border-0 rounded w-100 rounded-pill btn btn-outline-primary" tabindex="3" routerLink="/"
             routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="activeModal.close()">
-            <i class="bi bi-terminal-fill me-1"></i>Home</button>
+            <i class="bi bi-house-fill me-1"></i>Home</button>
     </div>
     <div class="mb-2">
         <button class="border-0 rounded w-100 rounded-pill btn btn-outline-primary" tabindex="4" routerLink="/projects"
             routerLinkActive="active" (click)="activeModal.close()">
             <i class="bi bi-terminal-fill me-1"></i>Projects</button>
     </div>
+    <div class="mb-2">
+        <button class="border-0 rounded w-100 rounded-pill btn btn-outline-primary" tabindex="4" routerLink="/resume"
+            routerLinkActive="active" (click)="activeModal.close()">
+            <i class="bi bi-file-earmark-person me-1"></i>Resume</button>
+    </div>
     <div class="row mb-2">
         <div class="col"><a class="border-0 navbar-nav text-light-emphasis rounded-pill btn btn-bd-linkedin"
-            href="https://www.linkedin.com/in/zhilong-liang-748b641a1" target="_blank"><i class="bi bi-linkedin"></i></a></div>
-        <div class="col"><a class="border-0 navbar-nav text-light-emphasis rounded-pill btn btn-bd-github" href="https://github.com/tea-LZL"
-            target="_blank"><i class="bi bi-github"></i></a></div>
+                href="https://www.linkedin.com/in/zhilong-liang-748b641a1" target="_blank"><i
+                    class="bi bi-linkedin"></i></a></div>
+        <div class="col"><a class="border-0 navbar-nav text-light-emphasis rounded-pill btn btn-bd-github"
+                href="https://github.com/tea-LZL" target="_blank"><i class="bi bi-github"></i></a></div>
         <div class="col">
             <button type="button" class="rounded-pill btn btn-outline-primary border-0 text-light-emphasis w-100"
                 id="bd-theme" (click)="changeTheme()">

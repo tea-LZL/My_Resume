@@ -3,12 +3,12 @@ import { AfterViewInit, Component, ElementRef, OnInit, QueryList, Renderer2, Vie
 import { ModalComponent } from "../../shared/modal/modal.component";
 
 @Component({
-    selector: 'app-home',
-    imports: [NgClass, ModalComponent],
-    templateUrl: './home.component.html',
-    styleUrl: './home.component.scss'
+  selector: 'app-home',
+  imports: [NgClass, ModalComponent],
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.scss'
 })
-export class HomeComponent implements OnInit, AfterViewInit{
+export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChildren('transGrow') transGrowElems!: QueryList<ElementRef>;
   @ViewChild('modalComp') modalComp!: ModalComponent;
   imgLoadStatus: boolean[] = [];
@@ -27,8 +27,8 @@ export class HomeComponent implements OnInit, AfterViewInit{
         setTimeout(() => loadingEl.remove(), 500);
       }
     }, 275);
-
   }
+
   arrCarouselImg = [
     'assets/Kobo_help_dance1.GIF',
     'assets/Kobo_help_dance2.GIF',
@@ -36,8 +36,8 @@ export class HomeComponent implements OnInit, AfterViewInit{
     'assets/Kobo_help_jump.GIF',
     'assets/Kobo_help_walk.GIF',
   ]
-    isImgLoaded = false;
-  ngOnInit(){
+  isImgLoaded = false;
+  ngOnInit() {
     const myCarouselElement = document.querySelector('#carousel')
     this.imgLoadStatus = this.arrCarouselImg.map(() => false);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars

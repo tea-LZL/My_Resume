@@ -2,11 +2,11 @@
     <div>
         <nav class="navbar navbar-expand-xxl rounded shadow">
             <div class="container-fluid">
-                <a class="navbar-brand home-ani text-light-emphasis font-plaster" routerLink="/" tabindex="1" role="button"><i
-                        class="bi bi-grid-fill me-1"></i>Zhilong Liang</a>
-                <div id="nav-icon" class="navbar-toggler border-0" (click)="bNav = !bNav; openNavModal()" (keyup)="bNav = !bNav"
-                    tabindex="2" role="button" aria-controls="navbarsCollapse" [ngClass]="{'open':bNav}"
-                    aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand home-ani text-light-emphasis font-plaster" routerLink="/" tabindex="1"
+                    role="button"><i class="bi bi-grid-fill me-1"></i>Zhilong Liang</a>
+                <div id="nav-icon" class="navbar-toggler border-0" (click)="bNav = !bNav; openNavModal()"
+                    (keyup)="bNav = !bNav" tabindex="2" role="button" aria-controls="navbarsCollapse"
+                    [ngClass]="{'open':bNav}" aria-expanded="false" aria-label="Toggle navigation">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -14,14 +14,23 @@
                 <div class="collapse navbar-collapse" id="navbarsCollapse">
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item m-1 dropdown-center">
-                            <button class="border-0 rounded px-3 btn btn-outline-primary" tabindex="3" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                                <i class="bi bi-terminal-fill me-1"></i>Home</button>
+                            <button class="border-0 rounded px-3 btn btn-outline-primary" tabindex="3" routerLink="/"
+                                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                                <i class="bi bi-house-fill me-1"></i>Home</button>
                         </li>
                     </ul>
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item m-1 dropdown-center">
-                            <button class="border-0 rounded px-3  btn btn-outline-primary" tabindex="4" routerLink="/projects" routerLinkActive="active">
+                            <button class="border-0 rounded px-3  btn btn-outline-primary" tabindex="4"
+                                routerLink="/projects" routerLinkActive="active">
                                 <i class="bi bi-terminal-fill me-1"></i>Projects</button>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav mb-2 mb-lg-0">
+                        <li class="nav-item m-1 dropdown-center">
+                            <button class="border-0 rounded px-3  btn btn-outline-primary" tabindex="4"
+                                routerLink="/resume" routerLinkActive="active">
+                                <i class="bi bi-file-earmark-person me-1"></i>Resume</button>
                         </li>
                     </ul>
                     <!-- <ul class="navbar-nav mb-2 mb-lg-0">

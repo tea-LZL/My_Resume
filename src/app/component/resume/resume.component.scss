@@ -1,0 +1,517 @@
+@import '../../../styles/theme';
+
+:host {
+    display: block;
+    font-family: $font-family-sans-serif;
+    color: $everforest-fg;
+    background-color: transparent; // Let the main app bg show through or manage it
+    min-height: 100vh;
+
+    @media (min-width: 1250px) {
+        padding: 2rem;
+    }
+
+    box-sizing: border-box;
+    position: relative; // For absolute positioning if needed, though fixed is better for sticky
+}
+
+.resume-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: $everforest-bg;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid $everforest-grey0;
+
+    // Animation initial state
+    opacity: 0;
+    // Include 'top' in the transition list for smooth following effect
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+        background-color 0.3s ease,
+        box-shadow 0.3s ease;
+
+    &.grow {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+// Header
+.resume-header {
+    padding: 3rem;
+    background: linear-gradient(135deg, $everforest-bg-dim, darken($everforest-bg, 2%));
+    color: $everforest-fg;
+    text-align: center;
+    border-bottom: 1px solid $everforest-grey0;
+
+    .name {
+        margin: 0;
+        font-size: 3rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.2;
+        color: $everforest-green;
+    }
+
+    .title {
+        margin: 0.5rem 0 1.5rem;
+        font-size: 1.25rem;
+        font-weight: 400;
+        opacity: 0.9;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: $everforest-aqua;
+    }
+
+    .summary {
+        max-width: 700px;
+        margin: 0 auto 2rem;
+        font-size: 1rem;
+        line-height: 1.6;
+        opacity: 0.9;
+        font-weight: 300;
+        color: $everforest-fg;
+    }
+
+    .contact-strip {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        font-size: 0.95rem;
+        color: $everforest-grey2;
+
+        .separator {
+            opacity: 0.5;
+            color: $everforest-grey1;
+        }
+
+        .contact-item {
+            color: $everforest-blue;
+        }
+    }
+}
+
+// Layout
+.resume-body {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    min-height: 800px;
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+// Sidebar
+.sidebar {
+    background-color: $everforest-bg-light;
+    padding: 2.5rem 2rem;
+    border-right: 1px solid $everforest-grey0;
+
+    .section-group {
+        margin-bottom: 2.5rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    .section-title {
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: $everforest-yellow;
+        margin-bottom: 1.5rem;
+        border-bottom: 2px solid $everforest-grey0;
+        padding-bottom: 0.5rem;
+        font-weight: 700;
+    }
+
+    .skills-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+
+        .skill-tag {
+            background: $everforest-bg-dim;
+            color: $everforest-fg;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid $everforest-grey0;
+            // box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+    }
+
+    .edu-item {
+        margin-bottom: 1.5rem;
+
+        .edu-degree {
+            font-weight: 600;
+            color: $everforest-fg;
+            font-size: 1rem;
+        }
+
+        .edu-school {
+            color: $everforest-grey2;
+            font-size: 0.9rem;
+            margin: 0.2rem 0;
+        }
+
+        .edu-year {
+            color: $everforest-grey1;
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+    }
+
+    .language-item {
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .lang-name {
+            color: $everforest-grey2;
+            font-size: 0.95rem;
+        }
+
+        .stars {
+            display: flex;
+            gap: 4px;
+
+            .dot {
+                width: 8px;
+                height: 8px;
+                background-color: $everforest-bg-dim;
+                border-radius: 50%;
+                border: 1px solid $everforest-grey0;
+
+                &.filled {
+                    background-color: $everforest-green;
+                    border-color: $everforest-green;
+                }
+            }
+        }
+    }
+}
+
+// Main Content
+.main-content {
+    padding: 3rem 2.5rem;
+    background-color: $everforest-bg;
+
+    .section-title {
+        font-size: 1.5rem;
+        color: $everforest-fg;
+        margin-bottom: 2rem;
+        font-weight: 700;
+        position: relative;
+        padding-bottom: 0.75rem;
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: $everforest-green;
+        }
+    }
+
+    .job-card {
+        margin-bottom: 2.5rem;
+        position: relative;
+        padding-left: 1rem;
+        border-left: 3px solid transparent;
+        transition: all 0.2s ease;
+
+        &:hover {
+            border-left-color: $everforest-green;
+        }
+
+        .job-header {
+            margin-bottom: 1rem;
+
+            .job-title {
+                font-size: 1.25rem;
+                margin: 0 0 0.25rem;
+                color: $everforest-fg;
+                font-weight: 600;
+            }
+
+            .job-company {
+                font-weight: 500;
+                color: $everforest-grey2;
+                font-size: 1rem;
+            }
+
+            .job-date {
+                float: right;
+                color: $everforest-bg;
+                font-size: 0.9rem;
+                background: $everforest-green;
+                padding: 0.2rem 0.5rem;
+                border-radius: 4px;
+                font-weight: 600;
+
+                @media (max-width: 1250px) {
+                    width: 100%;
+                    margin-bottom: 1rem;
+                    margin-top: 0.5rem;
+                }
+            }
+        }
+
+        .job-achievements {
+            margin: 0;
+            padding-left: 1.2rem;
+
+            li {
+                margin-bottom: 0.5rem;
+                color: $everforest-grey2;
+                line-height: 1.6;
+                font-size: 0.95rem;
+            }
+        }
+    }
+
+    .projects-section {
+        margin-top: 3rem;
+    }
+
+    .project-card {
+        background: $everforest-bg-light;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        border: 1px solid $everforest-grey0;
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+
+            .project-name {
+                margin: 0;
+                font-size: 1.1rem;
+                color: $everforest-yellow;
+            }
+        }
+
+        .project-desc {
+            margin: 0;
+            color: $everforest-grey2;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+    }
+}
+
+// Wrapper for positioning
+.resume-wrapper {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+// Download Button
+.pdf-download-btn {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    margin-left: 2rem;
+    height: 60px;
+    width: 60px;
+    border-radius: 10%;
+    background-color: $everforest-aqua;
+    color: $everforest-bg;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    opacity: 0;
+    // Include 'top' in the transition list for smooth following effect
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+        background-color 0.3s ease,
+        box-shadow 0.3s ease;
+
+    &.grow {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+    &:hover {
+        transform: translateY(-5px) scale(1.1);
+        background-color: lighten($everforest-aqua, 5%);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    &:active {
+        transform: translateY(0) scale(0.95);
+    }
+
+    i {
+        display: flex;
+    }
+
+    // Mobile view: Switch to fixed positioning
+    @media (max-width: 1250px) {
+        position: fixed;
+        left: auto;
+        top: auto;
+        bottom: 2rem;
+        right: 2rem;
+        margin-left: 0;
+    }
+}
+
+// Alternate Theme (Print Friendly White/Blue)
+// This overwrites specific properties when .resume-container has .alternate-theme class
+.resume-container.alternate-theme {
+    background: #ffffff;
+    border-color: #dee2e6;
+    color: #212529;
+
+    .resume-header {
+        background: #ffffff;
+        color: #212529;
+        border-bottom: 1px solid #dee2e6;
+
+        .name {
+            color: #0d6efd;
+        }
+
+        .title {
+            color: #6c757d;
+        }
+
+        .summary {
+            color: #212529;
+        }
+
+        .contact-strip {
+            color: #495057;
+
+            .contact-item {
+                color: #0d6efd;
+            }
+
+            .separator {
+                color: #ced4da;
+            }
+        }
+    }
+
+    .resume-body {
+        .sidebar {
+            background-color: #f8f9fa;
+            border-right: 1px solid #dee2e6;
+
+            .section-title {
+                color: #0d6efd;
+                border-bottom-color: #dee2e6;
+            }
+
+            .skills-grid .skill-tag {
+                background: #ffffff;
+                color: #212529;
+                border-color: #dee2e6;
+            }
+
+            .edu-item {
+                .edu-degree {
+                    color: #212529;
+                }
+
+                .edu-school {
+                    color: #6c757d;
+                }
+
+                .edu-year {
+                    color: #adb5bd;
+                }
+            }
+
+            .language-item {
+                .lang-name {
+                    color: #6c757d;
+                }
+
+                .stars .dot {
+                    background-color: #e9ecef;
+                    border-color: #ced4da;
+
+                    &.filled {
+                        background-color: #0d6efd;
+                        border-color: #0d6efd;
+                    }
+                }
+            }
+        }
+
+        .main-content {
+            background-color: #ffffff;
+
+            .section-title {
+                color: #212529;
+
+                &::after {
+                    background-color: #0d6efd;
+                }
+            }
+
+            .job-card {
+                &:hover {
+                    border-left-color: #0d6efd;
+                }
+
+                .job-header {
+                    .job-title {
+                        color: #212529;
+                    }
+
+                    .job-company {
+                        color: #6c757d;
+                    }
+
+                    .job-date {
+                        color: #ffffff;
+                        background: #0d6efd;
+                    }
+                }
+
+                .job-achievements li {
+                    color: #495057;
+                }
+            }
+
+            .project-card {
+                background: #f8f9fa;
+                border-color: #dee2e6;
+
+                .project-header .project-name {
+                    color: #0d6efd;
+                }
+
+                .project-desc {
+                    color: #495057;
+                }
+            }
+        }
+    }
+}

@@ -9,11 +9,12 @@
   </div>
   <div class="col-lg-6 p-0 z-1 align-content-center">
     @if (!isImgLoaded) {
-      <div style="height: 600px;" class="h-100 w-100 rounded-4 intro-glass d-flex justify-content-center align-items-center">
-        <div class="spinner-border" style="width: 4rem; height: 4rem; border-width: 6px;" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
+    <div style="height: 600px;"
+      class="h-100 w-100 rounded-4 intro-glass d-flex justify-content-center align-items-center">
+      <div class="spinner-border" style="width: 4rem; height: 4rem; border-width: 6px;" role="status">
+        <span class="visually-hidden">Loading...</span>
       </div>
+    </div>
     }
 
     <div id="carousel" class="carousel slide" data-bs-ride="carousel" [hidden]="!isImgLoaded">
@@ -48,17 +49,27 @@
 <div class="card p-4 my-3 rounded-5 shadow">
   <h3 class="text-primary" #SkillSets>SKILL SETS</h3>
   <div>
-    <a href="https://learn.microsoft.com/en-us/dotnet/csharp/" target="_blank" class="btn btn-outline-primary rounded-pill px-4 mb-2 me-2">C#</a>
-    <a href="https://angular.dev/" target="_blank" class="btn btn-outline-primary rounded-pill px-4 mb-2 me-2">Angular</a>
-    <a href="https://www.python.org/" target="_blank" class="btn btn-outline-primary rounded-pill px-4 mb-2 me-2">Python</a>
-    <a href="https://www.microsoft.com/en-us/sql-server" target="_blank" class="btn btn-outline-primary rounded-pill px-4 mb-2 me-2">MS SQL Server</a>
-    <a href="https://www.mysql.com/" target="_blank" class="btn btn-outline-primary rounded-pill px-4 mb-2 me-2">MySQL</a>
+    <a href="https://learn.microsoft.com/en-us/dotnet/csharp/" target="_blank"
+      class="btn btn-outline-primary rounded-pill px-4 mb-2 me-2">C#</a>
+    <a href="https://angular.dev/" target="_blank"
+      class="btn btn-outline-primary rounded-pill px-4 mb-2 me-2">Angular</a>
+    <a href="https://www.python.org/" target="_blank"
+      class="btn btn-outline-primary rounded-pill px-4 mb-2 me-2">Python</a>
+    <a href="https://www.microsoft.com/en-us/sql-server" target="_blank"
+      class="btn btn-outline-primary rounded-pill px-4 mb-2 me-2">MS SQL Server</a>
+    <a href="https://www.mysql.com/" target="_blank"
+      class="btn btn-outline-primary rounded-pill px-4 mb-2 me-2">MySQL</a>
     <a href="https://go.dev/" target="_blank" class="btn btn-outline-primary rounded-pill px-4 mb-2 me-2">Golang</a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" class="btn btn-outline-primary rounded-pill px-4 mb-2 me-2">JavaScript</a>
-    <a href="https://www.typescriptlang.org/" target="_blank" class="btn btn-outline-primary rounded-pill px-4 mb-2 me-2">TypeScript</a>
-    <a href="https://www.java.com/en/" target="_blank" class="btn btn-outline-primary rounded-pill px-4 mb-2 me-2">Java</a>
-    <a href="https://laravel.com/" target="_blank" class="btn btn-outline-primary rounded-pill px-4 mb-2 me-2">Laravel</a>
-    <a href="https://dotnet.microsoft.com/en-us/" target="_blank" class="btn btn-outline-primary rounded-pill px-4 mb-2">.NET</a>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank"
+      class="btn btn-outline-primary rounded-pill px-4 mb-2 me-2">JavaScript</a>
+    <a href="https://www.typescriptlang.org/" target="_blank"
+      class="btn btn-outline-primary rounded-pill px-4 mb-2 me-2">TypeScript</a>
+    <a href="https://www.java.com/en/" target="_blank"
+      class="btn btn-outline-primary rounded-pill px-4 mb-2 me-2">Java</a>
+    <a href="https://laravel.com/" target="_blank"
+      class="btn btn-outline-primary rounded-pill px-4 mb-2 me-2">Laravel</a>
+    <a href="https://dotnet.microsoft.com/en-us/" target="_blank"
+      class="btn btn-outline-primary rounded-pill px-4 mb-2">.NET</a>
   </div>
   <hr class="trans--grow hr1" #transGrow />
   <h3 class="text-primary" #Education>EDUCATION</h3>
@@ -118,7 +129,7 @@
   <h3 class="text-primary" #Experience>Work Experience</h3>
   <div class="col-12">
     <h5>Automate</h5>
-    <span>Formerly known as Britehouse Automotive undergone a transition
+    <!-- <span>Formerly known as Britehouse Automotive undergone a transition
       <sup><a target="_blank"
           href="https://www.volarisgroup.com/press-room/volaris-automotive-acquires-britehouse-automotive-expanding-its-footprint-in-the-automotive-software-solutions-market/"><i
             class="bi bi-arrow-up-right-square"></i></a></sup>
@@ -127,7 +138,7 @@
         href="https://en.wikipedia.org/wiki/Dimension_Data">
         NTT Dimension Data</a> to <a
         class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
-        target="_blank" href="https://www.volarisgroup.com/">Volaris Group</a></span><br />
+        target="_blank" href="https://www.volarisgroup.com/">Volaris Group</a></span><br /> -->
     <span class="text-secondary-emphasis">08/2022 - Current</span>
     <ul class="list-group list-group-flush w-fit-content">
       <li class="list-group-item fs-5 fw-bold bg-transparent">Major Projects Involved:</li>
@@ -139,7 +150,8 @@
       <li class="list-group-item bg-transparent">Internal Training Portal Application Rewrite (AngularJS => Angular 18)
       </li>
       <li class="list-group-item bg-transparent">Full Stack Client Supplier Onboarding Application</li>
-      <li class="list-group-item bg-transparent">Rewrite Client Membership Management and Statistic System (.NET 4 MVC => Angular 20 + .NET 8)</li>
+      <li class="list-group-item bg-transparent">Rewrite Client Membership Management and Statistic System (.NET 4 MVC
+        => Angular 20 + .NET 8)</li>
     </ul>
   </div>
 </div>

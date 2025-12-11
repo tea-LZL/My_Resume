@@ -16,10 +16,14 @@ export const routes: Routes = [
     },
     {
         path: 'timeline',
-        loadComponent: ()=> import('./component/timeline/timeline.component').then(mod => mod.TimelineComponent)
+        loadComponent: () => import('./component/timeline/timeline.component').then(mod => mod.TimelineComponent)
     },
     {
         path: 'files',
-        loadComponent: ()=> import('./component/file/file.component').then(mod => mod.FileComponent)
+        loadComponent: () => import('./component/file/file.component').then(mod => mod.FileComponent)
+    },
+    {
+        path: 'resume',
+        loadComponent: () => import('./component/resume/resume.component').then(mod => mod.ResumeComponent)
     }
 ];

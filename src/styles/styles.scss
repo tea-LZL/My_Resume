@@ -7,27 +7,30 @@
 
 html,
 body {
-    height:100%;
+    height: 100%;
+
     @-moz-document url-prefix() {
         /* CSS Code */
         scrollbar-color: $primary transparent;
     }
 }
 
-.cursor-pointer{
+.cursor-pointer {
     cursor: pointer;
 }
 
-.w-fit-content{
+.w-fit-content {
     width: fit-content;
 }
 
-.h-100{
+.h-100 {
     height: 100%;
 }
 
-.bi-check2, .bi-x-lg, .bi-plus{
-    -webkit-text-stroke:1px;
+.bi-check2,
+.bi-x-lg,
+.bi-plus {
+    -webkit-text-stroke: 1px;
 }
 
 
@@ -48,7 +51,11 @@ body {
 }
 
 
-.btn-primary, .btn-danger, .btn-info, .btn-warning, .btn-success{
+.btn-primary,
+.btn-danger,
+.btn-info,
+.btn-warning,
+.btn-success {
     color: var(--bs-dark) !important;
 }
 
@@ -63,21 +70,26 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none !important;
     margin: 0 !important;
 }
+
 /* Firefox */
 input[type=number] {
     -moz-appearance: textfield !important;
     appearance: textfield !important;
 }
 
-.btn-check:checked + .btn, :not(.btn-check) + .btn:active, .btn:first-child:active, .btn.active, .btn.show{
+.btn-check:checked+.btn,
+:not(.btn-check)+.btn:active,
+.btn:first-child:active,
+.btn.active,
+.btn.show {
     color: var(--bs-dark);
 }
 
-.btn  .btn:hover + .btn-outline-primary{
+.btn .btn:hover+.btn-outline-primary {
     color: var(--bs-dark) !important;
 }
 
-.white-hover:hover{
+.white-hover:hover {
     color: var(--bs-light) !important;
 }
 
@@ -88,7 +100,7 @@ input[type=number] {
     }
 }
 
-.fs-10rem{
+.fs-10rem {
     font-size: 10rem !important;
 }
 

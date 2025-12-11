@@ -64,7 +64,10 @@ $bootstrap-icons-map: (
   "github": "\F3ED",
   "linkedin": "\F472",
   "list": "\F479",
-  "terminal-fill": "\F5C2"
+  "terminal-fill": "\F5C2",
+  "file-earmark-person": "\F379",
+  "house-fill": "\F424",
+  "square-fill": "\F582"
 );
 
 @each $icon, $codepoint in $bootstrap-icons-map {

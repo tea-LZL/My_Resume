@@ -39,15 +39,15 @@
 }
 
 .wave1 {
-    animation: waveMove1 12s linear infinite alternate;
+    animation: waveMove1 8s linear infinite alternate;
 }
 
 .wave2 {
-    animation: waveMove2 16s linear infinite alternate;
+    animation: waveMove2 12s linear infinite alternate;
 }
 
 .wave3 {
-    animation: waveMove3 24s linear infinite alternate;
+    animation: waveMove3 5s linear infinite alternate;
 }
 
 @keyframes waveMove1 {
