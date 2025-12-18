@@ -1,12 +1,17 @@
 {
   "name": "Zhilong's Resume",
   "short_name": "ZL's Resume",
-  "theme_color": "#1976d2",
+  "theme_color": "#2d353b",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
   "icons": [
+    {
+      "src": "icons/icon-48x48.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
     {
       "src": "icons/icon-72x72.png",
       "sizes": "72x72",
@@ -38,6 +43,11 @@
       "type": "image/png"
     },
     {
+      "src": "icons/icon-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
       "src": "icons/icon-384x384.png",
       "sizes": "384x384",
       "type": "image/png"
@@ -50,16 +60,16 @@
   ],
   "screenshots": [
     {
-      "src": "screenshots/Wide.webp",
+      "src": "screenshots/Wide.png",
       "sizes": "3816x1847",
-      "type": "image/webp",
+      "type": "image/png",
       "form_factor": "wide",
       "label": "Home screen showing main navigation and featured content"
     },
     {
-      "src": "screenshots/Mobile.webp",
+      "src": "screenshots/Mobile.png",
       "sizes": "778x1671",
-      "type": "image/webp",
+      "type": "image/png",
       "platform": "ios",
       "label": "Mobile View showing main navigation and featured content"
     }
