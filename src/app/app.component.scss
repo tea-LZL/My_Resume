@@ -1,96 +1,173 @@
-.wave-bg {
-    position: fixed;
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 0;
-    pointer-events: none;
-    overflow: hidden;
+@import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 
-.wave-svg {
-    width: 120vw;
-    height: 100vh;
-    display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: -1;
+section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
-@media (max-width: 1000px) {
-    .wave-bg {
-        width: 1920px;
-        height: 100vh;
-    }
-
-    .wave-svg {
-        width: 1920px;
-        height: 100vh;
-        min-width: 1920px;
-        min-height: 100vh;
-    }
+section .wave {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bs-primary);
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
+  transition: 0.5s;
 }
 
-.wave {
-    transform: translateX(0);
-    will-change: transform;
-    z-index: -1;
+section .wave span {
+  content: "";
+  position: absolute;
+  width: 325vh;
+  height: 325vh;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -75%);
 }
 
-.wave1 {
-    animation: waveMove1 8s linear infinite alternate;
+.content {
+  position: relative;
+  z-index: 1;
+  font-size: 4em;
+  letter-spacing: 2px;
+  color: #fff;
 }
 
-.wave2 {
-    animation: waveMove2 12s linear infinite alternate;
+section .wave span:nth-child(1) {
+  border-radius: 45%;
+  background: rgba(45, 53, 59, 1);
+  animation: animate 5s linear infinite;
 }
 
-.wave3 {
-    animation: waveMove3 5s linear infinite alternate;
+section .wave span:nth-child(2) {
+  border-radius: 40%;
+  background: rgba(45, 53, 59, 0.5);
+  animation: animate 10s linear infinite;
 }
 
-@keyframes waveMove1 {
-    0% {
-        transform: translateX(0);
-    }
-
-    100% {
-        transform: translateX(-60px);
-    }
+section .wave span:nth-child(3) {
+  border-radius: 42.5%;
+  background: var(--bs-body-bg);
+  animation: animate 15s linear infinite;
 }
 
-@keyframes waveMove2 {
-    0% {
-        transform: translateX(0);
-    }
+@keyframes animate {
+  0% {
+    transform: translate(-50%, -75%) rotate(0deg);
+  }
 
-    100% {
-        transform: translateX(-120px);
-    }
+  100% {
+    transform: translate(-50%, -75%) rotate(360deg);
+  }
 }
 
-@keyframes waveMove3 {
-    0% {
-        transform: translateX(0);
-    }
 
-    100% {
-        transform: translateX(-180px);
-    }
-}
+// .wave-bg {
+//     position: fixed;
+//     inset: 0;
+//     width: 100vw;
+//     height: 100vh;
+//     z-index: 0;
+//     pointer-events: none;
+//     overflow: hidden;
+// }
+//
+// .wave-svg {
+//     width: 120vw;
+//     height: 100vh;
+//     display: block;
+//     position: absolute;
+//     left: 0;
+//     top: 0;
+//     z-index: -1;
+// }
+//
+// @media (max-width: 1000px) {
+//     .wave-bg {
+//         width: 1920px;
+//         height: 100vh;
+//     }
+//
+//     .wave-svg {
+//         width: 1920px;
+//         height: 100vh;
+//         min-width: 1920px;
+//         min-height: 100vh;
+//     }
+// }
+//
+// .wave {
+//     transform: translateX(0);
+//     will-change: transform;
+//     z-index: -1;
+// }
+//
+// .wave1 {
+//     animation: waveMove1 8s linear infinite alternate;
+// }
+//
+// .wave2 {
+//     animation: waveMove2 12s linear infinite alternate;
+// }
+//
+// .wave3 {
+//     animation: waveMove3 5s linear infinite alternate;
+// }
+//
+// @keyframes waveMove1 {
+//     0% {
+//         transform: translateX(0);
+//     }
+//
+//     100% {
+//         transform: translateX(-60px);
+//     }
+// }
+//
+// @keyframes waveMove2 {
+//     0% {
+//         transform: translateX(0);
+//     }
+//
+//     100% {
+//         transform: translateX(-120px);
+//     }
+// }
+//
+// @keyframes waveMove3 {
+//     0% {
+//         transform: translateX(0);
+//     }
+//
+//     100% {
+//         transform: translateX(-180px);
+//     }
+// }
 
 // Sticky footer styles
 main {
-    display: flex !important;
-    flex-direction: column !important;
-    min-height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 100% !important;
 }
 
 .flex-grow-1 {
-    flex: 1 0 auto !important;
+  flex: 1 0 auto !important;
 }
 
 app-footer {
-    flex-shrink: 0 !important;
+  flex-shrink: 0 !important;
 }
