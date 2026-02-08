@@ -1,72 +1,122 @@
 .custom-tooltip {
-    --bs-tooltip-bg: #0d6efd;
-    --bs-tooltip-color: white;
+  --bs-tooltip-bg: #0d6efd;
+  --bs-tooltip-color: white;
 }
 
-.carousel-control-prev-icon,.carousel-control-next-icon{
-    filter: invert(0) !important;
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(0) !important;
 }
 
 .trans--grow {
-    -webkit-transition: width 1s ease-out;
-    /* For Safari 3.1 to 6.0 */
-    transition: width 1s ease-out;
-    width: 0%;
+  -webkit-transition: width 1s ease-out;
+  /* For Safari 3.1 to 6.0 */
+  transition: width 1s ease-out;
+  width: 0%;
 }
 
 .grow {
-    width: 100%;
+  width: 100%;
 }
 
 .hr1 {
-    margin-left: 0;
+  margin-left: 0;
 }
 
 .hr2 {
-    margin-right: 0;
+  margin-right: 0;
 }
 
 hr {
-    margin-top: 20px;
-    padding: 2px 0;
-    border: none;
-    background-color: var(--bs-secondary);
-    letter-spacing: 5px;
+  margin-top: 20px;
+  padding: 2px 0;
+  border: none;
+  background-color: var(--bs-secondary);
+  letter-spacing: 5px;
 }
 
 .bg-indicators {
-    background-color: rgba(255, 255, 255, 0.671);
+  background-color: rgba(255, 255, 255, 0.671);
 }
 
 .indicator-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: #0d6efd;
-    opacity: 0.5;
-    border: none;
-    margin: 0 4px;
-    transition: opacity 0.2s, background-color 0.2s;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #0d6efd;
+  opacity: 0.5;
+  border: none;
+  margin: 0 4px;
+  transition:
+    opacity 0.2s,
+    background-color 0.2s;
 }
 
 .indicator-dot.active {
-    opacity: 1;
-    background-color: #1e293b;
+  opacity: 1;
+  background-color: #1e293b;
 }
 
 :root {
-    --glass-bg-light: rgba(255, 255, 255, 0.7);
-    --glass-bg-dark: rgba(30, 41, 59, 0.7);
-    --glass-text-light: #1e293b;
-    --glass-text-dark: #f8fafc;
+  --glass-bg-light: rgba(255, 255, 255, 0.7);
+  --glass-bg-dark: rgba(30, 41, 59, 0.7);
+  --glass-text-light: #1e293b;
+  --glass-text-dark: #f8fafc;
 }
 
 [data-bs-theme="light"] .intro-glass {
-    background: var(--glass-bg-light);
-    color: var(--glass-text-light);
+  background: var(--glass-bg-light);
+  color: var(--glass-text-light);
 }
 
 [data-bs-theme="dark"] .intro-glass {
-    background: var(--glass-bg-dark);
-    color: var(--glass-text-dark);
+  background: var(--glass-bg-dark);
+  color: var(--glass-text-dark);
+}
+
+// Weather TUI Styles
+#weather {
+  min-height: 300px;
+
+  .weather-tui {
+    font-family: "JetBrains Mono", "Courier New", monospace;
+
+    .tui-header {
+      h4 {
+        letter-spacing: 1px;
+      }
+    }
+
+    .location-info {
+      div {
+        line-height: 1.6;
+      }
+    }
+
+    .current-weather {
+      background: rgba(13, 110, 253, 0.05);
+
+      .weather-icon {
+        line-height: 1;
+      }
+    }
+
+    .weather-details {
+      .detail-item {
+        padding: 4px 0;
+        line-height: 1.8;
+      }
+    }
+
+    .tui-footer {
+      opacity: 0.8;
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 991px) {
+  #weather {
+    margin-top: 1rem;
+  }
 }
