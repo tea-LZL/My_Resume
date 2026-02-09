@@ -91,24 +91,24 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   getWeatherIcon(iconCode: string): string {
     const iconMap: Record<string, string> = {
-      "01d": "\uf00d", // wi-day-sunny
-      "01n": "\uf02e", // wi-night-clear
-      "02d": "\uf002", // wi-day-cloudy
-      "02n": "\uf086", // wi-night-alt-cloudy
-      "03d": "\uf013", // wi-cloudy
-      "03n": "\uf013",
-      "04d": "\uf041", // wi-cloud
-      "04n": "\uf041",
-      "09d": "\uf01a", // wi-showers
-      "09n": "\uf01a",
-      "10d": "\uf008", // wi-day-rain
-      "10n": "\uf036", // wi-night-rain
-      "11d": "\uf01e", // wi-thunderstorm
-      "11n": "\uf01e",
-      "13d": "\uf01b", // wi-snow
-      "13n": "\uf01b",
-      "50d": "\uf014", // wi-fog
-      "50n": "\uf014",
+      "01d": "󰖨", // wi-day-sunny
+      "01n": "", // wi-night-clear
+      "02d": "", // wi-day-cloudy
+      "02n": "", // wi-night-alt-cloudy
+      "03d": "󰖐", // wi-cloudy
+      "03n": "󰖐",
+      "04d": "", // wi-cloud
+      "04n": "",
+      "09d": "", // wi-showers
+      "09n": "",
+      "10d": "", // wi-day-rain
+      "10n": "", // wi-night-rain
+      "11d": "", // wi-thunderstorm
+      "11n": "",
+      "13d": "", // wi-snow
+      "13n": "",
+      "50d": "", // wi-fog
+      "50n": "",
     };
     return iconMap[iconCode] || "\uf07b"; // wi-na
   }
