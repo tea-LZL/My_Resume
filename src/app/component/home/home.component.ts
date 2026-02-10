@@ -49,8 +49,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     "assets/Kobo_help_dance1.GIF",
     "assets/Kobo_help_dance2.GIF",
     "assets/Kobo_help_down.GIF",
-    "assets/Kobo_help_jump.GIF",
-    "assets/Kobo_help_walk.GIF",
   ];
   isImgLoaded = false;
   ngOnInit() {
