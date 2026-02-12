@@ -1,23 +1,46 @@
-<!-- <div class="wave-bg"> -->
-<!--   <svg class="wave-svg" viewBox="0 0 1440 320" preserveAspectRatio="none"> -->
-<!--     <path class="wave wave1" -->
-<!--       d="M0,160 C360,240 1080,80 1440,160 L1440,320 L0,320 Z" -->
-<!--       fill="#ffd166" fill-opacity="1"/> -->
-<!--     <path class="wave wave2" -->
-<!--       d="M0,180 C480,100 960,260 1440,180 L1440,320 L0,320 Z" -->
-<!--       fill="#ef476f" fill-opacity="1"/> -->
-<!--     <path class="wave wave3" -->
-<!--       d="M0,200 C600,300 840,100 1440,200 L1440,320 L0,320 Z" -->
-<!--       fill="#26547c" fill-opacity="1"/> -->
-<!--   </svg> -->
-<!-- </div> -->
-<section class="position-fixed">
-  <div class="wave">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-</section>
+<div class="wave-bg" aria-hidden="true">
+  <svg class="wave-svg" viewBox="0 0 1440 640" preserveAspectRatio="none">
+    <path class="wave-layer wave-layer-1"
+      d="M0,320 C160,280 320,360 480,330 C640,300 800,240 960,260 C1120,280 1280,340 1440,300 L1440,640 L0,640 Z">
+      <animate attributeName="d" dur="18s" repeatCount="indefinite"
+        keyTimes="0;0.5;1"
+        keySplines="0.42 0 0.58 1;0.42 0 0.58 1"
+        calcMode="spline"
+        values="
+          M0,320 C160,280 320,360 480,330 C640,300 800,240 960,260 C1120,280 1280,340 1440,300 L1440,640 L0,640 Z;
+          M0,300 C180,340 340,260 520,300 C700,340 860,280 1020,300 C1180,320 1320,260 1440,280 L1440,640 L0,640 Z;
+          M0,320 C160,280 320,360 480,330 C640,300 800,240 960,260 C1120,280 1280,340 1440,300 L1440,640 L0,640 Z" />
+      <animateTransform attributeName="transform" type="translate" dur="24s" repeatCount="indefinite"
+        values="0 0;-40 0;0 0" />
+    </path>
+    <path class="wave-layer wave-layer-2"
+      d="M0,360 C180,320 360,400 540,370 C720,340 900,300 1080,330 C1260,360 1350,400 1440,360 L1440,640 L0,640 Z">
+      <animate attributeName="d" dur="24s" repeatCount="indefinite"
+        keyTimes="0;0.5;1"
+        keySplines="0.42 0 0.58 1;0.42 0 0.58 1"
+        calcMode="spline"
+        values="
+          M0,360 C180,320 360,400 540,370 C720,340 900,300 1080,330 C1260,360 1350,400 1440,360 L1440,640 L0,640 Z;
+          M0,350 C200,390 380,330 560,360 C740,390 920,320 1100,350 C1280,380 1360,340 1440,330 L1440,640 L0,640 Z;
+          M0,360 C180,320 360,400 540,370 C720,340 900,300 1080,330 C1260,360 1350,400 1440,360 L1440,640 L0,640 Z" />
+      <animateTransform attributeName="transform" type="translate" dur="32s" repeatCount="indefinite"
+        values="0 0;30 0;0 0" />
+    </path>
+    <path class="wave-layer wave-layer-3"
+      d="M0,400 C140,380 320,420 520,410 C720,400 900,360 1080,380 C1260,400 1360,440 1440,420 L1440,640 L0,640 Z">
+      <animate attributeName="d" dur="30s" repeatCount="indefinite"
+        keyTimes="0;0.5;1"
+        keySplines="0.42 0 0.58 1;0.42 0 0.58 1"
+        calcMode="spline"
+        values="
+          M0,400 C140,380 320,420 520,410 C720,400 900,360 1080,380 C1260,400 1360,440 1440,420 L1440,640 L0,640 Z;
+          M0,390 C160,430 340,380 540,400 C740,420 920,380 1100,400 C1280,420 1370,400 1440,380 L1440,640 L0,640 Z;
+          M0,400 C140,380 320,420 520,410 C720,400 900,360 1080,380 C1260,400 1360,440 1440,420 L1440,640 L0,640 Z" />
+      <animateTransform attributeName="transform" type="translate" dur="40s" repeatCount="indefinite"
+        values="0 0;-20 0;0 0" />
+    </path>
+  </svg>
+</div>
 <!-- Content Section -->
 <main [attr.data-bs-theme]="theme" class="bg-body d-flex flex-column">
   <app-navbar class="navbar navbar-expand-md fixed-top pt-0" style="height: 80px;"></app-navbar>

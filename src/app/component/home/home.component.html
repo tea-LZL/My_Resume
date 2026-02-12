@@ -1,4 +1,4 @@
-<div class="col-lg-12 row">
+<div class="col-lg-12 row gap-3">
   <div class="intro-glass p-4 mb-3 rounded-4 z-1">
     <h1>
       <span class="text-primary">Z</span>hilong
@@ -12,7 +12,7 @@
       useful.
     </p>
   </div>
-  <div class="col-lg-6 p-0 z-1 align-content-center">
+  <div class="col-lg p-0 z-1 align-content-center">
     @if (!isImgLoaded) {
       <div
         style="height: 600px"
@@ -30,7 +30,7 @@
 
     <div
       id="carousel"
-      class="carousel slide"
+      class="carousel slide h-100"
       data-bs-ride="carousel"
       [hidden]="!isImgLoaded"
     >
@@ -40,7 +40,7 @@
           [ngClass]="{'active':i===1}" [attr.aria-label]="'img'+i"></button>
         }
       </div> -->
-      <div class="carousel-inner rounded-4 intro-glass">
+      <div class="carousel-inner rounded-4 intro-glass h-100">
         @for (img of arrCarouselImg; track img; let i = $index) {
           <div class="carousel-item" [ngClass]="{ active: i === 0 }">
             <img
@@ -74,9 +74,9 @@
       </button>
     </div>
   </div>
-  <div class="col-lg-6 p-0 z-1 align-content-center">
+  <div class="col-lg p-0 z-1 align-content-center">
     <!-- <img class="w-100 rounded-4" src='assets/arknights-nian.gif' alt="pfp" /> -->
-    <div id="weather" class="intro-glass rounded-4 p-4">
+    <div id="weather" class="intro-glass rounded-4 p-4 h-100">
       @if (isWeatherLoading) {
         <div
           class="d-flex justify-content-center align-items-center"

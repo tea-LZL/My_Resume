@@ -4,70 +4,53 @@
   box-sizing: border-box;
 }
 
-section {
-  position: relative;
-  width: 100%;
+.wave-bg {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
   height: 100vh;
+  z-index: 0;
+  pointer-events: none;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+  background: var(--wave-base);
+  --wave-base: #232a2e;
+  --wave-3: #3c4841;
+  --wave-2: #dfa000;
+  --wave-1: #8da101;
 }
 
-section .wave {
+.wave-svg {
+  width: 120vw;
+  height: 100vh;
+  display: block;
   position: absolute;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--bs-primary);
-  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
-  transition: 0.5s;
-}
-
-section .wave span {
-  content: "";
-  position: absolute;
-  width: 325vh;
-  height: 325vh;
+  left: -10vw;
   top: 0;
-  left: 50%;
-  transform: translate(-50%, -75%);
 }
 
-.content {
-  position: relative;
-  z-index: 1;
-  font-size: 4em;
-  letter-spacing: 2px;
-  color: #fff;
+.wave-layer {
+  fill: var(--wave-1);
 }
 
-section .wave span:nth-child(1) {
-  border-radius: 45%;
-  background: rgba(45, 53, 59, 1);
-  animation: animate 5s linear infinite;
+.wave-layer-1 {
+  fill: var(--wave-1);
+  opacity: 0.9;
 }
 
-section .wave span:nth-child(2) {
-  border-radius: 40%;
-  background: rgba(45, 53, 59, 0.5);
-  animation: animate 10s linear infinite;
+.wave-layer-2 {
+  fill: var(--wave-2);
+  opacity: 1;
 }
 
-section .wave span:nth-child(3) {
-  border-radius: 42.5%;
-  background: var(--bs-body-bg);
-  animation: animate 15s linear infinite;
+.wave-layer-3 {
+  fill: var(--wave-3);
+  opacity: 1;
 }
 
-@keyframes animate {
-  0% {
-    transform: translate(-50%, -75%) rotate(0deg);
-  }
-
-  100% {
-    transform: translate(-50%, -75%) rotate(360deg);
+@media (max-width: 1000px) {
+  .wave-svg {
+    width: 160vw;
+    left: -30vw;
   }
 }
 
@@ -167,4 +150,3 @@ main {
 app-footer {
   flex-shrink: 0 !important;
 }
-
