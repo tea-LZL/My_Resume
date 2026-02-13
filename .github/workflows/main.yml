@@ -39,6 +39,7 @@ jobs:
             *) echo "Unsupported branch ${GITHUB_REF_NAME}"; exit 1 ;;
           esac
           sed -i 's/{{OPENWEATHER_API_KEY}}/${{ secrets.OPENWEATHER_API_KEY }}/g' src/environments/environment.ts
+          cat src/environments/environment.ts
           bun run build --configuration ${build_config}
         working-directory: ./
 
