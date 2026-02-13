@@ -1,130 +1,75 @@
-name: build
+name: deploy
 
 on:
   push:
-    branches: [ "develop", "uat", "master" ]
+    branches: ["develop", "uat", "master"]
   pull_request:
-    branches: [ "develop", "uat", "master" ]
+    branches: ["develop", "uat", "master"]
 
 jobs:
   build:
-    name: Build
+    name: deploy
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [22.x]
+        node-version: [24.x]
     steps:
-    - uses: actions/checkout@v4
-      with:
-        path: ./
-    - uses: oven-sh/setup-bun@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
+      - uses: actions/checkout@v4
+        with:
+          path: ./
+      - uses: oven-sh/setup-bun@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - name: install packages
-      working-directory: ./
-      run: bun ci
+      - name: install packages
+        working-directory: ./
+        run: bun ci
 
-    - name: PreBuild_Prelive
-      working-directory: ./      
-      if: |
-        github.ref == 'refs/heads/develop'
-        && github.event_name == 'pull_request'
-      run: |
-        bun run build --configuration=develop
-    - name: PreBuild_UAT
-      working-directory: ./
-      if: |
-        github.ref == 'refs/heads/uat'
-        && github.event_name == 'pull_request'
-      run: |
-        bun run build --configuration=uat
-    - name: PreBuild_Live
-      working-directory: ./
-      if: |
-        github.ref == 'refs/heads/master'
-        && github.event_name == 'pull_request'
-      run: |
-        bun run build --configuration=live
-
-    - name: Checkout publish prelive
-      uses: actions/checkout@v3
-      if: |
-        github.ref == 'refs/heads/develop' &&
-        github.event_name == 'push'
-      with:
-        repository: tea-LZL/My_Resume_Publish # optional, default is ${{ github.repository }}
-        ref: refs/heads/develop # optional
-        token: ${{ secrets.API_PUBLISH_TOKEN }} #
-        path: ./publish
-        
-    - name: Checkout publish uat
-      uses: actions/checkout@v3
-      if: |
-        github.ref == 'refs/heads/uat' &&
-        github.event_name == 'push'
-      with:
-        repository: tea-LZL/My_Resume_Publish # optional, default is ${{ github.repository }}
-        ref: refs/heads/uat # optional
-        token: ${{ secrets.API_PUBLISH_TOKEN }} #
-        path: ./publish
-        
-    - name: Checkout publish live
-      uses: actions/checkout@v3
-      if: |
-        github.ref == 'refs/heads/master' &&
-        github.event_name == 'push'
-      with:
-        repository: tea-LZL/My_Resume_Publish # optional, default is ${{ github.repository }}
-        ref: refs/heads/master # optional
-        token: ${{ secrets.API_PUBLISH_TOKEN }} #
-        path: ./publish
-
-    - name: build_prelive
-      if: |
-        github.ref == 'refs/heads/develop'
-        && github.event_name == 'push'
-      run: |
-         bun run build --configuration=prelive
-      working-directory: ./
-      
-    - name: build_uat
-      if: |
-        github.ref == 'refs/heads/uat'
-        && github.event_name == 'push'
-      run: |
-       
-         bun run build --configuration=uat
-      working-directory: ./
-      
-    - name: build_live
-      if: |
-        github.ref == 'refs/heads/master'
-        && github.event_name == 'push'
-      run: |
-       
-        bun run build --configuration=production
-      working-directory: ./
-            
-    - name: copy
-      if: |
+      - name: build
+        if: |
           (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/uat' || github.ref == 'refs/heads/master') &&
           github.event_name == 'push'
-      run: |
-        cp -a ./dist/project_personal/. ./publish
-    - name: commit
-      if: |
+        run: |
+          case "${GITHUB_REF_NAME}" in
+            develop) build_config=prelive ;;
+            uat) build_config=uat ;;
+            master) build_config=production ;;
+            *) echo "Unsupported branch ${GITHUB_REF_NAME}"; exit 1 ;;
+          esac
+          sed -i 's/{{OPENWEATHER_API_KEY}}/${{ secrets.OPENWEATHER_API_KEY }}/g' src/environments/environment.ts
+          bun run build --configuration ${build_config}
+        working-directory: ./
+
+      - name: Checkout publish
+        uses: actions/checkout@v4
+        if: |
           (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/uat' || github.ref == 'refs/heads/master') &&
           github.event_name == 'push'
-      run: |
-        echo "first LS"
-        cd ./publish
-        git config --global user.email "zhilong.k.liang@proton.me"
-        git config --global user.name "tea-bot"
-        # git reset --hard
-        # This is only necessary when .git directory is not on the same level as package.json - npm version issue
-        git add .
-        git -c user.email="zhilong.k.liang@proton.me" commit -m "Publish - Auto Publish" --allow-empty
-        git push
+        with:
+          repository: tea-LZL/My_Resume_Publish # optional, default is ${{ github.repository }}
+          ref: refs/heads/${{ github.ref_name }} # optional
+          token: ${{ secrets.GITHUB }} #
+          path: ./publish
+
+      - name: copy
+        if: |
+          (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/uat' || github.ref == 'refs/heads/master') &&
+          github.event_name == 'push'
+        run: |
+          cp -a ./dist/project_personal/. ./publish
+      - name: commit
+        if: |
+          (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/uat' || github.ref == 'refs/heads/master') &&
+          github.event_name == 'push'
+        run: |
+          echo "first LS"
+          cd ./publish
+          git config --global user.email "zhilong.k.liang@proton.me"
+          git config --global user.name "tea-bot"
+          # git reset --hard
+          # This is only necessary when .git directory is not on the same level as package.json - npm version issue
+          git add .
+          git -c user.email="zhilong.k.liang@proton.me" commit -m "Publish - Auto Publish" --allow-empty
+          git push
