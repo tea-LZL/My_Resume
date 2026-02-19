@@ -10,8 +10,12 @@ import { Project } from "../../interfaces/project";
 })
 export class ProjectsComponent implements AfterViewInit, OnInit {
   constructor() {}
+  activeProjectIndex = 0;
+
   ngOnInit(): void {
-    const myCarouselElement = document.querySelector("#projectCarousel");
+    const myCarouselElement = document.querySelector(
+      "#projectCarousel",
+    ) as HTMLElement;
     // this.imgLoadStatus = this.arrCarouselImg.map(() => false);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
     const carousel = new (window as any).bootstrap.Carousel(myCarouselElement, {
@@ -39,6 +43,15 @@ export class ProjectsComponent implements AfterViewInit, OnInit {
       ShortDescription:
         "A modern, high-performance weather API built with Go and the Gin web framework. Get current weather conditions and forecasts for any location worldwide using the OpenWeatherMap API.",
       Description: `Weathering With GO API was the project I set out to understand the quirk and super power of the programing language Go when pair with Gin framework, through this journey, working with the simplesitic philosophy of the Go design and combining it with the ever so complicated web, it has thought me that working with small building block and creating something bit by bit is not a hurdle of inconvinience but a tool of precision to more so control and specify the need and want of an application. The project now hosted on Google Cloud and managed with CI/CD Dcoker, it gives me great leverage to update and modify when I get even the shortest free time with no hastle`,
+    },
+    {
+      Title: "GenPass",
+      Cover_Image_URL: "assets/genpass_cover_image.png",
+      GitHub_Link: "https://github.com/tea-LZL/GenPass",
+      ShortDescription:
+        "Password Generator built with Rust and TUI with ratatui",
+      Description:
+        "A Password Generator TUI that runs on local, no need to go to Password Generator website anymore.",
     },
     // ,{
     //   Title: "C# AutoClicker",
