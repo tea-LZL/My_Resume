@@ -93,8 +93,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
       "01n": "moon-stars-fill", // wi-night-clear
       "02d": "cloud-sun-fill", // wi-day-cloudy
       "02n": "cloud-moon", // wi-night-alt-cloudy
-      "03d": "cloudy-fill", // wi-cloudy
-      "03n": "cloudy",
+      "03d": "cloud-sun-fill", // wi-cloudy
+      "03n": "cloud-moon",
       "04d": "clouds-fill", // wi-cloud
       "04n": "clouds",
       "09d": "cloud-drizzle-fill", // wi-showers
