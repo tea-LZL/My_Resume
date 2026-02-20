@@ -89,26 +89,26 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   getWeatherIcon(iconCode: string): string {
     const iconMap: Record<string, string> = {
-      "01d": "󰖨", // wi-day-sunny
-      "01n": "", // wi-night-clear
-      "02d": "", // wi-day-cloudy
-      "02n": "", // wi-night-alt-cloudy
-      "03d": "󰖐", // wi-cloudy
-      "03n": "󰖐",
-      "04d": "", // wi-cloud
-      "04n": "",
-      "09d": "", // wi-showers
-      "09n": "",
-      "10d": "", // wi-day-rain
-      "10n": "", // wi-night-rain
-      "11d": "", // wi-thunderstorm
-      "11n": "",
-      "13d": "", // wi-snow
-      "13n": "",
-      "50d": "", // wi-fog
-      "50n": "",
+      "01d": "sun-fill", // wi-day-sunny
+      "01n": "moon-stars-fill", // wi-night-clear
+      "02d": "cloud-sun-fill", // wi-day-cloudy
+      "02n": "cloud-moon", // wi-night-alt-cloudy
+      "03d": "cloudy-fill", // wi-cloudy
+      "03n": "cloudy",
+      "04d": "clouds-fill", // wi-cloud
+      "04n": "clouds",
+      "09d": "cloud-drizzle-fill", // wi-showers
+      "09n": "cloud-drizzle",
+      "10d": "cloud-rain-fill", // wi-day-rain
+      "10n": "cloud-rain", // wi-night-rain
+      "11d": "cloud-lightning-rain-fill", // wi-thunderstorm
+      "11n": "cloud-lightning-rain",
+      "13d": "cloud-snow-fill", // wi-snow
+      "13n": "cloud-snow",
+      "50d": "cloud-fog2-fill", // wi-fog
+      "50n": "cloud-fog2",
     };
-    return iconMap[iconCode] || "\uf07b"; // wi-na
+    return iconMap[iconCode] || "cloud"; // wi-na
   }
 
   viewFile(string: string) {

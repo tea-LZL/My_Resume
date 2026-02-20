@@ -8,8 +8,11 @@ $bootstrap-icons-font: "bootstrap-icons" !default;
 $bootstrap-icons-font-dir: "./fonts" !default;
 $bootstrap-icons-font-file: "#{$bootstrap-icons-font-dir}/#{$bootstrap-icons-font}" !default;
 $bootstrap-icons-font-hash: "24e3eb84d0bcaf83d77f904c78ac1f47" !default;
-$bootstrap-icons-font-src: url("#{$bootstrap-icons-font-file}.woff2?#{$bootstrap-icons-font-hash}") format("woff2"),
-  url("#{$bootstrap-icons-font-file}.woff?#{$bootstrap-icons-font-hash}") format("woff") !default;
+$bootstrap-icons-font-src:
+  url("#{$bootstrap-icons-font-file}.woff2?#{$bootstrap-icons-font-hash}")
+    format("woff2"),
+  url("#{$bootstrap-icons-font-file}.woff?#{$bootstrap-icons-font-hash}")
+    format("woff") !default;
 
 @font-face {
   font-display: block;
@@ -27,7 +30,7 @@ $bootstrap-icons-font-src: url("#{$bootstrap-icons-font-file}.woff2?#{$bootstrap
   font-variant: normal;
   text-transform: none;
   line-height: 1;
-  vertical-align: -.125em;
+  vertical-align: -0.125em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -53,21 +56,37 @@ $bootstrap-icons-map: (
   "arrow-clockwise": "\F116",
   "image": "\F42A",
   "plus": "\F4FE",
-  "cloud-arrow-up-fill":"\F296",
-  "eye-fill":"\F33E",
-  "floppy":"\F7D8",
-  "file-earmark-pdf":"\F63E",
-  "file-earmark-plus":"\F37D",
-  "download":"\F30A",
-  "file-earmark-text":"\F38B",
-  "arrow-up-right-square":"\F143",
+  "cloud-arrow-up-fill": "\F296",
+  "eye-fill": "\F33E",
+  "floppy": "\F7D8",
+  "file-earmark-pdf": "\F63E",
+  "file-earmark-plus": "\F37D",
+  "download": "\F30A",
+  "file-earmark-text": "\F38B",
+  "arrow-up-right-square": "\F143",
   "github": "\F3ED",
   "linkedin": "\F472",
   "list": "\F479",
   "terminal-fill": "\F5C2",
   "file-earmark-person": "\F379",
   "house-fill": "\F424",
-  "square-fill": "\F582"
+  "square-fill": "\F582",
+  "cloud-sun-fill": "\F2BD",
+  "cloud-moon": "\F2B0",
+  "cloudy": "\F2C5",
+  "cloudy-fill": "\F2C4",
+  "clouds": "\F2C3",
+  "clouds-fill": "\F2C2",
+  "cloud-drizzle": "\F29D",
+  "cloud-drizzle-fill": "\F29C",
+  "cloud-rain-fill": "\F2B3",
+  "cloud-rain": "\F2B6",
+  "cloud-lightning-rain-fill": "\F2AA",
+  "cloud-lightning-rain": "\F2AB",
+  "cloud-snow-fill": "\F2BB",
+  "cloud-snow": "\F2BC",
+  "cloud-fog2-fill": "\F2A1",
+  "cloud-fog2": "\F2A2",
 );
 
 @each $icon, $codepoint in $bootstrap-icons-map {
@@ -75,3 +94,4 @@ $bootstrap-icons-map: (
     content: $codepoint;
   }
 }
+
