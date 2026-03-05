@@ -6,7 +6,6 @@ import {
   ViewChildren,
 } from "@angular/core";
 import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
 import { PDFDocument } from "pdf-lib";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormsModule } from "@angular/forms";
@@ -200,7 +199,6 @@ export class DownloadResumeComponent {
         "JavaScript (ES6+)",
         "TypeScript",
         "Angular",
-        "Laravel",
         "Node.js",
         "HTML5 & SCSS",
         "Azure",
