@@ -563,7 +563,7 @@ export class DownloadResumeComponent {
 
       // Calculate total card height
       const proj1Height =
-        proj1TopPadding + 5 + proj1DescHeight + proj1BottomPadding;
+        proj1TopPadding + 2 + proj1DescHeight + proj1BottomPadding;
 
       // Draw project card background
       pdf.setFillColor(...colors.projectBg);
@@ -612,7 +612,7 @@ export class DownloadResumeComponent {
 
       // Calculate total card height
       const proj2Height =
-        proj2TopPadding + 5 + proj2DescHeight + proj2BottomPadding;
+        proj2TopPadding + 2 + proj2DescHeight + proj2BottomPadding;
 
       // Draw project card background
       pdf.setFillColor(...colors.projectBg);
@@ -642,6 +642,104 @@ export class DownloadResumeComponent {
         pdf.text(line, mainX + 6, proj2ContentY);
         proj2ContentY += 3.5;
       });
+
+      mainY += proj2Height + 6;
+
+      // Project 3
+      mainY = checkNewPage(mainY, 25);
+
+      const proj3TopPadding = 6;
+      const proj3BottomPadding = 4.6;
+      const proj3ContentStart = mainY + proj3TopPadding;
+      let proj3ContentY = proj3ContentStart;
+
+      const proj3TitleY = proj3ContentY;
+
+      pdf.setFontSize(8);
+      pdf.setTextColor(...colors.textLight);
+      pdf.setFont("helvetica", "normal");
+      const proj3Desc =
+        "A frontend UI for Ollama that lets you chat with LLMs, manage models, and browse chat history through a clean, responsive interface.";
+      const proj3Lines = pdf.splitTextToSize(proj3Desc, mainWidth - 12);
+      const proj3DescHeight = proj3Lines.length * 3.5;
+
+      const proj3Height =
+        proj3TopPadding + 2 + proj3DescHeight + proj3BottomPadding;
+
+      pdf.setFillColor(...colors.projectBg);
+      pdf.roundedRect(mainX, mainY, mainWidth, proj3Height, 2, 2, "F");
+
+      pdf.setDrawColor(...colors.border);
+      pdf.setLineWidth(0.2);
+      pdf.roundedRect(mainX, mainY, mainWidth, proj3Height, 2, 2, "S");
+
+      pdf.setFontSize(10);
+      const project3Color =
+        this.sTheme === "alternate"
+          ? colors.sectionTitle
+          : ([219, 188, 127] as [number, number, number]);
+      pdf.setTextColor(...project3Color);
+      pdf.setFont("helvetica", "bold");
+      pdf.text("Convo", mainX + 6, proj3TitleY);
+      proj3ContentY += 5;
+
+      pdf.setFontSize(8);
+      pdf.setTextColor(...colors.textLight);
+      pdf.setFont("helvetica", "normal");
+      proj3Lines.forEach((line: string) => {
+        pdf.text(line, mainX + 6, proj3ContentY);
+        proj3ContentY += 3.5;
+      });
+
+      mainY += proj3Height + 6;
+
+      // Project 4
+      mainY = checkNewPage(mainY, 25);
+
+      const proj4TopPadding = 6;
+      const proj4BottomPadding = 4.6;
+      const proj4ContentStart = mainY + proj4TopPadding;
+      let proj4ContentY = proj4ContentStart;
+
+      const proj4TitleY = proj4ContentY;
+
+      pdf.setFontSize(8);
+      pdf.setTextColor(...colors.textLight);
+      pdf.setFont("helvetica", "normal");
+      const proj4Desc =
+        "A password generator built with Rust and TUI using the Ratatui framework, providing a terminal-based interface for generating secure passwords locally.";
+      const proj4Lines = pdf.splitTextToSize(proj4Desc, mainWidth - 12);
+      const proj4DescHeight = proj4Lines.length * 3.5;
+
+      const proj4Height =
+        proj4TopPadding + 2 + proj4DescHeight + proj4BottomPadding;
+
+      pdf.setFillColor(...colors.projectBg);
+      pdf.roundedRect(mainX, mainY, mainWidth, proj4Height, 2, 2, "F");
+
+      pdf.setDrawColor(...colors.border);
+      pdf.setLineWidth(0.2);
+      pdf.roundedRect(mainX, mainY, mainWidth, proj4Height, 2, 2, "S");
+
+      pdf.setFontSize(10);
+      const project4Color =
+        this.sTheme === "alternate"
+          ? colors.sectionTitle
+          : ([219, 188, 127] as [number, number, number]);
+      pdf.setTextColor(...project4Color);
+      pdf.setFont("helvetica", "bold");
+      pdf.text("GenPass", mainX + 6, proj4TitleY);
+      proj4ContentY += 5;
+
+      pdf.setFontSize(8);
+      pdf.setTextColor(...colors.textLight);
+      pdf.setFont("helvetica", "normal");
+      proj4Lines.forEach((line: string) => {
+        pdf.text(line, mainX + 6, proj4ContentY);
+        proj4ContentY += 3.5;
+      });
+
+      mainY += proj4Height + 6;
 
       // Handle certificate merging
       if (this.bIncludeCredential) {

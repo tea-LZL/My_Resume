@@ -1,43 +1,24 @@
-import { NgClass } from "@angular/common";
-import { AfterViewInit, Component, OnInit } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { Project } from "../../interfaces/project";
+import { ImageLightboxComponent } from "../../shared/image-lightbox/image-lightbox.component";
 
 @Component({
   selector: "app-projects",
-  imports: [NgClass],
+  imports: [ImageLightboxComponent],
   templateUrl: "./projects.component.html",
   styleUrl: "./projects.component.scss",
 })
-export class ProjectsComponent implements AfterViewInit, OnInit {
-  constructor() {}
-  activeProjectIndex = 0;
+export class ProjectsComponent {
+  @ViewChild("imageLightbox") imageLightbox!: ImageLightboxComponent;
 
-  ngOnInit(): void {
-    const myCarouselElement = document.querySelector(
-      "#projectCarousel",
-    ) as HTMLElement;
-    // this.imgLoadStatus = this.arrCarouselImg.map(() => false);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-    const carousel = new (window as any).bootstrap.Carousel(myCarouselElement, {
-      interval: 2000,
-      touch: false,
-    });
-  }
-
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      const loadingEl = document.getElementById("app-loading");
-      if (loadingEl) {
-        loadingEl.classList.add("fade-out");
-        setTimeout(() => loadingEl.remove(), 500);
-      }
-    }, 275);
+  openImage(url: string) {
+    this.imageLightbox.openImageModal(url);
   }
 
   arrProjects: Project[] = [
     {
       Title: "Weathering With GO API",
-      Cover_Image_URL: "assets/weathering_with_go_api_cover_image.png",
+      Cover_Image_URLs: ["assets/weathering_with_go_api_cover_image.png"],
       GitHub_Link:
         "https://github.com/tea-steeping-studio/weathering-with-go-api",
       ShortDescription:
@@ -46,16 +27,25 @@ export class ProjectsComponent implements AfterViewInit, OnInit {
     },
     {
       Title: "GenPass",
-      Cover_Image_URL: "assets/genpass_cover_image.png",
+      Cover_Image_URLs: ["assets/genpass_cover_image.png"],
       GitHub_Link: "https://github.com/tea-LZL/GenPass",
       ShortDescription:
         "Password Generator built with Rust and TUI with ratatui",
       Description:
         "A Password Generator TUI that runs on local, no need to go to Password Generator website anymore.",
     },
+    {
+      Title: "Convo",
+      Cover_Image_URLs: ["assets/convo_cover_image.png", "assets/convo_setup_model_image.png"],
+      GitHub_Link: "#",
+      ShortDescription:
+        "A frontend UI for Ollama that lets you chat with LLMs, manage models, and browse chat history — all through a clean, responsive interface.",
+      Description:
+        "Convo is a frontend UI that interacts with the Ollama API, providing a user-friendly interface to chat with AI models. It supports setting up and managing models, maintaining chat history, and provides a seamless experience for interacting with locally hosted LLMs through Ollama.",
+    },
     // ,{
     //   Title: "C# AutoClicker",
-    //   Cover_Image_URL: "assets/weathering_with_go_api_cover_image.png",
+    //   Cover_Image_URLs: ["assets/weathering_with_go_api_cover_image.png"],
     //   GitHub_Link: "https://github.com/tea-LZL/AutoClicker_CSharp",
     //   ShortDescription: "Console AutoClicker Written in C#",
     //   Description: "A Windows AutoClicker for the Console that I use. Written in haste and works like jank."

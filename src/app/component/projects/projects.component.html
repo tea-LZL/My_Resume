@@ -1,48 +1,32 @@
-<div id="projectCarousel" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-indicators">
-    <button
-      type="button"
-      class=""
-      data-bs-target="#projectCarousel"
-      data-bs-slide-to="0"
-      class="active"
-      aria-label="Slide 1"
-      aria-current="true"
-    ></button>
-    <button
-      type="button"
-      data-bs-target="#projectCarousel"
-      data-bs-slide-to="1"
-      aria-label="Slide 2"
-      class=""
-    ></button>
-  </div>
-  <div class="carousel-inner">
-    @for (proj of arrProjects; track proj; let i = $index) {
-      <div class="carousel-item" [ngClass]="{ active: i === 0 }">
-        <img
-          loading="eager"
-          [src]="proj.Cover_Image_URL"
-          class="d-block w-100 rounded carousel-image"
-          alt="carousel{{ i }}"
-        />
-        <div class="container shadow">
-          <div
-            class="carousel-caption text-end text-white intro-glass p-5 rounded"
-          >
-            <h5>{{ proj.Title }}</h5>
-            <p>
+<div class="container py-5">
+  <div class="row g-4">
+    @for (proj of arrProjects; track proj) {
+      <div class="col-12">
+        <div class="project-card card flex-lg-row align-items-stretch overflow-hidden">
+          <div class="project-card-img-wrapper">
+            @for (imgUrl of proj.Cover_Image_URLs; track imgUrl; let i = $index) {
+              <div class="project-card-img-container" (click)="openImage(imgUrl)" role="button">
+                <img
+                  [src]="imgUrl"
+                  [alt]="proj.Title + ' ' + (i + 1)"
+                  class="project-card-img"
+                />
+              </div>
+            }
+          </div>
+          <div class="project-card-body card-body d-flex flex-column p-4 p-lg-5">
+            <h3 class="project-card-title mb-2">{{ proj.Title }}</h3>
+            <p class="project-card-subtitle text-muted mb-3">{{ proj.ShortDescription }}</p>
+            <p class="project-card-description mb-4">{{ proj.Description }}</p>
+            <div class="mt-auto">
               <a
-                class="btn btn-light"
-                href="{{ proj.GitHub_Link }}"
+                class="btn btn-primary"
+                [href]="proj.GitHub_Link"
                 target="_blank"
-                ><i class="bi bi-github"></i
-              ></a>
-            </p>
-            <div class="pt-3">
-              <p class="text-start" id="project-description">
-                {{ arrProjects[i]?.Description }}
-              </p>
+                rel="noopener noreferrer"
+              >
+                <i class="bi bi-github me-2"></i>View on GitHub
+              </a>
             </div>
           </div>
         </div>
@@ -50,3 +34,5 @@
     }
   </div>
 </div>
+
+<app-image-lightbox #imageLightbox></app-image-lightbox>

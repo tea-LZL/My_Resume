@@ -1,0 +1,47 @@
+:host {
+  ::ng-deep .modal-content {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+
+  ::ng-deep .modal-header {
+    display: none;
+  }
+
+  ::ng-deep .modal-dialog {
+    margin: 0;
+  }
+
+  ::ng-deep .modal {
+    padding: 0 !important;
+  }
+
+  ::ng-deep .modal-backdrop.show {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.65);
+  }
+}
+
+.lightbox-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  cursor: zoom-out;
+}
+
+.lightbox-image {
+  max-width: 80vw;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 6px;
+  cursor: default;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
