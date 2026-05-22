@@ -1,11 +1,11 @@
-import { CommonModule } from "@angular/common";
+
 import { Component, TemplateRef, ViewChild } from "@angular/core";
 import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: "app-image-lightbox",
-  imports: [CommonModule],
+  imports: [],
   templateUrl: "./image-lightbox.component.html",
   styleUrl: "./image-lightbox.component.scss",
 })
