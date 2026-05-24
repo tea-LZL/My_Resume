@@ -364,8 +364,9 @@ export class DownloadResumeComponent {
       pdf.setFont("helvetica", "normal");
       const languages = [
         { name: "English", dots: 5 },
-        { name: "Mandarin", dots: 5 },
-        { name: "Afrikaans", dots: 2 },
+        { name: "Mandarin", dots: 4 },
+        { name: "Cantonese", dots: 3 },
+        { name: "Afrikaans", dots: 1 },
       ];
 
       languages.forEach((lang) => {
@@ -795,7 +796,11 @@ export class DownloadResumeComponent {
       }
 
       const mergedPdfBytes = await mergedPdf.save();
-      const blob = new Blob([mergedPdfBytes], { type: "application/pdf" });
+      const mergedPdfBuffer = new ArrayBuffer(mergedPdfBytes.byteLength);
+      new Uint8Array(mergedPdfBuffer).set(mergedPdfBytes);
+      const blob = new Blob([mergedPdfBuffer], {
+        type: "application/pdf",
+      });
       const link = document.createElement("a");
       link.href = window.URL.createObjectURL(blob);
       link.download = "Zhilong_Liang_Resume.pdf";
