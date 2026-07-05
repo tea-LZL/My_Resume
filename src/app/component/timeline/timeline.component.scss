@@ -216,8 +216,8 @@
   font-size: 0.75rem;
   font-weight: 500;
   color: var(--ef-yellow);
-  background: rgba(219, 188, 127, 0.1);
-  border: 1px solid rgba(219, 188, 127, 0.25);
+  background: rgba(var(--ef-yellow-rgb), 0.1);
+  border: 1px solid rgba(var(--ef-yellow-rgb), 0.25);
   border-radius: 999px;
 }
 

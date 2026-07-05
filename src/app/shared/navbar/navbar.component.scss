@@ -1,6 +1,6 @@
 .home-ani {
     text-align: center;
-    color: #fff;
+    color: var(--ef-fg);
     transition: all .3s;
     position: relative;
     overflow: hidden;
@@ -254,7 +254,7 @@
 }
 
 .dropdown-menu .dropdown-item.active {
-  background-color: rgba(167, 192, 128, 0.2);
+  background-color: rgba(var(--ef-green-rgb), 0.2);
   color: var(--ef-green);
   font-weight: 600;
 }

@@ -4,8 +4,8 @@
 
 :host {
   display: block !important;
-  background: #0f1114 !important;
-  color: #c9c1ad;
+  background: var(--ef-bg-dim) !important;
+  color: var(--ef-fg);
   flex-shrink: 0 !important;
   position: relative;
   z-index: 10;
@@ -15,5 +15,5 @@
   max-width: 100%;
   margin: 0;
   padding: 0;
-  background: #0f1114;
+  background: var(--ef-bg-dim);
 }

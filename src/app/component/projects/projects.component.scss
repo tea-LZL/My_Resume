@@ -19,8 +19,8 @@
     background: linear-gradient(
       135deg,
       transparent 0%,
-      rgba(167, 192, 128, 0.04) 40%,
-      rgba(127, 187, 179, 0.04) 70%,
+      rgba(var(--ef-green-rgb), 0.04) 40%,
+      rgba(var(--ef-blue-rgb), 0.04) 70%,
       transparent 100%
     );
     opacity: 0;
@@ -183,7 +183,7 @@
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 
   &:hover {
-    background: rgba(167, 192, 128, 0.15);
+    background: rgba(var(--ef-green-rgb), 0.15);
     border-color: var(--ef-border-hover);
     box-shadow: 0 0 12px var(--btn-glow);
     transform: translateY(-2px);

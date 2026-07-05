@@ -526,3 +526,153 @@
   }
 }
 
+/* ========================================
+   LIGHT THEME OVERRIDES
+   ======================================== */
+
+[data-bs-theme="light"] {
+  :host {
+    color: var(--ef-fg);
+  }
+
+  .resume-container {
+    background: var(--ef-bg);
+    border-color: var(--ef-grey0);
+  }
+
+  .resume-header {
+    background: linear-gradient(135deg, var(--ef-bg-dim), var(--ef-bg-light));
+    color: var(--ef-fg);
+    border-bottom-color: var(--ef-grey0);
+
+    .name {
+      color: var(--ef-green);
+    }
+
+    .title {
+      color: var(--ef-aqua);
+    }
+
+    .summary {
+      color: var(--ef-fg);
+    }
+
+    .contact-strip {
+      color: var(--ef-fg-dim);
+
+      .separator {
+        color: var(--ef-grey1);
+      }
+
+      .contact-item {
+        color: var(--ef-blue);
+      }
+    }
+  }
+
+  .sidebar {
+    background-color: var(--ef-bg-light);
+    border-right-color: var(--ef-grey0);
+
+    .section-title {
+      color: var(--ef-yellow);
+      border-bottom-color: var(--ef-grey0);
+    }
+
+    .skills-grid .skill-tag {
+      background: var(--ef-bg-dim);
+      color: var(--ef-fg);
+      border-color: var(--ef-grey0);
+    }
+
+    .edu-item {
+      .edu-degree {
+        color: var(--ef-fg);
+      }
+
+      .edu-school {
+        color: var(--ef-fg-dim);
+      }
+
+      .edu-year {
+        color: var(--ef-grey1);
+      }
+    }
+
+    .language-item {
+      .lang-name {
+        color: var(--ef-fg-dim);
+      }
+
+      .stars .dot {
+        background-color: var(--ef-bg-dim);
+        border-color: var(--ef-grey0);
+
+        &.filled {
+          background-color: var(--ef-green);
+          border-color: var(--ef-green);
+        }
+      }
+    }
+  }
+
+  .main-content {
+    background-color: var(--ef-bg);
+
+    .section-title {
+      color: var(--ef-fg);
+
+      &::after {
+        background-color: var(--ef-green);
+      }
+    }
+
+    .job-card {
+      &:hover {
+        border-left-color: var(--ef-green);
+      }
+
+      .job-header {
+        .job-title {
+          color: var(--ef-fg);
+        }
+
+        .job-company {
+          color: var(--ef-fg-dim);
+        }
+
+        .job-date {
+          color: var(--ef-bg);
+          background: var(--ef-green);
+        }
+      }
+
+      .job-achievements li {
+        color: var(--ef-fg-dim);
+      }
+    }
+
+    .project-card {
+      background: var(--ef-bg-light);
+      border-color: var(--ef-grey0);
+
+      .project-header .project-name {
+        color: var(--ef-yellow);
+      }
+
+      .project-desc {
+        color: var(--ef-fg-dim);
+      }
+    }
+  }
+
+  .pdf-download-btn {
+    background-color: var(--ef-aqua);
+    color: var(--ef-bg);
+
+    &:hover {
+      background-color: var(--ef-aqua);
+    }
+  }
+}
+

@@ -1,6 +1,6 @@
 .custom-tooltip {
-  --bs-tooltip-bg: #0d6efd;
-  --bs-tooltip-color: white;
+  --bs-tooltip-bg: var(--ef-blue);
+  --bs-tooltip-color: var(--ef-bg);
 }
 
 .carousel-control-prev-icon,
@@ -36,14 +36,14 @@ hr {
 }
 
 .bg-indicators {
-  background-color: rgba(255, 255, 255, 0.671);
+  background-color: rgba(var(--ef-fg-rgb), 0.15);
 }
 
 .indicator-dot {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background-color: #0d6efd;
+  background-color: var(--ef-blue);
   opacity: 0.5;
   border: none;
   margin: 0 4px;
@@ -54,7 +54,7 @@ hr {
 
 .indicator-dot.active {
   opacity: 1;
-  background-color: #1e293b;
+  background-color: var(--ef-bg-dim);
 }
 
 /* ========================================
@@ -309,7 +309,7 @@ hr {
     }
 
     .current-weather {
-      background: rgba(13, 110, 253, 0.05);
+      background: rgba(var(--ef-blue-rgb), 0.05);
 
       .weather-icon {
         line-height: 1;
