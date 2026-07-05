@@ -2,7 +2,20 @@
   <!-- Intro Panel — Kinetic Typography Hero -->
   <div class="bento-cell bento-intro intro-glass p-4 rounded-4" appScrollReveal="fade-up">
     <h1 id="hero-name" class="hero-kinetic">
-      <span class="text-primary kinetic-char">Z</span><span class="kinetic-char">h</span><span class="kinetic-char">i</span><span class="kinetic-char">l</span><span class="kinetic-char">o</span><span class="kinetic-char">n</span><span class="kinetic-char">g</span><span class="kinetic-char">&nbsp;</span><span class="text-primary kinetic-char">L</span><span class="kinetic-char">i</span><span class="kinetic-char">a</span><span class="kinetic-char">n</span><span class="kinetic-char">g</span><span class="typing-cursor"></span>
+      <span class="text-primary kinetic-char">Z</span>
+      <span class="kinetic-char">h</span>
+      <span class="kinetic-char">i</span>
+      <span class="kinetic-char">l</span>
+      <span class="kinetic-char">o</span>
+      <span class="kinetic-char">n</span>
+      <span class="kinetic-char">g</span>
+      <span class="kinetic-char">&nbsp;</span>
+      <span class="text-primary kinetic-char">L</span>
+      <span class="kinetic-char">i</span>
+      <span class="kinetic-char">a</span>
+      <span class="kinetic-char">n</span>
+      <span class="kinetic-char">g</span>
+      <span class="typing-cursor"></span>
     </h1>
     <p class="fs-4 fw-semibold hero-subtitle">Software Developer</p>
     <p class="fs-5 hero-tagline">
@@ -12,15 +25,19 @@
     <!-- Film-Strip Color Palette -->
     <div class="palette-strip-wrapper mt-3">
       <div class="palette-scrub-line" id="paletteScrubLine"></div>
-      <div class="palette-strip" id="paletteStrip" (mousemove)="onPaletteScrub($event)" (touchmove)="onPaletteScrub($event)">
-        <div class="palette-swatch" style="background:#2d353b" data-label="#2d353b"></div>
-        <div class="palette-swatch" style="background:#a7c080" data-label="#a7c080"></div>
-        <div class="palette-swatch" style="background:#7fbbb3" data-label="#7fbbb3"></div>
-        <div class="palette-swatch" style="background:#dbbc7f" data-label="#dbbc7f"></div>
-        <div class="palette-swatch" style="background:#e67e80" data-label="#e67e80"></div>
-        <div class="palette-swatch" style="background:#d699b6" data-label="#d699b6"></div>
-        <div class="palette-swatch" style="background:#83c092" data-label="#83c092"></div>
-        <div class="palette-swatch" style="background:#fdf6e3" data-label="#fdf6e3"></div>
+      <div
+        class="palette-strip"
+        id="paletteStrip"
+        (mousemove)="onPaletteScrub($event)"
+        (touchmove)="onPaletteScrub($event)">
+        <div class="palette-swatch" style="background: #2d353b" data-label="#2d353b"></div>
+        <div class="palette-swatch" style="background: #a7c080" data-label="#a7c080"></div>
+        <div class="palette-swatch" style="background: #7fbbb3" data-label="#7fbbb3"></div>
+        <div class="palette-swatch" style="background: #dbbc7f" data-label="#dbbc7f"></div>
+        <div class="palette-swatch" style="background: #e67e80" data-label="#e67e80"></div>
+        <div class="palette-swatch" style="background: #d699b6" data-label="#d699b6"></div>
+        <div class="palette-swatch" style="background: #83c092" data-label="#83c092"></div>
+        <div class="palette-swatch" style="background: #fdf6e3" data-label="#fdf6e3"></div>
       </div>
     </div>
   </div>
@@ -45,7 +62,7 @@
               loading="eager"
               [src]="img"
               class="d-block w-100 h-100"
-              style="object-fit: cover;"
+              style="object-fit: cover"
               alt="carousel{{ i }}"
               (load)="isImgLoaded = true" />
           </div>
@@ -86,7 +103,7 @@
                 <i class="bi bi-cloud-sun me-2"></i>
                 WEATHER.SYS
               </h4>
-              <small class="text-muted font-monospace">v1.0</small>
+              <small class="text-muted font-monospace">v2.0</small>
             </div>
           </div>
 
@@ -190,57 +207,101 @@
   </div>
 
   <!-- Skills — Marquee Strip -->
-  <div class="bento-cell bento-skills monograph-card card p-4 rounded-4 shadow" style="opacity: 98%" [appScrollReveal]="'fade-up'" [revealDelay]="50">
+  <div
+    class="bento-cell bento-skills monograph-card card p-4 rounded-4 shadow"
+    style="opacity: 98%"
+    [appScrollReveal]="'fade-up'"
+    [revealDelay]="50">
     <h3 class="text-primary mb-3" #SkillSets>SKILL SETS</h3>
     <div class="marquee-strip">
       <div class="marquee-track">
         <span>C#</span>
+        <span>·</span>
         <span>Angular</span>
+        <span>·</span>
         <span>Python</span>
+        <span>·</span>
         <span>MS SQL</span>
+        <span>·</span>
         <span>MySQL</span>
+        <span>·</span>
         <span>Golang</span>
+        <span>·</span>
         <span>JavaScript</span>
+        <span>·</span>
         <span>TypeScript</span>
+        <span>·</span>
         <span>Java</span>
+        <span>·</span>
         <span>.NET</span>
+        <span>·</span>
         <span>Rust</span>
+        <span>·</span>
         <span>Docker</span>
+        <span>·</span>
         <span>GCP</span>
+        <span>·</span>
         <span>Azure</span>
+        <span>·</span>
         <span>Git</span>
+        <span>·</span>
         <span>CI/CD</span>
+        <span>·</span>
         <span>Linux</span>
+        <span>·</span>
         <span>REST API</span>
-        <span>TDD</span>
+        <span>·</span>
         <span>Agile</span>
+        <span>·</span>
         <!-- Duplicate for seamless loop -->
         <span>C#</span>
+        <span>·</span>
         <span>Angular</span>
+        <span>·</span>
         <span>Python</span>
+        <span>·</span>
         <span>MS SQL</span>
+        <span>·</span>
         <span>MySQL</span>
+        <span>·</span>
         <span>Golang</span>
+        <span>·</span>
         <span>JavaScript</span>
+        <span>·</span>
         <span>TypeScript</span>
+        <span>·</span>
         <span>Java</span>
+        <span>·</span>
         <span>.NET</span>
+        <span>·</span>
         <span>Rust</span>
+        <span>·</span>
         <span>Docker</span>
+        <span>·</span>
         <span>GCP</span>
+        <span>·</span>
         <span>Azure</span>
+        <span>·</span>
         <span>Git</span>
+        <span>·</span>
         <span>CI/CD</span>
+        <span>·</span>
         <span>Linux</span>
+        <span>·</span>
         <span>REST API</span>
-        <span>TDD</span>
+        <span>·</span>
         <span>Agile</span>
+        <span>·</span>
       </div>
     </div>
   </div>
 
   <!-- Education -->
-  <div class="bento-cell bento-education monograph-card card p-4 rounded-4 shadow" style="opacity: 98%" [appScrollReveal]="'fade-up'" [revealDelay]="100">
+  <div
+    class="bento-cell bento-education monograph-card card p-4 rounded-4 shadow"
+    style="opacity: 98%"
+    [appScrollReveal]="'fade-up'"
+    [revealDelay]="100">
     <h3 class="text-primary" #Education>EDUCATION</h3>
     <div>
       <div class="mb-3">
@@ -258,65 +319,73 @@
     </div>
   </div>
   <!-- Certifications -->
-  <div class="bento-cell bento-certs monograph-card card p-4 rounded-4 shadow" style="opacity: 98%" [appScrollReveal]="'fade-up'" [revealDelay]="150">
+  <div
+    class="bento-cell bento-certs monograph-card card p-4 rounded-4 shadow"
+    style="opacity: 98%"
+    [appScrollReveal]="'fade-up'"
+    [revealDelay]="150">
     <h3 class="text-primary" #Certifications>CERTIFICATIONS</h3>
     <div class="cert-list">
       <div class="cert-item my-2">
         <h5>Microsoft Certified: Azure Database Administrator Associate</h5>
-      <div>
-        <button
-          class="btn btn-outline-primary rounded-pill px-3 my-1 me-3"
-          (click)="viewFile('Credentials_ZhilongLiang_4664_AzureDatabaseAdministratorAssociate.pdf')">
-          <i class="bi bi-file-earmark-pdf me-1"></i>
-          View
-        </button>
-        <a
-          class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
-          target="_blank"
-          href="https://learn.microsoft.com/en-gb/users/zhilongliang-4664/credentials/a479ba66473c157">
-          View on Microsoft
-        </a>
-      </div>
+        <div>
+          <button
+            class="btn btn-outline-primary rounded-pill px-3 my-1 me-3"
+            (click)="viewFile('Credentials_ZhilongLiang_4664_AzureDatabaseAdministratorAssociate.pdf')">
+            <i class="bi bi-file-earmark-pdf me-1"></i>
+            View
+          </button>
+          <a
+            class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+            target="_blank"
+            href="https://learn.microsoft.com/en-gb/users/zhilongliang-4664/credentials/a479ba66473c157">
+            View on Microsoft
+          </a>
+        </div>
       </div>
       <div class="cert-item my-2">
         <h5>Microsoft Certified: DevOps Engineer Expert</h5>
-      <div>
-        <button
-          class="btn btn-outline-primary rounded-pill px-3 my-1 me-3"
-          (click)="viewFile('Credentials_ZhilongLiang_4664_DevOps_Engineer_Expert.pdf')">
-          <i class="bi bi-file-earmark-pdf me-1"></i>
-          View
-        </button>
-        <a
-          class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
-          target="_blank"
-          href="https://learn.microsoft.com/en-gb/users/zhilongliang-4664/credentials/bd2700599055f76f">
-          View on Microsoft
-        </a>
-      </div>
+        <div>
+          <button
+            class="btn btn-outline-primary rounded-pill px-3 my-1 me-3"
+            (click)="viewFile('Credentials_ZhilongLiang_4664_DevOps_Engineer_Expert.pdf')">
+            <i class="bi bi-file-earmark-pdf me-1"></i>
+            View
+          </button>
+          <a
+            class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+            target="_blank"
+            href="https://learn.microsoft.com/en-gb/users/zhilongliang-4664/credentials/bd2700599055f76f">
+            View on Microsoft
+          </a>
+        </div>
       </div>
       <div class="cert-item my-2">
         <h5>Microsoft Certified: Azure Developer Associate</h5>
-      <div>
-        <button
-          class="btn btn-outline-primary rounded-pill px-3 my-1 me-3"
-          (click)="viewFile('Credentials_ZhilongLiang_4664_Azure_Developer_Associate.pdf')">
-          <i class="bi bi-file-earmark-pdf me-1"></i>
-          View
-        </button>
-        <a
-          class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
-          target="_blank"
-          href="https://learn.microsoft.com/en-gb/users/zhilongliang-4664/credentials/ad9659f137b6be27">
-          View on Microsoft
-        </a>
-      </div>
+        <div>
+          <button
+            class="btn btn-outline-primary rounded-pill px-3 my-1 me-3"
+            (click)="viewFile('Credentials_ZhilongLiang_4664_Azure_Developer_Associate.pdf')">
+            <i class="bi bi-file-earmark-pdf me-1"></i>
+            View
+          </button>
+          <a
+            class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+            target="_blank"
+            href="https://learn.microsoft.com/en-gb/users/zhilongliang-4664/credentials/ad9659f137b6be27">
+            View on Microsoft
+          </a>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- Work Experience -->
-  <div class="bento-cell bento-experience monograph-card card p-4 rounded-4 shadow" style="opacity: 98%" [appScrollReveal]="'fade-up'" [revealDelay]="200">
+  <div
+    class="bento-cell bento-experience monograph-card card p-4 rounded-4 shadow"
+    style="opacity: 98%"
+    [appScrollReveal]="'fade-up'"
+    [revealDelay]="200">
     <h3 class="text-primary" #Experience>Work Experience</h3>
     <div>
       <h5>Automate</h5>

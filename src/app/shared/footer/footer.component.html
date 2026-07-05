@@ -12,7 +12,7 @@
     z-index: 10;
   ">
   <div style="max-width: 1320px; margin: 0 auto; padding: 48px 2rem 0">
-    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; padding-bottom: 48px">
+    <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 48px; padding-bottom: 48px">
       <!-- Brand + Quote -->
       <div>
         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px">
@@ -65,72 +65,6 @@
             — Martin Fowler
           </cite>
         </blockquote>
-      </div>
-
-      <!-- Quick Links -->
-      <div>
-        <h4
-          style="
-            font-family: &quot;JetBrains Mono&quot;, monospace;
-            font-size: 10px;
-            font-weight: 600;
-            color: #7a8478;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            margin: 0 0 16px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid rgba(167, 192, 128, 0.15);
-          ">
-          Navigate
-        </h4>
-        <a
-          routerLink="/"
-          style="
-            display: flex;
-            align-items: center;
-            color: #9da9a0;
-            text-decoration: none;
-            font-size: 14px;
-            padding: 8px 0;
-            transition:
-              color 0.25s ease,
-              transform 0.25s ease;
-          ">
-          <i class="bi bi-house-door" style="font-size: 14px; opacity: 0.6; margin-right: 8px"></i>
-          Home
-        </a>
-        <a
-          routerLink="/projects"
-          style="
-            display: flex;
-            align-items: center;
-            color: #9da9a0;
-            text-decoration: none;
-            font-size: 14px;
-            padding: 8px 0;
-            transition:
-              color 0.25s ease,
-              transform 0.25s ease;
-          ">
-          <i class="bi bi-terminal" style="font-size: 14px; opacity: 0.6; margin-right: 8px"></i>
-          Projects
-        </a>
-        <a
-          routerLink="/resume"
-          style="
-            display: flex;
-            align-items: center;
-            color: #9da9a0;
-            text-decoration: none;
-            font-size: 14px;
-            padding: 8px 0;
-            transition:
-              color 0.25s ease,
-              transform 0.25s ease;
-          ">
-          <i class="bi bi-file-earmark-person" style="font-size: 14px; opacity: 0.6; margin-right: 8px"></i>
-          Resume
-        </a>
       </div>
 
       <!-- Connect -->
@@ -201,7 +135,7 @@
               transform 0.25s ease;
           ">
           <i class="bi bi-code" style="font-size: 14px; opacity: 0.6; margin-right: 8px"></i>
-          Source asdklfjasdlkfjasdlkfjasdlkfjalskdfjskladfjasklfjlaskdjfsdklajf
+          Source
         </a>
       </div>
     </div>
@@ -222,7 +156,7 @@
       color: #7a8478;
       letter-spacing: 0.04em;
     ">
-    <span></span>
-    <span style="opacity: 0.6">v1.0 · Angular {{ angularVersion }}</span>
+    <span>{{ currentYear }}</span>
+    <span style="opacity: 0.6">v2.0 · Angular {{ angularVersion }}</span>
   </div>
 </footer>

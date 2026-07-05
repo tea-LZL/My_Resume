@@ -92,9 +92,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   arrCarouselImg = [
-    "assets/Kobo_help_dance1.GIF",
-    "assets/Kobo_help_dance2.GIF",
-    "assets/Kobo_help_down.GIF",
+    "assets/Cat1.JPEG",
+    "assets/Cat2.JPEG",
+    "assets/Cat3.JPEG",
+    "assets/Cat4.JPEG",
   ];
   isImgLoaded = false;
   ngOnInit() {
@@ -102,8 +103,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.imgLoadStatus = this.arrCarouselImg.map(() => false);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
     const carousel = new (window as any).bootstrap.Carousel(myCarouselElement, {
-      interval: 2000,
-      touch: false,
+      interval: 5000,
+      touch: true,
     });
     this.fetchWeather();
   }

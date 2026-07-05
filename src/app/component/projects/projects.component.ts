@@ -2,7 +2,10 @@ import { Component, ViewChild } from "@angular/core";
 import { Project } from "../../interfaces/project";
 import { ImageLightboxComponent } from "../../shared/image-lightbox/image-lightbox.component";
 import { ScrollRevealDirective } from "../../shared/directives/scroll-reveal.directive";
-import { StepRevealComponent, StepItem } from "../../shared/step-reveal/step-reveal.component";
+import {
+  StepRevealComponent,
+  StepItem,
+} from "../../shared/step-reveal/step-reveal.component";
 
 @Component({
   selector: "app-projects",
@@ -20,35 +23,39 @@ export class ProjectsComponent {
   caseStudySteps: StepItem[] = [
     {
       title: "Start with the problem — weather data for any location, fast",
-      expression: "GET /weather?city=pretoria → 200 OK { temp, humidity, wind }",
-      note: "The OpenWeatherMap API returns rich data, but the free tier is rate-limited. We need a caching layer that respects the 10-minute freshness window."
+      expression:
+        "GET /weather?city=pretoria → 200 OK { temp, humidity, wind }",
+      note: "The OpenWeatherMap API returns rich data, but the free tier is rate-limited. We need a caching layer that respects the 10-minute freshness window.",
     },
     {
       title: "Choose the right tool — Go + Gin for zero-dependency speed",
       expression: "go mod init && go get github.com/gin-gonic/gin",
-      note: "Go's standard library covers HTTP, JSON, and testing. Gin adds routing and middleware without the framework tax. Binary size: ~12 MB."
+      note: "Go's standard library covers HTTP, JSON, and testing. Gin adds routing and middleware without the framework tax. Binary size: ~12 MB.",
     },
     {
       title: "Design the cache — in-memory with TTL eviction",
-      expression: "type Cache struct { mu sync.RWMutex; items map[string]CacheEntry }",
-      note: "A simple map with read-write mutex. Each entry stores the response plus an expiration timestamp. A background goroutine sweeps stale entries every 60 seconds."
+      expression:
+        "type Cache struct { mu sync.RWMutex; items map[string]CacheEntry }",
+      note: "A simple map with read-write mutex. Each entry stores the response plus an expiration timestamp. A background goroutine sweeps stale entries every 60 seconds.",
     },
     {
       title: "Containerize — single-stage Docker build, 18 MB image",
-      expression: "FROM golang:alpine AS build → COPY . . → go build → FROM scratch",
-      note: "Multi-stage builds keep the final image tiny. No shell, no package manager — just the Go binary and a CA cert bundle for HTTPS."
+      expression:
+        "FROM golang:alpine AS build → COPY . . → go build → FROM scratch",
+      note: "Multi-stage builds keep the final image tiny. No shell, no package manager — just the Go binary and a CA cert bundle for HTTPS.",
     },
     {
       title: "Deploy to Google Cloud Run — CI/CD via GitHub Actions",
-      expression: "gcloud run deploy weathering-api --image gcr.io/... --region us-central1",
-      note: "Cloud Run auto-scales to zero when idle (no cost) and spins up in under a second on the first request. GitHub Actions pushes on every merge to main."
+      expression:
+        "gcloud run deploy weathering-api --image gcr.io/... --region us-central1",
+      note: "Cloud Run auto-scales to zero when idle (no cost) and spins up in under a second on the first request. GitHub Actions pushes on every merge to main.",
     },
     {
       title: "Monitor and iterate — structured logging and health checks",
-      expression: "GET /health → 200 { \"status\": \"ok\", \"uptime\": \"72h\" }",
+      expression: 'GET /health → 200 { "status": "ok", "uptime": "72h" }',
       note: "Every request logs method, path, status, and latency. The health endpoint lets Cloud Run know the instance is ready. Alerts fire if error rate exceeds 1%.",
-      final: true
-    }
+      final: true,
+    },
   ];
 
   arrProjects: Project[] = [
@@ -75,13 +82,24 @@ export class ProjectsComponent {
     },
     {
       Title: "Convo",
-      Cover_Image_URLs: ["assets/convo_cover_image.png", "assets/convo_setup_model_image.png"],
-      GitHub_Link: "#",
+      Cover_Image_URLs: [
+        "assets/convo_cover_image.png",
+        "assets/convo_setup_model_image.png",
+      ],
+      GitHub_Link: "https://github.com/tea-LZL/Convo",
       ShortDescription:
         "A frontend UI for Ollama that lets you chat with LLMs, manage models, and browse chat history — all through a clean, responsive interface.",
       Description:
         "Convo is a frontend UI that interacts with the Ollama API, providing a user-friendly interface to chat with AI models. It supports setting up and managing models, maintaining chat history, and provides a seamless experience for interacting with locally hosted LLMs through Ollama.",
-      Tags: ["Angular", "TypeScript", "Ollama", "AI"],
+      Tags: [
+        "Rust",
+        "Tauri",
+        "React",
+        "Typescript",
+        "Tailwind",
+        "Ollama",
+        "AI",
+      ],
     },
   ];
 }

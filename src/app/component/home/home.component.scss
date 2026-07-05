@@ -343,7 +343,7 @@ hr {
 .marquee-strip {
   overflow: hidden;
   position: relative;
-  padding: 0.5rem 0;
+  padding: 0.75rem 0;
   border-top: 1px solid var(--ef-border);
   mask-image: linear-gradient(
     to right,
@@ -371,21 +371,22 @@ hr {
 
 .marquee-track {
   display: flex;
+  align-items: center;
   white-space: nowrap;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
+  font-size: 1.1rem;
   font-weight: 500;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--ef-fg-muted);
   width: max-content;
-  animation: marqueeScroll 45s linear infinite;
+  animation: marqueeScroll 60s linear infinite;
 
-  span {
+  span:not(.marquee-separator) {
     flex-shrink: 0;
-    padding: 0.18rem 0.7rem;
-    margin: 0 0.15rem;
-    border-radius: 0.3rem;
+    padding: 0.35rem 1rem;
+    margin: 0 0.25rem;
+    border-radius: 0.4rem;
     background: transparent;
     border: 1px solid transparent;
     transition:
@@ -399,6 +400,14 @@ hr {
       color: var(--ef-green);
     }
   }
+}
+
+.marquee-separator {
+  flex-shrink: 0;
+  font-size: 0.5rem;
+  color: var(--ef-green);
+  opacity: 0.4;
+  margin: 0 0.5rem;
 }
 
 @keyframes marqueeScroll {
