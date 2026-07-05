@@ -1,18 +1,45 @@
 .project-card {
-  border: 1px solid rgba(122, 132, 120, 0.3);
-  background-color: var(--bs-card-bg);
+  border: 1px solid var(--ef-border);
+  background-color: var(--card-bg);
   transition:
-    border-color 0.3s ease,
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+    border-color 0.4s ease,
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s ease;
+  perspective: 1000px;
 
   &:hover {
-    border-color: var(--bs-primary);
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    border-color: var(--ef-green);
+    transform: translateY(-6px) rotateX(2deg);
+    box-shadow:
+      0 16px 48px rgba(0, 0, 0, 0.15),
+      0 0 0 1px var(--glass-border);
   }
 }
 
+/* Featured Project Card */
+.project-card-featured {
+  border-width: 2px;
+  border-image: linear-gradient(135deg, var(--bs-primary), var(--bs-info)) 1;
+  border-image-slice: 1;
+
+  &:hover {
+    border-image: linear-gradient(135deg, var(--bs-success), var(--bs-primary)) 1;
+  }
+}
+
+.featured-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--bs-warning);
+  margin-bottom: 0.5rem;
+}
+
+/* Image Reveal Animation */
 .project-card-img-wrapper {
   flex: 0 0 100%;
   max-height: 300px;
@@ -21,6 +48,7 @@
   gap: 4px;
   padding: 4px;
   background: var(--bs-border-color);
+  position: relative;
 
   @media (min-width: 992px) {
     flex: 0 0 40%;
@@ -36,8 +64,23 @@
   border-radius: 6px;
   position: relative;
 
+  /* Clip-path reveal overlay */
+  .project-card-img-reveal {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--glass-border), var(--glass-bg));
+    clip-path: circle(0% at 50% 50%);
+    transition: clip-path 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 2;
+    pointer-events: none;
+  }
+
   &:hover {
-    outline: 3px solid var(--bs-primary);
+    .project-card-img-reveal {
+      clip-path: circle(75% at 50% 50%);
+    }
+
+    outline: 3px solid var(--ef-green);
     outline-offset: -3px;
   }
 }
@@ -47,8 +90,8 @@
   height: 100%;
   object-fit: cover;
   transition:
-    transform 0.5s ease,
-    filter 0.3s ease;
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.4s ease;
 
   .project-card-img-container:hover & {
     transform: scale(1.08);
@@ -62,6 +105,7 @@
 
 .project-card-title {
   font-weight: 600;
+  font-size: 1.4rem;
 }
 
 .project-card-subtitle {
@@ -72,4 +116,32 @@
   font-size: 0.95rem;
   line-height: 1.7;
   color: var(--bs-body-color);
+}
+
+/* Glowing Tag Pills */
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.project-tag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--ef-green);
+  background: var(--btn-glow);
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(167, 192, 128, 0.15);
+    border-color: var(--ef-border-hover);
+    box-shadow: 0 0 12px var(--btn-glow);
+    transform: translateY(-1px);
+  }
 }

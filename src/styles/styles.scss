@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Plaster&display=swap");
 
 /* You can add global styles to this file, and also import other style files */
@@ -54,11 +55,6 @@
 html,
 body {
   height: 100%;
-
-  @-moz-document url-prefix() {
-    /* CSS Code */
-    scrollbar-color: $primary transparent;
-  }
 }
 
 .cursor-pointer {
@@ -77,22 +73,6 @@ body {
 .bi-x-lg,
 .bi-plus {
   -webkit-text-stroke: 1px;
-}
-
-::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-
-::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px transparent;
-  // border-radius: 15px;
-}
-
-::-webkit-scrollbar-thumb {
-  // border-radius: 2px;
-  background-color: $primary;
-  -webkit-box-shadow: inset 0 0 6px transparent;
 }
 
 .btn-primary,
@@ -228,23 +208,316 @@ input[type="number"] {
   transition: opacity 0.5s ease;
 }
 
+/* ========================================
+   GLASSMORPHISM 2.0
+   ======================================== */
+
 .intro-glass {
-  backdrop-filter: blur(32px);
-  -webkit-backdrop-filter: blur(32px);
+  background: var(--glass-bg);
+  color: var(--glass-fg);
+  backdrop-filter: blur(40px) saturate(1.5);
+  -webkit-backdrop-filter: blur(40px) saturate(1.5);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
   transition:
-    background 0.3s,
-    color 0.3s;
+    background 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+
+  &:hover {
+    border-color: var(--ef-border-hover);
+    box-shadow: var(--glass-shadow-hover);
+  }
+}
+
+/* Typography — Display headings use Space Grotesk */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Space Grotesk', 'Segoe UI', system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.font-mono, .font-monospace {
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* Scroll Reveal Animations */
+.reveal-hidden {
+  opacity: 0;
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-visible {
+  opacity: 1 !important;
+  transform: none !important;
+  transition-delay: 0ms !important;
+}
+
+.reveal-fade-up {
+  transform: translateY(30px);
+}
+
+.reveal-fade-in {
+  transform: none;
+}
+
+.reveal-scale-in {
+  transform: scale(0.92);
+}
+
+.reveal-fade-left {
+  transform: translateX(-30px);
+}
+
+.reveal-fade-right {
+  transform: translateX(30px);
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-hidden {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ========================================
+   CSS CUSTOM PROPERTIES — DARK THEME (default)
+   ======================================== */
+
+:root {
+  /* Surface colors */
+  --ef-bg: #2d353b;
+  --ef-bg-dim: #232a2e;
+  --ef-bg-light: #343f44;
+  --ef-bg-card: #343f44;
+  --ef-surface: #343f44;
+
+  /* Text colors */
+  --ef-fg: #d3c6aa;
+  --ef-fg-muted: #859289;
+  --ef-fg-dim: #9da9a0;
+
+  /* Accent colors (same in both themes) */
+  --ef-green: #a7c080;
+  --ef-aqua: #83c092;
+  --ef-blue: #7fbbb3;
+  --ef-yellow: #dbbc7f;
+  --ef-red: #e67e80;
+  --ef-orange: #e69875;
+  --ef-purple: #d699b6;
+  --ef-grey0: #7a8478;
+  --ef-grey1: #859289;
+
+  /* Border */
+  --ef-border: rgba(122, 132, 120, 0.3);
+  --ef-border-hover: rgba(167, 192, 128, 0.5);
+
+  /* Wave background */
+  --wave-base: #232a2e;
+  --wave-1: #8da101;
+  --wave-2: #dfa000;
+  --wave-3: #3c4841;
+
+  /* Glass */
+  --glass-bg: rgba(30, 41, 59, 0.6);
+  --glass-fg: #f8fafc;
+  --glass-border: rgba(167, 192, 128, 0.12);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --glass-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.4);
+
+  /* Card */
+  --card-bg: var(--ef-bg-light);
+  --card-border: rgba(122, 132, 120, 0.2);
+  --card-border-hover: rgba(167, 192, 128, 0.3);
+
+  /* Skill button hover glow */
+  --btn-glow: rgba(167, 192, 128, 0.3);
+
+  /* Noise overlay opacity */
+  --noise-opacity: 0.03;
+
+  /* Mesh gradient colors */
+  --mesh-green: rgba(167, 192, 128, 0.08);
+  --mesh-blue: rgba(127, 187, 179, 0.06);
+  --mesh-yellow: rgba(219, 188, 127, 0.04);
+}
+
+/* ========================================
+   CSS CUSTOM PROPERTIES — LIGHT THEME
+   ======================================== */
+
+[data-bs-theme="light"] {
+  /* Surface colors */
+  --ef-bg: #fdf6e3;
+  --ef-bg-dim: #efebd4;
+  --ef-bg-light: #f0eadb;
+  --ef-bg-card: #f5f0e5;
+  --ef-surface: #e8e3d5;
+
+  /* Text colors */
+  --ef-fg: #5c6a72;
+  --ef-fg-muted: #9da9a0;
+  --ef-fg-dim: #859289;
+
+  /* Accent colors — slightly adjusted for light bg */
+  --ef-green: #7a9a5a;
+  --ef-aqua: #5a9a72;
+  --ef-blue: #5a9a93;
+  --ef-yellow: #c4a05a;
+  --ef-red: #c45a5c;
+  --ef-orange: #c47a55;
+  --ef-purple: #b07a96;
+  --ef-grey0: #9da9a0;
+  --ef-grey1: #859289;
+
+  /* Border */
+  --ef-border: rgba(92, 106, 114, 0.2);
+  --ef-border-hover: rgba(122, 154, 90, 0.4);
+
+  /* Wave background — light warm tones */
+  --wave-base: #efebd4;
+  --wave-1: #d4cfc0;
+  --wave-2: #e8dcc0;
+  --wave-3: #e0dbd0;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-fg: #3b4850;
+  --glass-border: rgba(122, 154, 90, 0.2);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --glass-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.12);
+
+  /* Card */
+  --card-bg: #f5f0e5;
+  --card-border: rgba(92, 106, 114, 0.15);
+  --card-border-hover: rgba(122, 154, 90, 0.3);
+
+  /* Skill button hover glow */
+  --btn-glow: rgba(122, 154, 90, 0.2);
+
+  /* Noise overlay opacity */
+  --noise-opacity: 0.02;
+
+  /* Mesh gradient colors */
+  --mesh-green: rgba(122, 154, 90, 0.06);
+  --mesh-blue: rgba(90, 154, 147, 0.04);
+  --mesh-yellow: rgba(196, 160, 90, 0.04);
+
+  /* Override Bootstrap body vars */
+  --bs-body-bg: #fdf6e3;
+  --bs-body-color: #5c6a72;
+  --bs-card-bg: #f5f0e5;
+  --bs-border-color: rgba(92, 106, 114, 0.2);
+  --bs-emphasis-color: #3b4850;
+  --bs-secondary-color: #859289;
+  --bs-secondary-bg: #efebd4;
+  --bs-tertiary-bg: #f0eadb;
+}
+
+/* Smooth theme transition */
+html {
+  transition: background-color 0.4s ease;
+}
+
+body {
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease;
+}
+
+/* ========================================
+   SCROLL PROGRESS BAR
+   ======================================== */
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--ef-green), var(--ef-blue), var(--ef-aqua));
+  z-index: 10000;
+  transition: width 0.1s linear;
+  border-radius: 0 2px 2px 0;
+}
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, $primary, $info, $success);
+  z-index: 10000;
+  transition: width 0.1s linear;
+  border-radius: 0 2px 2px 0;
+}
+
+/* ========================================
+   CUSTOM SCROLLBAR (Upgraded)
+   ======================================== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(167, 192, 128, 0.4);
+  border-radius: 3px;
+  transition: background 0.2s;
+
+  &:hover {
+    background: rgba(167, 192, 128, 0.7);
+  }
 }
 
 /* Additional Everforest theme enhancements */
 .card {
-  border-color: rgba(122, 132, 120, 0.3);
-  background-color: var(--bs-card-bg);
+  border-color: var(--card-border);
+  background-color: var(--card-bg);
+  backdrop-filter: blur(20px) saturate(1.3);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .card:hover {
-  border-color: var(--bs-primary);
-  transition: border-color 0.3s ease;
+  border-color: var(--card-border-hover);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
 }
 
 .nav-link:hover {

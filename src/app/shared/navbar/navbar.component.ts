@@ -3,10 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NavModalComponent } from './nav-modal/nav-modal.component';
+import { MagneticHoverDirective } from '../directives/magnetic-hover.directive';
 
 @Component({
   selector: "app-navbar",
-  imports: [NgClass, RouterLink, RouterLinkActive],
+  imports: [NgClass, RouterLink, RouterLinkActive, MagneticHoverDirective],
   templateUrl: "./navbar.component.html",
   styleUrl: "./navbar.component.scss",
 })

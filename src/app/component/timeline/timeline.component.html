@@ -1,32 +1,70 @@
-<section class="design-section z-1">
-    <div class="timeline bg-dark p-5 rounded-5 shadow">
-        <div class="timeline-empty">
-        </div>
-        <div class="timeline-middle">
-            <div class="timeline-circle"></div>
-        </div>
-        <div class="timeline-component timeline-content">
-            <h3>HTML</h3>
-            <p>Some Text</p>
-        </div>
-        <div class="timeline-component timeline-content">
-            <h3>CSS</h3>
-            <p>Some Text.</p>
-        </div>
-        <div class="timeline-middle">
-            <div class="timeline-circle"></div>
-        </div>
-        <div class="timeline-empty">
-        </div>
-        <div class="timeline-empty">
-        </div>
-        <div class="timeline-middle">
-            <div class="timeline-circle"></div>
-        </div>
-        <div class=" timeline-component timeline-content">
-            <h3>Javascript</h3>
-            <p>Some Text.</p>
-        </div>
+<section class="timeline-section z-1">
+  <div class="timeline-header" appScrollReveal="fade-up">
+    <h1 class="text-primary mb-2">Timeline</h1>
+    <p class="text-muted fs-5">My journey so far</p>
+  </div>
 
+  <div class="timeline">
+    <!-- Animated vertical line -->
+    <div class="timeline-line" aria-hidden="true"></div>
+
+    <!-- Timeline Items -->
+    <div class="timeline-item timeline-item-left" appScrollReveal="fade-left">
+      <div class="timeline-marker">
+        <i class="bi bi-mortarboard-fill"></i>
+      </div>
+      <div class="timeline-card intro-glass rounded-4 p-4">
+        <span class="timeline-date">2014 – 2018</span>
+        <h3>High School</h3>
+        <h5>Willowridge High School</h5>
+        <p class="text-muted">Matric Certificate</p>
+      </div>
     </div>
+
+    <div class="timeline-item timeline-item-right" [appScrollReveal]="'fade-right'" [revealDelay]="100">
+      <div class="timeline-marker">
+        <i class="bi bi-book-fill"></i>
+      </div>
+      <div class="timeline-card intro-glass rounded-4 p-4">
+        <span class="timeline-date">2019 – 2023</span>
+        <h3>IT Studies</h3>
+        <h5>CTU Training Solution</h5>
+        <p class="text-muted">Information Technology: System Development</p>
+      </div>
+    </div>
+
+    <div class="timeline-item timeline-item-left" [appScrollReveal]="'fade-left'" [revealDelay]="100">
+      <div class="timeline-marker">
+        <i class="bi bi-briefcase-fill"></i>
+      </div>
+      <div class="timeline-card intro-glass rounded-4 p-4">
+        <span class="timeline-date">08/2022 – Present</span>
+        <h3>Software Developer</h3>
+        <h5>Automate</h5>
+        <ul class="timeline-list">
+          <li>Internal Dealership System & Mobile App</li>
+          <li>Dealership Website</li>
+          <li>2 Admin System Rewrites (AngularJS → Angular 18)</li>
+          <li>API Rewrite (.NET Framework → .NET 8)</li>
+          <li>Training Portal Rewrite (AngularJS → Angular 18)</li>
+          <li>Full Stack Client Supplier Onboarding App</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item timeline-item-right" [appScrollReveal]="'fade-right'" [revealDelay]="200">
+      <div class="timeline-marker marker-cert">
+        <i class="bi bi-patch-check-fill"></i>
+      </div>
+      <div class="timeline-card intro-glass rounded-4 p-4">
+        <span class="timeline-date">Certifications</span>
+        <h3>Microsoft Certified</h3>
+        <div class="cert-badges">
+          <span class="cert-badge">Azure DB Admin Associate</span>
+          <span class="cert-badge">DevOps Engineer Expert</span>
+          <span class="cert-badge">Azure Developer Associate</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>

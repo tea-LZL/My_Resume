@@ -12,10 +12,11 @@ import {
 import { ModalComponent } from "../../shared/modal/modal.component";
 import { WeatherService } from "../../services/weather.service";
 import { WeatherData } from "../../interfaces/weather";
+import { ScrollRevealDirective } from "../../shared/directives/scroll-reveal.directive";
 
 @Component({
   selector: "app-home",
-  imports: [CommonModule, NgClass, ModalComponent],
+  imports: [CommonModule, NgClass, ModalComponent, ScrollRevealDirective],
   templateUrl: "./home.component.html",
   styleUrl: "./home.component.scss",
 })

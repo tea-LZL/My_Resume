@@ -4,4 +4,6 @@ export interface Project {
     GitHub_Link: string;
     ShortDescription: string;
     Description: string;
+    Tags?: string[];
+    Featured?: boolean;
 }

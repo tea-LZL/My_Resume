@@ -1,11 +1,14 @@
 <div class="container py-5">
   <div class="row g-4">
     @for (proj of arrProjects; track proj) {
-      <div class="col-12">
-        <div class="project-card card flex-lg-row align-items-stretch overflow-hidden">
-          <div class="project-card-img-wrapper">
+      <div class="col-12" [class.col-lg-8]="proj.Featured" [class.offset-lg-2]="proj.Featured">
+        <div class="project-card card" [class.project-card-featured]="proj.Featured"
+             [class.flex-lg-row]="proj.Featured" [class.align-items-stretch]="proj.Featured"
+             [class.overflow-hidden]="proj.Featured" appScrollReveal="fade-up">
+          <div class="project-card-img-wrapper" [class.flex-lg-row]="!proj.Featured">
             @for (imgUrl of proj.Cover_Image_URLs; track imgUrl; let i = $index) {
               <div class="project-card-img-container" (click)="openImage(imgUrl)" role="button">
+                <div class="project-card-img-reveal"></div>
                 <img
                   [src]="imgUrl"
                   [alt]="proj.Title + ' ' + (i + 1)"
@@ -15,8 +18,18 @@
             }
           </div>
           <div class="project-card-body card-body d-flex flex-column p-4 p-lg-5">
+            @if (proj.Featured) {
+              <span class="featured-badge">⭐ Featured</span>
+            }
             <h3 class="project-card-title mb-2">{{ proj.Title }}</h3>
             <p class="project-card-subtitle text-muted mb-3">{{ proj.ShortDescription }}</p>
+            @if (proj.Tags && proj.Tags.length > 0) {
+              <div class="project-tags mb-3">
+                @for (tag of proj.Tags; track tag) {
+                  <span class="project-tag">{{ tag }}</span>
+                }
+              </div>
+            }
             <p class="project-card-description mb-4">{{ proj.Description }}</p>
             <div class="mt-auto">
               <a

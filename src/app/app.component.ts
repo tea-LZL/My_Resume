@@ -1,15 +1,17 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { Subscription } from 'rxjs';
 import { StateService } from './services/state.service';
 import { FooterComponent } from "./shared/footer/footer.component";
+import { routeAnimation } from './animations/route-animations';
 
 @Component({
     selector: 'app-root',
     imports: [RouterOutlet, NavbarComponent, FooterComponent],
     templateUrl: './app.component.html',
-    styleUrl: './app.component.scss'
+    styleUrl: './app.component.scss',
+    animations: [routeAnimation],
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = "Zhilong's Resume";
@@ -25,6 +27,13 @@ export class AppComponent implements OnInit, OnDestroy {
     this.subLoading = new Subscription();
   }
 
+  prepareRoute(outlet: RouterOutlet) {
+    if (outlet && outlet.isActivated) {
+      return outlet.activatedRouteData?.['animation'] ?? outlet.activatedRoute?.routeConfig?.path ?? '';
+    }
+    return '';
+  }
+
   ngOnInit(): void {
     // this.theme = localStorage.getItem('theme') ?? 'auto';
     // this.setTheme(this.theme);
@@ -33,6 +42,17 @@ export class AppComponent implements OnInit, OnDestroy {
       this.loading = value;
       this.cdr.detectChanges();
     });
+  }
+
+  @HostListener('window:scroll')
+  onWindowScroll(): void {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    const progressBar = document.getElementById('scrollProgress');
+    if (progressBar) {
+      progressBar.style.width = `${progress}%`;
+    }
   }
 
   // setTheme(theme:string) {

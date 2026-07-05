@@ -1,3 +1,6 @@
+<!-- Scroll Progress Bar -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
 <div class="wave-bg" aria-hidden="true">
   <svg class="wave-svg" viewBox="0 0 1440 640" preserveAspectRatio="none">
     <path class="wave-layer wave-layer-1"
@@ -47,7 +50,11 @@
   <div class="overflow-y-auto overflow-x-hidden focus-hidden" style="padding-top: 90px;">
     <div class="h-100">
       <div class="m-4 h-100 rounded">
-        <main class="container-xl mx-auto"><router-outlet /></main>
+        <main class="container-xl mx-auto">
+          <div [@routeAnimation]="prepareRoute(outlet)">
+            <router-outlet #outlet="outlet" />
+          </div>
+        </main>
       </div>
     </div>
   </div>
