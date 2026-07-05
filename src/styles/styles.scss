@@ -85,10 +85,10 @@ body {
 
 .text-shadow {
   text-shadow:
-    rgb(45, 53, 59) -1px 0px,
-    rgb(45, 53, 59) 0px 1px,
-    rgb(45, 53, 59) 1px 0px,
-    rgb(45, 53, 59) 0px -1px;
+    var(--ef-bg) -1px 0px,
+    var(--ef-bg) 0px 1px,
+    var(--ef-bg) 1px 0px,
+    var(--ef-bg) 0px -1px;
 }
 
 // Hide Arrow In Number Input
@@ -325,14 +325,21 @@ h4 {
   --ef-fg-muted: #859289;
   --ef-fg-dim: #9da9a0;
 
-  /* Accent colors (same in both themes) */
+  /* Accent colors — with RGB channels for alpha compositing */
   --ef-green: #a7c080;
+  --ef-green-rgb: 167, 192, 128;
   --ef-aqua: #83c092;
+  --ef-aqua-rgb: 131, 192, 146;
   --ef-blue: #7fbbb3;
+  --ef-blue-rgb: 127, 187, 179;
   --ef-yellow: #dbbc7f;
+  --ef-yellow-rgb: 219, 188, 127;
   --ef-red: #e67e80;
+  --ef-red-rgb: 230, 126, 128;
   --ef-orange: #e69875;
+  --ef-orange-rgb: 230, 152, 117;
   --ef-purple: #d699b6;
+  --ef-purple-rgb: 214, 153, 182;
   --ef-grey0: #7a8478;
   --ef-grey1: #859289;
 
@@ -387,14 +394,21 @@ h4 {
   --ef-fg-muted: #9da9a0;
   --ef-fg-dim: #859289;
 
-  /* Accent colors — slightly adjusted for light bg */
+  /* Accent colors — slightly adjusted for light bg, with RGB channels */
   --ef-green: #7a9a5a;
+  --ef-green-rgb: 122, 154, 90;
   --ef-aqua: #5a9a72;
+  --ef-aqua-rgb: 90, 154, 114;
   --ef-blue: #5a9a93;
+  --ef-blue-rgb: 90, 154, 147;
   --ef-yellow: #c4a05a;
+  --ef-yellow-rgb: 196, 160, 90;
   --ef-red: #c45a5c;
+  --ef-red-rgb: 196, 90, 92;
   --ef-orange: #c47a55;
+  --ef-orange-rgb: 196, 122, 85;
   --ef-purple: #b07a96;
+  --ef-purple-rgb: 176, 122, 150;
   --ef-grey0: #9da9a0;
   --ef-grey1: #859289;
 
@@ -468,17 +482,6 @@ body {
   transition: width 0.1s linear;
   border-radius: 0 2px 2px 0;
 }
-.scroll-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 0%;
-  height: 3px;
-  background: linear-gradient(90deg, $primary, $info, $success);
-  z-index: 10000;
-  transition: width 0.1s linear;
-  border-radius: 0 2px 2px 0;
-}
 
 /* ========================================
    CUSTOM SCROLLBAR (Upgraded)
@@ -509,15 +512,16 @@ body {
   backdrop-filter: blur(20px) saturate(1.3);
   -webkit-backdrop-filter: blur(20px) saturate(1.3);
   transition:
-    border-color 0.3s ease,
-    box-shadow 0.3s ease,
-    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    border-color 0.4s ease,
+    background-color 0.4s ease,
+    box-shadow 0.4s ease,
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .card:hover {
   border-color: var(--card-border-hover);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--card-shadow);
+  transform: translateY(-4px);
 }
 
 .nav-link:hover {
@@ -525,8 +529,15 @@ body {
 }
 
 .dropdown-menu {
-  background-color: var(--bs-card-bg);
-  border-color: rgba(122, 132, 120, 0.3);
+  background-color: var(--card-bg);
+  border-color: var(--ef-border);
+  backdrop-filter: blur(20px) saturate(1.3);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+  transition: background-color 0.4s ease, border-color 0.4s ease;
+}
+
+.dropdown-item {
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .dropdown-item:hover {
@@ -537,6 +548,370 @@ body {
 /* Custom scrollbar for Everforest */
 ::-webkit-scrollbar-thumb:hover {
   background-color: var(--bs-success);
+}
+
+/* ========================================
+   KINETIC TYPOGRAPHY — TYPEWRITER HERO
+   ======================================== */
+
+.kinetic-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px) rotateX(90deg);
+  animation: kineticEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes kineticEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) rotateX(90deg);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-4px) rotateX(-5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+  }
+}
+
+/* Typewriter cursor blink */
+.typing-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1.1em;
+  background: var(--ef-green);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: cursorBlink 0.8s step-end infinite;
+  transition:
+    opacity 0.2s ease,
+    background-color 0.4s ease;
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ========================================
+   HOVER-RAISE CARDS (Print Monograph Style)
+   ======================================== */
+
+.monograph-card {
+  position: relative;
+  transition:
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.4s ease;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+      135deg,
+      var(--ef-green) 0%,
+      transparent 40%,
+      transparent 60%,
+      var(--ef-blue) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  &:hover {
+    transform: translateY(-8px) rotateX(1deg) scale(1.01);
+    box-shadow:
+      0 20px 60px var(--card-shadow-heavy),
+      0 0 0 1px var(--card-border-hover);
+
+    &::after {
+      opacity: 0.05;
+    }
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+/* ========================================
+   COPY-FLASH CODE BLOCK
+   ======================================== */
+
+.code-block-wrapper {
+  position: relative;
+  background: var(--ef-bg-dim);
+  border: 1px solid var(--ef-border);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  transition: background-color 0.4s ease, border-color 0.4s ease;
+
+  pre {
+    margin: 0;
+    padding: 1.25rem;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--ef-fg);
+  }
+}
+
+.copy-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--ef-fg-muted);
+  background: var(--ef-surface);
+  border: 1px solid var(--ef-border);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
+  z-index: 2;
+
+  .code-block-wrapper:hover & {
+    opacity: 1;
+  }
+
+  &:hover {
+    color: var(--ef-fg);
+    border-color: var(--ef-border-hover);
+  }
+}
+
+.copy-btn--flash {
+  animation: copyFlash 0.4s ease;
+  color: var(--ef-green) !important;
+  border-color: var(--ef-green) !important;
+  background: rgba(167, 192, 128, 0.15) !important;
+}
+
+@keyframes copyFlash {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+/* ========================================
+   FILM-STRIP COLOR PALETTE SWATCHES
+   ======================================== */
+
+.palette-strip {
+  display: flex;
+  gap: 0;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid var(--ef-border);
+  transition: border-color 0.4s ease;
+  cursor: grab;
+  user-select: none;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.palette-swatch {
+  flex: 1;
+  min-width: 48px;
+  height: 64px;
+  position: relative;
+  transition:
+    flex 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.3s ease;
+
+  &:hover {
+    flex: 2.5;
+    filter: brightness(1.1);
+  }
+
+  &::after {
+    content: attr(data-label);
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 500;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
+}
+
+/* Palette scrub indicator */
+.palette-strip-wrapper {
+  position: relative;
+}
+
+.palette-scrub-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--ef-fg);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+
+  .palette-strip-wrapper:hover & {
+    opacity: 0.6;
+  }
+}
+
+/* ========================================
+   LOGO BUILD/CONSTRUCT ANIMATIONS
+   ======================================== */
+
+.logo-build {
+  opacity: 0;
+  transform: scale(0.8);
+
+  &.logo-build--visible {
+    animation: logoConstruct 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
+
+@keyframes logoConstruct {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+    filter: blur(8px);
+  }
+  30% {
+    opacity: 0.5;
+    filter: blur(4px);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.03);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+.logo-rotate {
+  opacity: 0;
+
+  &.logo-rotate--visible {
+    animation: logoRotateIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
+
+@keyframes logoRotateIn {
+  0% {
+    opacity: 0;
+    transform: rotate(-180deg) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+/* ========================================
+   PROJECT CROSS-FADE + SLIDE
+   ======================================== */
+
+.project-spread {
+  overflow: hidden;
+  position: relative;
+}
+
+.project-spread-slide {
+  animation: projectSlideIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+
+  @for $i from 0 through 9 {
+    &:nth-child(#{$i + 1}) {
+      animation-delay: #{$i * 0.1}s;
+    }
+  }
+}
+
+@keyframes projectSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ========================================
+   3-STATE THEME TOGGLE ENHANCEMENTS
+   ======================================== */
+
+#bd-theme {
+  transition:
+    background-color 0.4s ease,
+    border-color 0.4s ease,
+    color 0.4s ease;
+}
+
+/* Theme icon rotation on toggle */
+#bd-theme i {
+  display: inline-block;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#bd-theme:hover i {
+  transform: rotate(30deg);
+}
+
+#bd-theme:active i {
+  transform: rotate(180deg) scale(0.9);
+}
+
+/* ========================================
+   GLOBAL TRANSITION ENHANCEMENTS
+   ======================================== */
+
+*,
+*::before,
+*::after {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Card shadow variables */
+:root {
+  --card-shadow: rgba(0, 0, 0, 0.15);
+  --card-shadow-heavy: rgba(0, 0, 0, 0.2);
+}
+
+[data-bs-theme="light"] {
+  --card-shadow: rgba(0, 0, 0, 0.06);
+  --card-shadow-heavy: rgba(0, 0, 0, 0.1);
 }
 
 /* Importing Bootstrap SCSS file. */

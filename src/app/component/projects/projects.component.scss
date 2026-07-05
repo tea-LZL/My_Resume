@@ -3,16 +3,47 @@
   background-color: var(--card-bg);
   transition:
     border-color 0.4s ease,
-    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.4s ease;
+    background-color 0.4s ease,
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   perspective: 1000px;
+  position: relative;
+  overflow: hidden;
+
+  /* Subtle edge sheen on hover */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+      135deg,
+      transparent 0%,
+      rgba(167, 192, 128, 0.04) 40%,
+      rgba(127, 187, 179, 0.04) 70%,
+      transparent 100%
+    );
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 0;
+  }
 
   &:hover {
     border-color: var(--ef-green);
-    transform: translateY(-6px) rotateX(2deg);
+    transform: translateY(-8px) rotateX(1deg);
     box-shadow:
-      0 16px 48px rgba(0, 0, 0, 0.15),
-      0 0 0 1px var(--glass-border);
+      0 20px 60px var(--card-shadow-heavy),
+      0 0 0 1px var(--card-border-hover);
+
+    &::before {
+      opacity: 1;
+    }
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
   }
 }
 
@@ -37,6 +68,12 @@
   letter-spacing: 0.05em;
   color: var(--bs-warning);
   margin-bottom: 0.5rem;
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
 }
 
 /* Image Reveal Animation */
@@ -49,6 +86,7 @@
   padding: 4px;
   background: var(--bs-border-color);
   position: relative;
+  transition: background-color 0.4s ease;
 
   @media (min-width: 992px) {
     flex: 0 0 40%;
@@ -106,6 +144,11 @@
 .project-card-title {
   font-weight: 600;
   font-size: 1.4rem;
+  transition: color 0.3s ease;
+
+  .project-card:hover & {
+    color: var(--ef-green);
+  }
 }
 
 .project-card-subtitle {
@@ -116,6 +159,7 @@
   font-size: 0.95rem;
   line-height: 1.7;
   color: var(--bs-body-color);
+  transition: color 0.4s ease;
 }
 
 /* Glowing Tag Pills */
@@ -136,12 +180,12 @@
   border: 1px solid var(--glass-border);
   border-radius: 999px;
   letter-spacing: 0.02em;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 
   &:hover {
     background: rgba(167, 192, 128, 0.15);
     border-color: var(--ef-border-hover);
     box-shadow: 0 0 12px var(--btn-glow);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
   }
 }

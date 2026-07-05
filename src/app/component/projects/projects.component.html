@@ -1,7 +1,7 @@
 <div class="container py-5">
-  <div class="row g-4">
+  <div class="project-spread row g-4">
     @for (proj of arrProjects; track proj) {
-      <div class="col-12" [class.col-lg-8]="proj.Featured" [class.offset-lg-2]="proj.Featured">
+      <div class="project-spread-slide col-12" [class.col-lg-8]="proj.Featured" [class.offset-lg-2]="proj.Featured">
         <div class="project-card card" [class.project-card-featured]="proj.Featured"
              [class.flex-lg-row]="proj.Featured" [class.align-items-stretch]="proj.Featured"
              [class.overflow-hidden]="proj.Featured" appScrollReveal="fade-up">
@@ -45,6 +45,22 @@
         </div>
       </div>
     }
+  </div>
+</div>
+
+<!-- Case Study: Step-by-Step Reveal -->
+<div class="container py-5">
+  <div class="project-spread-slide" appScrollReveal="fade-up">
+    <div class="card p-4 p-lg-5" style="background: var(--card-bg); border-color: var(--ef-border);">
+      <div class="font-mono text-xs uppercase tracking-widest mb-3" style="color: var(--ef-green); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em;">// case study</div>
+      <h2 class="font-display" style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.8rem; letter-spacing: -0.02em; margin-bottom: 0.5rem;">
+        How <span style="color: var(--ef-green);">Weathering With GO API</span> was built
+      </h2>
+      <p style="color: var(--ef-fg-dim); margin-bottom: 1.5rem;">
+        From idea to deployed API — walk through the decisions, the code, and the lessons.
+      </p>
+      <app-step-reveal [steps]="caseStudySteps"></app-step-reveal>
+    </div>
   </div>
 </div>
 

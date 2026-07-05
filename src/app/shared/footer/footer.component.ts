@@ -1,11 +1,57 @@
-import { Component } from '@angular/core';
+import { Component, VERSION, ViewEncapsulation } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
-  imports: [],
-  templateUrl: './footer.component.html',
-  styleUrl: './footer.component.scss'
+  imports: [RouterLink],
+  template: `
+<footer style="background: #0f1114; color: #c9c1ad; border-top: 3px solid rgba(167, 192, 128, 0.4); padding: 0; margin: 0; width: 100%; flex-shrink: 0; min-height: 200px; position: relative; z-index: 10;">
+  <div style="max-width: 1320px; margin: 0 auto; padding: 48px 2rem 0;">
+    <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 48px; padding-bottom: 48px;">
+      <!-- Brand + Quote -->
+      <div>
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+          <svg width="44" height="44" viewBox="0 0 48 48" aria-hidden="true" style="flex-shrink: 0;">
+            <rect x="4" y="4" width="40" height="40" rx="10" fill="none" stroke="#a7c080" stroke-width="2.5"/>
+            <text x="24" y="29" text-anchor="middle" fill="#a7c080" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="18">ZL</text>
+          </svg>
+          <span style="font-family: 'Plaster', 'Space Grotesk', sans-serif; font-size: 20px; color: #f0ebe1;">Zhilong Liang</span>
+        </div>
+        <blockquote style="margin: 0; font-size: 15px; font-style: italic; line-height: 1.6; color: #9da9a0; max-width: 420px; padding-left: 16px; border-left: 2px solid rgba(167, 192, 128, 0.3);">
+          "Any fool can write code that a computer can understand. Good programmers write code that humans can understand."
+          <cite style="display: block; margin-top: 8px; font-style: normal; font-size: 11px; font-family: 'JetBrains Mono', monospace; color: #7a8478; letter-spacing: 0.05em; text-transform: uppercase;">— Martin Fowler</cite>
+        </blockquote>
+      </div>
+
+      <!-- Connect -->
+      <div>
+        <h4 style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: #7a8478; letter-spacing: 0.15em; text-transform: uppercase; margin: 0 0 16px; padding-bottom: 12px; border-bottom: 1px solid rgba(167, 192, 128, 0.15);">Connect</h4>
+        <a href="https://github.com/tea-LZL" target="_blank" rel="noopener" style="display: flex; align-items: center; color: #9da9a0; text-decoration: none; font-size: 14px; padding: 8px 0; transition: color 0.25s ease, transform 0.25s ease;">
+          <i class="bi bi-github" style="font-size: 14px; opacity: 0.6; margin-right: 8px;"></i>GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/zhilong-liang-748b641a1" target="_blank" rel="noopener" style="display: flex; align-items: center; color: #9da9a0; text-decoration: none; font-size: 14px; padding: 8px 0; transition: color 0.25s ease, transform 0.25s ease;">
+          <i class="bi bi-linkedin" style="font-size: 14px; opacity: 0.6; margin-right: 8px;"></i>LinkedIn
+        </a>
+        <a href="https://github.com/tea-LZL/My_Resume" target="_blank" rel="noopener" style="display: flex; align-items: center; color: #9da9a0; text-decoration: none; font-size: 14px; padding: 8px 0; transition: color 0.25s ease, transform 0.25s ease;">
+          <i class="bi bi-code-square" style="font-size: 14px; opacity: 0.6; margin-right: 8px;"></i>Source
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div style="max-width: 1320px; margin: 0 auto; padding: 20px 2rem; border-top: 1px solid rgba(167, 192, 128, 0.12); display: flex; justify-content: space-between; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #7a8478; letter-spacing: 0.04em;">
+    <span>&copy; {{ currentYear }} — handcrafted with <i class="bi bi-suit-heart-fill" style="color: #e67e80;"></i> and TypeScript</span>
+    <span style="opacity: 0.6;">v1.0 · Angular {{ angularVersion }}</span>
+  </div>
+</footer>
+  `,
+  encapsulation: ViewEncapsulation.None,
+  host: {
+    'style': 'display: block; background: #0f1114; flex-shrink: 0; position: relative; z-index: 10;'
+  }
 })
 export class FooterComponent {
-
+  currentYear = new Date().getFullYear();
+  angularVersion = VERSION.major;
 }

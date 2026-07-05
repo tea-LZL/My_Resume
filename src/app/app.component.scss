@@ -98,6 +98,31 @@
   }
 }
 
+/* Morphing organic blob */
+.morph-blob {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  top: -10%;
+  right: -5%;
+  z-index: 1;
+  opacity: 0.5;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+
+  @media (max-width: 768px) {
+    width: 400px;
+    height: 400px;
+    top: -5%;
+    right: -10%;
+  }
+}
+
+.morph-path {
+  fill: rgba(var(--ef-green-rgb), 0.12);
+  transition: fill 0.6s ease;
+}
+
 // .wave-bg {
 //     position: fixed;
 //     inset: 0;

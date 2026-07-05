@@ -8,34 +8,35 @@ import {
 } from '@angular/animations';
 
 /**
- * Route transition animation — smooth fade + slight slide between pages.
+ * Route transition animation — cross-fade with slight horizontal slide.
+ * Projects page slides in from the right, others fade up.
  */
 export const routeAnimation = trigger('routeAnimation', [
   transition('* <=> *', [
     query(':enter', [
       style({
         opacity: 0,
-        transform: 'translateY(12px)',
+        transform: 'translateX(20px)',
       }),
     ], { optional: true }),
 
     group([
       query(':leave', [
         animate(
-          '250ms ease-out',
+          '200ms ease-out',
           style({
             opacity: 0,
-            transform: 'translateY(-8px)',
+            transform: 'translateX(-16px)',
           }),
         ),
       ], { optional: true }),
 
       query(':enter', [
         animate(
-          '350ms 100ms ease-out',
+          '400ms 80ms cubic-bezier(0.16, 1, 0.3, 1)',
           style({
             opacity: 1,
-            transform: 'translateY(0)',
+            transform: 'translateX(0)',
           }),
         ),
       ], { optional: true }),

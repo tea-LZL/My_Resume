@@ -1,6 +1,6 @@
-<div class="w-100 px-4 pt-3 backdrop-blur">
+<div class="w-100 navbar-wrapper" [class.navbar-wrapper--scrolled]="isScrolled">
     <div>
-        <nav class="navbar navbar-expand-xxl rounded shadow">
+        <nav class="navbar navbar-expand-xxl" [class.rounded]="!isScrolled" [class.shadow]="!isScrolled" [class.shadow-sm]="isScrolled">
             <div class="container-fluid">
                 <a class="navbar-brand home-ani text-light-emphasis font-plaster" routerLink="/" tabindex="1"
                     role="button"><i class="bi bi-grid-fill me-1"></i>Zhilong Liang</a>
@@ -33,18 +33,6 @@
                                 <i class="bi bi-file-earmark-person me-1"></i>Resume</button>
                         </li>
                     </ul>
-                    <!-- <ul class="navbar-nav mb-2 mb-lg-0">
-                        <li class="nav-item m-1 dropdown-center">
-                            <a class="nav-link dropdown-ani rounded cursor-pointer px-3 text-light-emphasis"
-                                data-bs-toggle="dropdown" href="#" tabindex="4" role="button" aria-expanded="false">
-                                <i class="bi bi-person-fill me-1"></i>More<i
-                                    class="bi bi-caret-down-fill ms-1"></i></a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item cursor-pointer" (click)="navTo('timeline')"
-                                        (keypress)="navTo('timeline')" tabindex="0" role="button">Timeline</a></li>
-                            </ul>
-                        </li>
-                    </ul> -->
                     <span class="mx-auto"></span>
                     <a class="me-lg-3 px-3 border-0 navbar-nav text-light-emphasis btn btn-bd-linkedin"
                         href="https://www.linkedin.com/in/zhilong-liang-748b641a1" target="_blank" appMagneticHover><i

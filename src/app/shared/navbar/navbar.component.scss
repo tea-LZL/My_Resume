@@ -52,7 +52,13 @@
 
 .navbar {
     background-color: var(--bs-body-bg) !important;
-    filter: brightness(1.3);
+    transition:
+        background-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+.navbar-brand {
+    transition: color 0.4s ease;
 }
 
 .logo-img{
@@ -66,11 +72,29 @@
 
 .backdrop-blur{
     backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
 }
 
-// #bd-theme:hover,#bd-theme:active, #bd-theme.show {
-//     color: var(--bs-light) !important;
-// }
+/* ========================================
+   NAVBAR SCROLL STATE — liquid merge
+   ======================================== */
+
+.navbar-wrapper {
+  padding: 0.75rem 1rem;
+  background: transparent;
+  transition:
+    padding 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.35s ease,
+    border-bottom 0.35s ease;
+  border-bottom: 1px solid transparent;
+}
+
+.navbar-wrapper--scrolled {
+  padding: 0;
+  background: var(--bs-body-bg);
+  border-bottom: 1px solid var(--ef-border);
+}
+
 .dropdown-item:hover {
     background: var(--bs-gray);
 }
@@ -195,4 +219,75 @@
     -moz-transform: rotate(-135deg) scale(0.6);
     -o-transform: rotate(-135deg) scale(0.6);
     transform: rotate(-135deg) scale(0.6);
+}
+
+/* ========================================
+   THEME DROPDOWN ENHANCEMENTS
+   ======================================== */
+
+#bd-theme {
+  transition:
+    background-color 0.4s ease,
+    border-color 0.4s ease,
+    color 0.4s ease;
+}
+
+#bd-theme i {
+  display: inline-block;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#bd-theme:hover i {
+  transform: rotate(30deg);
+}
+
+#bd-theme:active i {
+  transform: rotate(180deg) scale(0.9);
+}
+
+/* Theme dropdown items */
+.dropdown-menu .dropdown-item {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.dropdown-menu .dropdown-item.active {
+  background-color: rgba(167, 192, 128, 0.2);
+  color: var(--ef-green);
+  font-weight: 600;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  transform: translateX(4px);
+}
+
+/* Nav link active state — clean, distinct, theme-aware */
+.nav-link.active,
+.btn-outline-primary.active {
+  background: rgba(var(--ef-green-rgb), 0.18) !important;
+  border-color: var(--ef-green) !important;
+  color: var(--ef-green) !important;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  box-shadow: 0 0 0 1px rgba(var(--ef-green-rgb), 0.25);
+  position: relative;
+
+  /* Left accent bar */
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20%;
+    bottom: 20%;
+    width: 3px;
+    background: var(--ef-green);
+    border-radius: 0 3px 3px 0;
+  }
+}
+
+.nav-link.active i,
+.btn-outline-primary.active i {
+  color: var(--ef-green) !important;
 }

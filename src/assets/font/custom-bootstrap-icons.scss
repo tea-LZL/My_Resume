@@ -87,6 +87,7 @@ $bootstrap-icons-map: (
   "cloud-snow": "\F2BC",
   "cloud-fog2-fill": "\F2A1",
   "cloud-fog2": "\F2A2",
+  "code": "\F2C8",
 );
 
 @each $icon, $codepoint in $bootstrap-icons-map {
@@ -94,4 +95,3 @@ $bootstrap-icons-map: (
     content: $codepoint;
   }
 }
-

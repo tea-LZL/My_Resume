@@ -44,6 +44,51 @@ export class HomeComponent implements OnInit, AfterViewInit {
         setTimeout(() => loadingEl.remove(), 500);
       }
     }, 275);
+
+    // Kinetic typography: animate characters when the hero scrolls into view
+    this.setupKineticReveal();
+  }
+
+  /** Watch for the hero entering the viewport, then stagger the character animations */
+  private setupKineticReveal(): void {
+    const heroEl = document.getElementById("hero-name");
+    if (!heroEl) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            this.animateKineticHero();
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.3 },
+    );
+
+    observer.observe(heroEl);
+  }
+
+  /** Animate each character with staggered delays */
+  private animateKineticHero(): void {
+    const chars = document.querySelectorAll<HTMLElement>(".kinetic-char");
+    chars.forEach((char, i) => {
+      char.style.animationDelay = `${i * 0.05}s`;
+    });
+  }
+
+  /** Film-strip palette scrub: move the scrub line with mouse/touch */
+  onPaletteScrub(event: MouseEvent | TouchEvent): void {
+    const strip = document.getElementById("paletteStrip");
+    const line = document.getElementById("paletteScrubLine");
+    if (!strip || !line) return;
+
+    const rect = strip.getBoundingClientRect();
+    const clientX =
+      event instanceof MouseEvent ? event.clientX : event.touches[0].clientX;
+    const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
+    line.style.left = `${x}px`;
+    line.style.opacity = "0.7";
   }
 
   arrCarouselImg = [
@@ -90,26 +135,26 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   getWeatherIcon(iconCode: string): string {
     const iconMap: Record<string, string> = {
-      "01d": "sun-fill", // wi-day-sunny
-      "01n": "moon-stars-fill", // wi-night-clear
-      "02d": "cloud-sun-fill", // wi-day-cloudy
-      "02n": "cloud-moon", // wi-night-alt-cloudy
-      "03d": "cloud-sun-fill", // wi-cloudy
+      "01d": "sun-fill",
+      "01n": "moon-stars-fill",
+      "02d": "cloud-sun-fill",
+      "02n": "cloud-moon",
+      "03d": "cloud-sun-fill",
       "03n": "cloud-moon",
-      "04d": "clouds-fill", // wi-cloud
+      "04d": "clouds-fill",
       "04n": "clouds",
-      "09d": "cloud-drizzle-fill", // wi-showers
+      "09d": "cloud-drizzle-fill",
       "09n": "cloud-drizzle",
-      "10d": "cloud-rain-fill", // wi-day-rain
-      "10n": "cloud-rain", // wi-night-rain
-      "11d": "cloud-lightning-rain-fill", // wi-thunderstorm
+      "10d": "cloud-rain-fill",
+      "10n": "cloud-rain",
+      "11d": "cloud-lightning-rain-fill",
       "11n": "cloud-lightning-rain",
-      "13d": "cloud-snow-fill", // wi-snow
+      "13d": "cloud-snow-fill",
       "13n": "cloud-snow",
-      "50d": "cloud-fog2-fill", // wi-fog
+      "50d": "cloud-fog2-fill",
       "50n": "cloud-fog2",
     };
-    return iconMap[iconCode] || "cloud"; // wi-na
+    return iconMap[iconCode] || "cloud";
   }
 
   viewFile(string: string) {
