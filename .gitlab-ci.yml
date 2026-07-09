@@ -34,6 +34,8 @@ deploy:
     - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME =~ /^(develop|uat|master)$/
   needs:
     - build
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq git
   script:
     - git clone --branch ${CI_COMMIT_REF_NAME} https://gitlab-ci-token:${API_PUBLISH_TOKEN}@gitlab.com/tea-LZL/My_Resume_Publish.git ./publish
     - cp -a ./dist/project_personal/. ./publish
