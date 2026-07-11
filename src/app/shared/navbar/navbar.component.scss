@@ -1,7 +1,7 @@
 .home-ani {
     text-align: center;
     color: var(--ef-fg);
-    transition: all .3s;
+    transition: all .15s;
     position: relative;
     overflow: hidden;
     z-index: 1;
@@ -53,12 +53,12 @@
 .navbar {
     background-color: var(--bs-body-bg) !important;
     transition:
-        background-color 0.4s ease,
-        box-shadow 0.4s ease;
+        background-color 0.15s ease,
+        box-shadow 0.15s ease;
 }
 
 .navbar-brand {
-    transition: color 0.4s ease;
+    transition: color 0.15s ease;
 }
 
 .logo-img{
@@ -83,9 +83,9 @@
   padding: 0.75rem 1rem;
   background: transparent;
   transition:
-    padding 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-    background 0.35s ease,
-    border-bottom 0.35s ease;
+  padding 0.15s cubic-bezier(0.16, 1, 0.3, 1),
+  background 0.15s ease,
+  border-bottom 0.15s ease;
   border-bottom: 1px solid transparent;
 }
 
@@ -162,10 +162,10 @@
     -moz-transform: rotate(0deg) scale(0.6);
     -o-transform: rotate(0deg) scale(0.6);
     transform: rotate(0deg) scale(0.6);
-    -webkit-transition: .5s ease-in-out;
-    -moz-transition: .5s ease-in-out;
-    -o-transition: .5s ease-in-out;
-    transition: .5s ease-in-out;
+    -webkit-transition: .25s ease-in-out;
+    -moz-transition: .25s ease-in-out;
+    -o-transition: .25s ease-in-out;
+    transition: .25s ease-in-out;
     cursor: pointer;
 }
 
@@ -182,10 +182,10 @@
     -moz-transform: rotate(0deg) scale(0.6);
     -o-transform: rotate(0deg) scale(0.6);
     transform: rotate(0deg) scale(0.6);
-    -webkit-transition: .25s ease-in-out;
-    -moz-transition: .25s ease-in-out;
-    -o-transition: .25s ease-in-out;
-    transition: .25s ease-in-out;
+    -webkit-transition: .15s ease-in-out;
+    -moz-transition: .15s ease-in-out;
+    -o-transition: .15s ease-in-out;
+    transition: .15s ease-in-out;
 }
 
 #nav-icon span:nth-child(1) {
@@ -227,14 +227,14 @@
 
 #bd-theme {
   transition:
-    background-color 0.4s ease,
-    border-color 0.4s ease,
-    color 0.4s ease;
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
 }
 
 #bd-theme i {
   display: inline-block;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 #bd-theme:hover i {
@@ -248,9 +248,9 @@
 /* Theme dropdown items */
 .dropdown-menu .dropdown-item {
   transition:
-    background-color 0.3s ease,
-    color 0.3s ease,
-    transform 0.3s ease;
+    background-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease;
 }
 
 .dropdown-menu .dropdown-item.active {

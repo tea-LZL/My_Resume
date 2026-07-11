@@ -9,10 +9,18 @@ import {
   ViewChild,
   ViewChildren,
 } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { ModalComponent } from "../../shared/modal/modal.component";
 import { WeatherService } from "../../services/weather.service";
 import { WeatherData } from "../../interfaces/weather";
 import { ScrollRevealDirective } from "../../shared/directives/scroll-reveal.directive";
+
+interface ContributionDay {
+  date: string;
+  count: number;
+  level: number; // 0-4 intensity
+}
 
 @Component({
   selector: "app-home",
@@ -28,9 +36,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
   isWeatherLoading = false;
   weatherError: string | null = null;
 
+  gitlabWeeks: ContributionDay[][] = [];
+  githubSvg: SafeHtml = '';
+
   constructor(
     private renderer: Renderer2,
     private weatherService: WeatherService,
+    private http: HttpClient,
+    private sanitizer: DomSanitizer,
   ) {}
 
   ngAfterViewInit(): void {
@@ -107,6 +120,67 @@ export class HomeComponent implements OnInit, AfterViewInit {
       touch: true,
     });
     this.fetchWeather();
+    this.fetchGitlabContributions();
+    this.fetchGithubContributions();
+  }
+
+  private fetchGithubContributions(): void {
+    const COLORS: Record<string, string> = {
+      '#eeeeee': 'var(--gh-empty)',
+      '#c6e48b': 'var(--gh-l1)',
+      '#7bc96f': 'var(--gh-l2)',
+      '#239a3b': 'var(--gh-l3)',
+      '#196127': 'var(--gh-l4)',
+    };
+    this.http.get('/github-chart', { responseType: 'text' })
+      .subscribe({
+        next: (svg) => {
+          for (const [from, to] of Object.entries(COLORS)) {
+            svg = svg.replaceAll(from, to);
+          }
+          this.githubSvg = this.sanitizer.bypassSecurityTrustHtml(svg);
+        },
+        error: () => {},
+      });
+  }
+
+  private fetchGitlabContributions(): void {
+    this.http.get<Record<string, number>>('/gitlab-calendar')
+      .subscribe({
+        next: (data) => { this.gitlabWeeks = this.buildHeatmap(data); },
+        error: () => {}, // ponytail: silent fail, no API = no graph
+      });
+  }
+
+  private buildHeatmap(data: Record<string, number>): ContributionDay[][] {
+    const today = new Date();
+    const weeks: ContributionDay[][] = [];
+    const startDate = new Date(today);
+    startDate.setDate(today.getDate() - 364);
+
+    const cursor = new Date(startDate);
+    cursor.setDate(cursor.getDate() - cursor.getDay());
+
+    let currentWeek: ContributionDay[] = [];
+    let weekCount = 0;
+
+    while (weekCount < 53) {
+      const dateStr = cursor.toISOString().slice(0, 10);
+      const count = data[dateStr] || 0;
+      currentWeek.push({
+        date: dateStr,
+        count,
+        level: count === 0 ? 0 : count <= 2 ? 1 : count <= 5 ? 2 : count <= 10 ? 3 : 4,
+      });
+
+      if (currentWeek.length === 7) {
+        weeks.push(currentWeek);
+        currentWeek = [];
+        weekCount++;
+      }
+      cursor.setDate(cursor.getDate() + 1);
+    }
+    return weeks;
   }
 
   fetchWeather() {

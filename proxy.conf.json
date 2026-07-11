@@ -1,0 +1,14 @@
+{
+  "/gitlab-calendar": {
+    "target": "https://gitlab.com",
+    "secure": true,
+    "pathRewrite": { "^/gitlab-calendar": "/users/tea-LZL/calendar.json" },
+    "changeOrigin": true
+  },
+  "/github-chart": {
+    "target": "https://ghchart.rshah.org",
+    "secure": true,
+    "pathRewrite": { "^/github-chart": "/tea-LZL" },
+    "changeOrigin": true
+  }
+}

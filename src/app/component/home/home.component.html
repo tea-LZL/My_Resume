@@ -399,6 +399,68 @@
       </ul>
     </div>
   </div>
+
+  <!-- Contribution Activity -->
+  <div
+    class="bento-cell bento-contributions monograph-card card p-4 rounded-4 shadow"
+    style="opacity: 98%"
+    [appScrollReveal]="'fade-up'"
+    [revealDelay]="250">
+    <h5 class="d-flex align-items-center gap-2 mb-2">
+      <i class="bi bi-github"></i> GitHub Contributions
+      <a href="https://github.com/tea-LZL" target="_blank" class="ms-auto fs-6 fw-normal text-muted text-decoration-none">&#64;tea-LZL <i class="bi bi-box-arrow-up-right ms-1"></i></a>
+    </h5>
+    <div class="contrib-img" [innerHTML]="githubSvg"></div>
+  </div>
+
+  <!-- GitLab Contribution Activity -->
+  <div
+    class="bento-cell bento-gitlab monograph-card card p-4 rounded-4 shadow"
+    style="opacity: 98%"
+    [appScrollReveal]="'fade-up'"
+    [revealDelay]="300">
+    <h5 class="d-flex align-items-center gap-2 mb-2">
+      <i class="bi bi-gitlab" style="color: #fc6d26"></i> GitLab Contributions
+      <a href="https://gitlab.com/tea-LZL" target="_blank" class="ms-auto fs-6 fw-normal text-muted text-decoration-none">&#64;tea-LZL <i class="bi bi-box-arrow-up-right ms-1"></i></a>
+    </h5>
+    @if (gitlabWeeks.length) {
+      <div class="heatmap-wrapper">
+        <div class="heatmap-chart">
+          <!-- y-axis day labels -->
+          <div class="heatmap-y-label" style="grid-row:2">Mon</div>
+          <div class="heatmap-y-label" style="grid-row:4">Wed</div>
+          <div class="heatmap-y-label" style="grid-row:6">Fri</div>
+          <div class="heatmap-grid">
+            @for (week of gitlabWeeks; track $index) {
+              <div class="heatmap-week">
+                @for (day of week; track day.date) {
+                  <div
+                    class="heatmap-day"
+                    [attr.data-level]="day.level"
+                    [title]="day.date + ': ' + day.count + ' contributions'"></div>
+                }
+              </div>
+            }
+          </div>
+
+        </div>
+        <div class="heatmap-legend">
+          <span class="text-muted small">Less</span>
+          <div class="heatmap-day" data-level="0"></div>
+          <div class="heatmap-day" data-level="1"></div>
+          <div class="heatmap-day" data-level="2"></div>
+          <div class="heatmap-day" data-level="3"></div>
+          <div class="heatmap-day" data-level="4"></div>
+          <span class="text-muted small">More</span>
+        </div>
+      </div>
+    } @else {
+      <div class="text-center text-muted py-3">
+        <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+        Loading contribution data&hellip;
+      </div>
+    }
+  </div>
 </div>
 
 <app-modal #modalComp></app-modal>

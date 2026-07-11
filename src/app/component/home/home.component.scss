@@ -158,6 +158,16 @@ hr {
     grid-column: 4 / 5;
     grid-row: 4 / 5;
   }
+
+  .bento-contributions {
+    grid-column: 1 / 5;
+    grid-row: 5 / 6;
+  }
+
+  .bento-gitlab {
+    grid-column: 1 / 5;
+    grid-row: 6 / 7;
+  }
 }
 
 /* Tablet (2 columns) */
@@ -431,4 +441,101 @@ hr {
   .marquee-track {
     animation: none !important;
   }
+}
+
+/* ========================================
+   CONTRIBUTION HEATMAP
+   ======================================== */
+
+.heatmap-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.heatmap-chart {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: repeat(7, 12px) auto;
+  gap: 3px;
+  align-items: center;
+}
+
+.heatmap-y-label {
+  font-size: 0.65rem;
+  color: var(--ef-fg-muted);
+  text-align: right;
+  padding-right: 6px;
+  line-height: 12px;
+}
+
+.heatmap-grid {
+  display: flex;
+  gap: 3px;
+  grid-column: 2;
+  grid-row: 1 / span 7;
+}
+
+.heatmap-week {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.heatmap-day {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+
+  &[data-level="0"] { background: var(--ef-border); }
+  &[data-level="1"] { background: rgba(var(--ef-green-rgb), 0.25); }
+  &[data-level="2"] { background: rgba(var(--ef-green-rgb), 0.45); }
+  &[data-level="3"] { background: rgba(var(--ef-green-rgb), 0.7); }
+  &[data-level="4"] { background: var(--ef-green); }
+}
+
+.heatmap-legend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  justify-content: flex-end;
+
+  .heatmap-day {
+    width: 11px;
+    height: 11px;
+  }
+}
+
+.contrib-img {
+  max-height: 140px;
+  overflow: hidden;
+  border-radius: 6px;
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+
+:host {
+  --gh-empty: #424c50;
+  --gh-l1: #b5d396;
+  --gh-l2: #a7c080;
+  --gh-l3: #8da571;
+  --gh-l4: #6e8a57;
+}
+
+:host-context([data-bs-theme="light"]) {
+  --gh-empty: #d4d4d4;
+  --gh-l1: #9ab86a;
+  --gh-l2: #7da05a;
+  --gh-l3: #6b8e4d;
+  --gh-l4: #5a7a3f;
 }
