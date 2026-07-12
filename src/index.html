@@ -17,6 +17,13 @@
       <span class="loader"></span>
     </div>
     <noscript>Please enable JavaScript to continue using this application.</noscript>
+    <script>
+      // ponytail: fallback if Angular bootstrap stalls
+      setTimeout(function() {
+        var el = document.getElementById('app-loading');
+        if (el) { el.classList.add('fade-out'); setTimeout(function() { el.remove(); }, 500); }
+      }, 3000);
+    </script>
   </body>
 
 </html>

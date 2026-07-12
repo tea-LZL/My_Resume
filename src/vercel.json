@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/github-chart",
+      "destination": "https://ghchart.rshah.org/tea-LZL"
+    },
+    {
+      "source": "/gitlab-calendar",
+      "destination": "https://gitlab.com/users/tea-LZL/calendar.json"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
