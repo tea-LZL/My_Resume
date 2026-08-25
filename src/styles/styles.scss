@@ -130,6 +130,17 @@ a {
   }
 }
 
+.resume-download-window {
+  .modal-content {
+    overflow: hidden;
+    border: 1px solid var(--site-line);
+    border-radius: 0;
+    background: var(--site-background);
+    color: var(--site-foreground);
+    box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.35);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

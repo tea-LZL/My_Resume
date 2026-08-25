@@ -44,7 +44,7 @@ export interface WorkExperienceEntry {
 }
 
 export const contact = {
-  email: "zhilong.k.liang@gmail.com",
+  email: "zhilongliang@tealzl.com",
   phone: "+27 82-732-6878",
   location: "Pretoria, ZA",
   linkedinUrl: "https://www.linkedin.com/in/zhilong-liang-748b641a1",

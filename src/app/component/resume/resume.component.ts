@@ -39,7 +39,8 @@ export class ResumeComponent {
     );
     const modalRef = this.modal.open(DownloadResumeComponent, {
       centered: true,
-      size: "md",
+      size: "lg",
+      windowClass: "resume-download-window",
       ariaLabelledBy: "download-resume-title",
     });
 

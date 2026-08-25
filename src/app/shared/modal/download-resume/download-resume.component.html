@@ -1,47 +1,74 @@
-<div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Download Resume</h4>
-    <button type="button" class="btn-close" aria-label="Close" (click)="dismiss()"></button>
-</div>
-<div class="modal-body">
-    <div class="mb-3">
-        <p>Theme:</p>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="theme" id="theme-default" value="default" checked
-                [(ngModel)]="sTheme">
-            <label class="form-check-label" for="theme-default">
-                <i class="bi bi-square-fill me-1 text-primary"></i>
-                <i class="bi bi-square-fill text-secondary"></i>
-                <span class="ms-1">Default</span>
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="theme" id="theme-alternate" value="alternate"
-                [(ngModel)]="sTheme">
-            <label class="form-check-label" for="theme-alternate">
-                <i class="bi bi-square-fill me-1" style="color: #ffffff;"></i>
-                <i class="bi bi-square-fill" style="color: #0d6efd"></i>
-                <span class="ms-1">Alternative</span>
-            </label>
-        </div>
-    </div>
+<div class="resume-download-modal">
+  <header class="resume-download-modal__header">
     <div>
-        <p>Include Certificates:</p>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="credentials" id="credentials-include" [value]="true"
-                [(ngModel)]="bIncludeCredential">
-            <label class="form-check-label" for="credentials-include">
-                Include
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="credentials" id="credentials-exclude" [value]="false"
-                [(ngModel)]="bIncludeCredential" checked>
-            <label class="form-check-label" for="credentials-exclude">
-                Exclude
-            </label>
-        </div>
+      <p class="resume-download-modal__eyebrow">Resume / document settings</p>
+      <h2 id="download-resume-title">Download your resume.</h2>
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-outline-primary" (click)="downloadPDF()">Download
-            PDF</button>
-    </div>
+    <button
+      type="button"
+      class="resume-download-modal__close"
+      aria-label="Close download settings"
+      (click)="dismiss()"
+    >
+      <span aria-hidden="true">×</span>
+    </button>
+  </header>
+
+  <div class="resume-download-modal__body">
+    <p class="resume-download-modal__intro">
+      The PDF keeps the current editorial hierarchy, shared resume data, and selectable text.
+    </p>
+
+    <fieldset class="pdf-theme-options" [disabled]="isGenerating">
+      <legend>PDF theme</legend>
+
+      <label class="pdf-theme-option" [class.is-selected]="sTheme === 'dark'">
+        <input type="radio" name="resume-pdf-theme" value="dark" [(ngModel)]="sTheme" />
+        <span class="pdf-theme-option__swatch pdf-theme-option__swatch--dark" aria-hidden="true"></span>
+        <span class="pdf-theme-option__content">
+          <strong>Dark editorial</strong>
+          <small>Everforest palette with soft green rules.</small>
+        </span>
+      </label>
+
+      <label class="pdf-theme-option" [class.is-selected]="sTheme === 'light'">
+        <input type="radio" name="resume-pdf-theme" value="light" [(ngModel)]="sTheme" />
+        <span class="pdf-theme-option__swatch pdf-theme-option__swatch--light" aria-hidden="true"></span>
+        <span class="pdf-theme-option__content">
+          <strong>Paper light</strong>
+          <small>Warm paper with the same editorial structure.</small>
+        </span>
+      </label>
+    </fieldset>
+
+    <label class="credential-option">
+      <input type="checkbox" [(ngModel)]="bIncludeCredential" [disabled]="isGenerating" />
+      <span>
+        <strong>Append credential PDFs</strong>
+        <small>Place the verified Azure credential documents after the resume.</small>
+      </span>
+    </label>
+
+    @if (generationError) {
+      <p class="resume-download-modal__error" role="alert">{{ generationError }}</p>
+    }
+  </div>
+
+  <footer class="resume-download-modal__footer">
+    <button type="button" class="resume-download-button" [disabled]="isGenerating" (click)="dismiss()">
+      Cancel
+    </button>
+    <button
+      type="button"
+      class="resume-download-button resume-download-button--accent"
+      [disabled]="isGenerating"
+      (click)="downloadPDF()"
+    >
+      @if (isGenerating) {
+        Generating…
+      } @else {
+        Download PDF
+      }
+    </button>
+  </footer>
+</div>
