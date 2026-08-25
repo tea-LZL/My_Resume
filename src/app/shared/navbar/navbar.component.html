@@ -1,79 +1,60 @@
-<div class="w-100 navbar-wrapper" [class.navbar-wrapper--scrolled]="isScrolled">
-    <div>
-        <nav class="navbar navbar-expand-xxl" [class.rounded]="!isScrolled" [class.shadow]="!isScrolled" [class.shadow-sm]="isScrolled">
-            <div class="container-fluid">
-                <a class="navbar-brand home-ani text-light-emphasis font-plaster" routerLink="/" tabindex="1"
-                    role="button"><i class="bi bi-grid-fill me-1"></i>Zhilong Liang</a>
-                <div id="nav-icon" class="navbar-toggler border-0" (click)="bNav = !bNav; openNavModal()"
-                    (keyup)="bNav = !bNav" tabindex="2" role="button" aria-controls="navbarsCollapse"
-                    [ngClass]="{'open':bNav}" aria-expanded="false" aria-label="Toggle navigation">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                <div class="collapse navbar-collapse" id="navbarsCollapse">
-                    <ul class="navbar-nav mb-2 mb-lg-0">
-                        <li class="nav-item m-1 dropdown-center">
-                            <button class="border-0 rounded px-3 btn btn-outline-primary" tabindex="3" routerLink="/"
-                                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" appMagneticHover>
-                                <i class="bi bi-house-fill me-1"></i>Home</button>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav mb-2 mb-lg-0">
-                        <li class="nav-item m-1 dropdown-center">
-                            <button class="border-0 rounded px-3  btn btn-outline-primary" tabindex="4"
-                                routerLink="/projects" routerLinkActive="active" appMagneticHover>
-                                <i class="bi bi-terminal-fill me-1"></i>Projects</button>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav mb-2 mb-lg-0">
-                        <li class="nav-item m-1 dropdown-center">
-                            <button class="border-0 rounded px-3  btn btn-outline-primary" tabindex="4"
-                                routerLink="/resume" routerLinkActive="active" appMagneticHover>
-                                <i class="bi bi-file-earmark-person me-1"></i>Resume</button>
-                        </li>
-                    </ul>
-                    <span class="mx-auto"></span>
-                    <a class="me-lg-3 px-3 border-0 navbar-nav text-light-emphasis btn btn-bd-linkedin"
-                        href="https://www.linkedin.com/in/zhilong-liang-748b641a1" target="_blank" appMagneticHover><i
-                            class="bi bi-linkedin"></i></a>
-                    <a class="me-lg-3 px-3 border-0 navbar-nav text-light-emphasis btn btn-bd-github"
-                        href="https://github.com/tea-LZL" target="_blank" appMagneticHover><i class="bi bi-github"></i></a>
-                    <div class="dropdown navbar-nav">
-                        <button
-                            class="btn btn-outline-primary border-0 py-2 dropdown-toggle d-flex align-items-center text-light-emphasis align-self-center"
-                            id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown"
-                            aria-label="Toggle theme (auto)">
-                            <i class="bi"
-                                [ngClass]="{'bi-circle-half':theme === 'auto','bi-moon-stars-fill':theme === 'dark','bi-sun-fill':theme === 'light'}"></i>
-                            <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="bd-theme-text">
-                            <li class="py-1 px-3">
-                                <button type="button"
-                                    class="dropdown-item rounded-pill d-flex align-items-center justify-content-center"
-                                    [ngClass]="{'active':theme === 'light'}" (click)="setTheme('light')">
-                                    <i class="bi bi-sun-fill me-2"></i>Light
-                                </button>
-                            </li>
-                            <li class="py-1 px-3">
-                                <button type="button"
-                                    class="dropdown-item rounded-pill d-flex align-items-center justify-content-center"
-                                    [ngClass]="{'active':theme === 'dark'}" (click)="setTheme('dark')">
-                                    <i class="bi bi-moon-stars-fill me-2"></i>Dark
-                                </button>
-                            </li>
-                            <li class="py-1 px-3">
-                                <button type="button"
-                                    class="dropdown-item rounded-pill d-flex align-items-center justify-content-center"
-                                    [ngClass]="{'active':theme === 'auto'}" (click)="setTheme('auto')">
-                                    <i class="bi bi-circle-half me-2"></i>Auto
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </nav>
+<header class="site-nav" [class.site-nav--scrolled]="isScrolled">
+  <div class="site-nav__inner">
+    <a class="site-nav__brand" routerLink="/" aria-label="Zhilong Liang home">
+      <span class="site-nav__mark" aria-hidden="true">ZL</span>
+      <span>Zhilong Liang</span>
+    </a>
+
+    <nav class="site-nav__links" aria-label="Primary navigation">
+      <a routerLink="/" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }" appMagneticHover>
+        Home
+      </a>
+      <a routerLink="/projects" routerLinkActive="is-active" appMagneticHover>Projects</a>
+      <a routerLink="/resume" routerLinkActive="is-active" appMagneticHover>Resume</a>
+      <a routerLink="/timeline" routerLinkActive="is-active" appMagneticHover>Timeline</a>
+    </nav>
+
+    <div class="site-nav__actions">
+      <a class="site-nav__social-button" href="https://github.com/tea-LZL" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub">
+        <i class="bi bi-github" aria-hidden="true"></i>
+      </a>
+      <a class="site-nav__social-button" href="https://gitlab.com/tea-LZL" target="_blank" rel="noopener noreferrer" aria-label="GitLab" title="GitLab">
+        <i class="bi bi-gitlab" aria-hidden="true"></i>
+      </a>
+      <a class="site-nav__social-button" href="https://www.linkedin.com/in/zhilong-liang-748b641a1" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn">
+        <i class="bi bi-linkedin" aria-hidden="true"></i>
+      </a>
+      <div class="theme-menu">
+        <button
+          type="button"
+          class="theme-button"
+          id="bd-theme"
+          aria-haspopup="menu"
+          aria-label="Choose color theme"
+          data-bs-toggle="dropdown"
+        >
+          <i class="bi" [ngClass]="{ 'bi-circle-half': theme === 'auto', 'bi-moon-stars-fill': theme === 'dark', 'bi-sun-fill': theme === 'light' }" aria-hidden="true"></i>
+          <span class="visually-hidden">Choose color theme</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme">
+          <li><button type="button" class="dropdown-item" [class.active]="theme === 'light'" (click)="setTheme('light')">Light</button></li>
+          <li><button type="button" class="dropdown-item" [class.active]="theme === 'dark'" (click)="setTheme('dark')">Dark</button></li>
+          <li><button type="button" class="dropdown-item" [class.active]="theme === 'auto'" (click)="setTheme('auto')">Auto</button></li>
+        </ul>
+      </div>
     </div>
-</div>
+
+    <button
+      type="button"
+      class="site-nav__toggle"
+      [class.is-open]="bNav"
+      [attr.aria-expanded]="bNav"
+      aria-label="Open navigation menu"
+      (click)="openNavModal()"
+    >
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
+  </div>
+</header>

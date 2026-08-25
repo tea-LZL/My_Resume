@@ -1,18 +1,22 @@
-import { Component } from '@angular/core';
-import { ScrollRevealDirective } from '../../shared/directives/scroll-reveal.directive';
+import { Component } from "@angular/core";
+
+import {
+  certifications,
+  education,
+  workExperience,
+} from "../../data/portfolio.data";
+import { ScrollRevealDirective } from "../../shared/directives/scroll-reveal.directive";
 
 @Component({
-    selector: 'app-timeline',
-    imports: [ScrollRevealDirective],
-    templateUrl: './timeline.component.html',
-    styleUrl: './timeline.component.scss'
+  selector: "app-timeline",
+  imports: [ScrollRevealDirective],
+  templateUrl: "./timeline.component.html",
+  styleUrl: "./timeline.component.scss",
 })
 export class TimelineComponent {
-    constructor() {
-        const loadingEl = document.getElementById('app-loading');
-        if (loadingEl) {
-            loadingEl.classList.add('fade-out');
-            setTimeout(() => loadingEl.remove(), 500);
-        }
-    }
+  readonly workExperience = workExperience;
+  readonly timelineWorkExperience = workExperience;
+  readonly education = education;
+  readonly timelineEducation = [...education].reverse();
+  readonly certifications = certifications;
 }

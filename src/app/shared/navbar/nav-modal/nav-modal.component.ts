@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -10,12 +10,11 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrl: './nav-modal.component.scss'
 })
 export class NavModalComponent {
-  themeList = ['auto','light','dark'];
-  theme:string;
-  constructor(public activeModal: NgbActiveModal){
-    this.theme = localStorage.getItem("theme")?? 'auto';
-  }
-  changeTheme() {
+  readonly themeList = ['auto', 'light', 'dark'];
+  theme = localStorage.getItem("theme") ?? "auto";
+  public readonly activeModal = inject(NgbActiveModal);
+
+  changeTheme(): void {
     this.theme = localStorage.getItem("theme") ?? 'auto';
     let index = this.themeList.findIndex((x: string) => x === this.theme);
     if (index >= 2) index = -1;

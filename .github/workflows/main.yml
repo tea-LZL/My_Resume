@@ -27,26 +27,24 @@ jobs:
         working-directory: ./
         run: bun ci
 
+      - name: test
+        working-directory: ./
+        run: bun run test -- --watch=false --browsers=ChromeHeadless
+
+      - name: lint
+        working-directory: ./
+        run: bun run lint
+
       - name: build
-        if: |
-          (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/uat' || github.ref == 'refs/heads/master') &&
-          github.event_name == 'push'
+        if: ${{ success() && github.event_name == 'push' && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/uat' || github.ref == 'refs/heads/master') }}
         run: |
-          case "${GITHUB_REF_NAME}" in
-            develop) build_config=prelive ;;
-            uat) build_config=uat ;;
-            master) build_config=production ;;
-            *) echo "Unsupported branch ${GITHUB_REF_NAME}"; exit 1 ;;
-          esac
           sed -i 's/{{OPENWEATHER_API_KEY}}/${{ secrets.OPENWEATHER_API_KEY }}/g' src/environments/environment.ts
-          bun run build --configuration ${build_config}
+          bun run build --configuration production
         working-directory: ./
 
       - name: Checkout publish
         uses: actions/checkout@v4
-        if: |
-          (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/uat' || github.ref == 'refs/heads/master') &&
-          github.event_name == 'push'
+        if: ${{ success() && github.event_name == 'push' && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/uat' || github.ref == 'refs/heads/master') }}
         with:
           repository: tea-LZL/My_Resume_Publish # optional, default is ${{ github.repository }}
           ref: refs/heads/${{ github.ref_name }} # optional
@@ -54,15 +52,11 @@ jobs:
           path: ./publish
 
       - name: copy
-        if: |
-          (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/uat' || github.ref == 'refs/heads/master') &&
-          github.event_name == 'push'
+        if: ${{ success() && github.event_name == 'push' && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/uat' || github.ref == 'refs/heads/master') }}
         run: |
           cp -a ./dist/project_personal/. ./publish
       - name: commit
-        if: |
-          (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/uat' || github.ref == 'refs/heads/master') &&
-          github.event_name == 'push'
+        if: ${{ success() && github.event_name == 'push' && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/uat' || github.ref == 'refs/heads/master') }}
         run: |
           echo "first LS"
           cd ./publish

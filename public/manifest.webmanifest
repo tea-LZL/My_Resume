@@ -1,8 +1,9 @@
 {
-  "name": "Zhilong's Resume",
-  "short_name": "ZL's Resume",
-  "theme_color": "#2d353b",
-  "background_color": "#fafafa",
+  "name": "Zhilong Liang — Software Engineer",
+  "short_name": "Zhilong Liang",
+  "description": "Portfolio and resume for Zhilong Liang, a software engineer, with selected projects, experience, and contact details.",
+  "theme_color": "#101014",
+  "background_color": "#101014",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
@@ -64,14 +65,14 @@
       "sizes": "3816x1847",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Home screen showing main navigation and featured content"
+      "label": "Desktop home screen"
     },
     {
       "src": "screenshots/Mobile.png",
       "sizes": "778x1671",
       "type": "image/png",
       "platform": "ios",
-      "label": "Mobile View showing main navigation and featured content"
+      "label": "Mobile home screen"
     }
   ]
 }

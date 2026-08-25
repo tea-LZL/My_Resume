@@ -1,155 +1,147 @@
-import { CommonModule, NgClass } from "@angular/common";
+import { CommonModule } from "@angular/common";
 import {
   AfterViewInit,
   Component,
-  ElementRef,
   OnInit,
-  QueryList,
-  Renderer2,
   ViewChild,
-  ViewChildren,
+  inject,
 } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
+import { RouterLink } from "@angular/router";
 import { ModalComponent } from "../../shared/modal/modal.component";
+import { ScrollRevealDirective } from "../../shared/directives/scroll-reveal.directive";
 import { WeatherService } from "../../services/weather.service";
 import { WeatherData } from "../../interfaces/weather";
-import { ScrollRevealDirective } from "../../shared/directives/scroll-reveal.directive";
+import { Project } from "../../interfaces/project";
+import {
+  CertificateLink,
+  certificateLinks,
+  certifications as portfolioCertifications,
+  education as portfolioEducation,
+  featuredProjects as portfolioFeaturedProjects,
+  portfolioProjects,
+  profile as portfolioProfile,
+  skills as portfolioSkills,
+  workExperience as portfolioWorkExperience,
+} from "../../data/portfolio.data";
 
 interface ContributionDay {
   date: string;
   count: number;
-  level: number; // 0-4 intensity
+  level: number;
+}
+
+interface BootstrapWindow extends Window {
+  bootstrap?: {
+    Carousel?: new (
+      element: Element,
+      options: {
+        interval: number;
+        touch: boolean;
+      },
+    ) => unknown;
+  };
 }
 
 @Component({
   selector: "app-home",
-  imports: [CommonModule, NgClass, ModalComponent, ScrollRevealDirective],
+  imports: [CommonModule, RouterLink, ModalComponent, ScrollRevealDirective],
   templateUrl: "./home.component.html",
   styleUrl: "./home.component.scss",
 })
 export class HomeComponent implements OnInit, AfterViewInit {
-  @ViewChildren("transGrow") transGrowElems!: QueryList<ElementRef>;
-  @ViewChild("modalComp") modalComp!: ModalComponent;
-  imgLoadStatus: boolean[] = [];
-  weatherData: WeatherData | null = null;
-  isWeatherLoading = false;
-  weatherError: string | null = null;
+  @ViewChild("modalComp") modalComp?: ModalComponent;
 
-  gitlabWeeks: ContributionDay[][] = [];
-  githubSvg: SafeHtml = '';
+  private readonly weatherService = inject(WeatherService);
+  private readonly http = inject(HttpClient);
 
-  constructor(
-    private renderer: Renderer2,
-    private weatherService: WeatherService,
-    private http: HttpClient,
-    private sanitizer: DomSanitizer,
-  ) {}
+  readonly profile = portfolioProfile;
+  readonly featuredProjects = portfolioFeaturedProjects;
+  readonly skills = portfolioSkills;
+  readonly education = portfolioEducation;
+  readonly certifications = portfolioCertifications;
+  readonly workExperience = portfolioWorkExperience;
+  readonly certificateLinks = certificateLinks;
+  readonly weatheringProject: Project | undefined = portfolioProjects.find(
+    (project) => project.id === "weathering-with-go-api",
+  );
 
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.transGrowElems.forEach((elem) => {
-        this.renderer.addClass(elem.nativeElement, "grow");
-      });
-      const loadingEl = document.getElementById("app-loading");
-      if (loadingEl) {
-        loadingEl.classList.add("fade-out");
-        setTimeout(() => loadingEl.remove(), 500);
-      }
-    }, 275);
-
-    // Kinetic typography: animate characters when the hero scrolls into view
-    this.setupKineticReveal();
-  }
-
-  /** Watch for the hero entering the viewport, then stagger the character animations */
-  private setupKineticReveal(): void {
-    const heroEl = document.getElementById("hero-name");
-    if (!heroEl) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            this.animateKineticHero();
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.3 },
-    );
-
-    observer.observe(heroEl);
-  }
-
-  /** Animate each character with staggered delays */
-  private animateKineticHero(): void {
-    const chars = document.querySelectorAll<HTMLElement>(".kinetic-char");
-    chars.forEach((char, i) => {
-      char.style.animationDelay = `${i * 0.05}s`;
-    });
-  }
-
-  /** Film-strip palette scrub: move the scrub line with mouse/touch */
-  onPaletteScrub(event: MouseEvent | TouchEvent): void {
-    const strip = document.getElementById("paletteStrip");
-    const line = document.getElementById("paletteScrubLine");
-    if (!strip || !line) return;
-
-    const rect = strip.getBoundingClientRect();
-    const clientX =
-      event instanceof MouseEvent ? event.clientX : event.touches[0].clientX;
-    const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
-    line.style.left = `${x}px`;
-    line.style.opacity = "0.7";
-  }
-
-  arrCarouselImg = [
+  readonly arrCarouselImg = [
     "assets/Cat1.JPEG",
     "assets/Cat2.JPEG",
     "assets/Cat3.JPEG",
     "assets/Cat4.JPEG",
   ];
+
+  imgLoadStatus: boolean[] = [];
   isImgLoaded = false;
-  ngOnInit() {
-    const myCarouselElement = document.querySelector("#carousel");
+  private readonly carouselImageErrors = new Set<number>();
+  private readonly projectImageErrors = new Set<string>();
+
+  weatherData: WeatherData | null = null;
+  isWeatherLoading = false;
+  weatherError: string | null = null;
+
+  gitlabWeeks: ContributionDay[][] = [];
+  isGitlabLoading = false;
+  gitlabError: string | null = null;
+
+  githubChartUrl = "/github-chart";
+  isGithubChartLoaded = false;
+  githubChartError: string | null = null;
+
+  ngOnInit(): void {
     this.imgLoadStatus = this.arrCarouselImg.map(() => false);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-    const carousel = new (window as any).bootstrap.Carousel(myCarouselElement, {
-      interval: 5000,
-      touch: true,
-    });
     this.fetchWeather();
     this.fetchGitlabContributions();
     this.fetchGithubContributions();
   }
 
-  private fetchGithubContributions(): void {
-    const COLORS: Record<string, string> = {
-      '#eeeeee': 'var(--gh-empty)',
-      '#c6e48b': 'var(--gh-l1)',
-      '#7bc96f': 'var(--gh-l2)',
-      '#239a3b': 'var(--gh-l3)',
-      '#196127': 'var(--gh-l4)',
-    };
-    this.http.get('/github-chart', { responseType: 'text' })
-      .subscribe({
-        next: (svg) => {
-          for (const [from, to] of Object.entries(COLORS)) {
-            svg = svg.replaceAll(from, to);
-          }
-          this.githubSvg = this.sanitizer.bypassSecurityTrustHtml(svg);
-        },
-        error: () => {},
+  ngAfterViewInit(): void {
+    this.initializeCarousel();
+  }
+
+  private initializeCarousel(): void {
+    const carouselElement =
+      typeof document === "undefined"
+        ? null
+        : document.querySelector("#carousel");
+    const Carousel =
+      typeof window === "undefined"
+        ? undefined
+        : (window as BootstrapWindow).bootstrap?.Carousel;
+
+    if (carouselElement && Carousel) {
+      new Carousel(carouselElement, {
+        interval: 5000,
+        touch: true,
       });
+    }
+  }
+
+  private fetchGithubContributions(): void {
+    // The chart is requested as an image so its SVG never enters the HTML trust boundary.
+    this.githubChartUrl = "/github-chart";
+    this.isGithubChartLoaded = false;
+    this.githubChartError = null;
   }
 
   private fetchGitlabContributions(): void {
-    this.http.get<Record<string, number>>('/gitlab-calendar')
-      .subscribe({
-        next: (data) => { this.gitlabWeeks = this.buildHeatmap(data); },
-        error: () => {}, // ponytail: silent fail, no API = no graph
-      });
+    this.isGitlabLoading = true;
+    this.gitlabError = null;
+
+    this.http.get<Record<string, number>>("/gitlab-calendar").subscribe({
+      next: (data) => {
+        this.gitlabWeeks = this.buildHeatmap(data);
+        this.isGitlabLoading = false;
+      },
+      error: () => {
+        this.gitlabWeeks = [];
+        this.isGitlabLoading = false;
+        this.gitlabError =
+          "GitLab activity is unavailable right now, but the rest of the portfolio is still available.";
+      },
+    });
   }
 
   private buildHeatmap(data: Record<string, number>): ContributionDay[][] {
@@ -170,7 +162,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
       currentWeek.push({
         date: dateStr,
         count,
-        level: count === 0 ? 0 : count <= 2 ? 1 : count <= 5 ? 2 : count <= 10 ? 3 : 4,
+        level:
+          count === 0 ? 0 : count <= 2 ? 1 : count <= 5 ? 2 : count <= 10 ? 3 : 4,
       });
 
       if (currentWeek.length === 7) {
@@ -183,7 +176,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     return weeks;
   }
 
-  fetchWeather() {
+  private fetchWeather(): void {
     this.isWeatherLoading = true;
     this.weatherError = null;
 
@@ -197,12 +190,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
           if (response.success) {
             this.weatherData = response.data;
           } else {
-            this.weatherError = "Failed to load weather data";
+            this.weatherData = null;
+            this.weatherError = "Weather data is unavailable right now.";
           }
           this.isWeatherLoading = false;
         },
-        error: (error) => {
-          this.weatherError = error.message || "Failed to load weather data";
+        error: () => {
+          this.weatherData = null;
+          this.weatherError = "Weather data is unavailable right now.";
           this.isWeatherLoading = false;
         },
       });
@@ -232,7 +227,51 @@ export class HomeComponent implements OnInit, AfterViewInit {
     return iconMap[iconCode] || "cloud";
   }
 
-  viewFile(string: string) {
-    this.modalComp.openPdfModal(string);
+  onGithubChartLoad(): void {
+    this.isGithubChartLoaded = true;
+    this.githubChartError = null;
+  }
+
+  onGithubChartError(): void {
+    this.isGithubChartLoaded = false;
+    this.githubChartError =
+      "GitHub contribution activity is unavailable right now.";
+  }
+
+  onCarouselImageLoad(index: number): void {
+    this.imgLoadStatus[index] = true;
+    this.isImgLoaded = true;
+  }
+
+  onCarouselImageError(index: number): void {
+    this.carouselImageErrors.add(index);
+  }
+
+  isCarouselImageFailed(index: number): boolean {
+    return this.carouselImageErrors.has(index);
+  }
+
+  get carouselUnavailable(): boolean {
+    return this.carouselImageErrors.size >= this.arrCarouselImg.length;
+  }
+
+  onProjectImageError(projectId: string): void {
+    this.projectImageErrors.add(projectId);
+  }
+
+  isProjectImageFailed(projectId: string): boolean {
+    return this.projectImageErrors.has(projectId);
+  }
+
+  viewFile(pdfFile: string): void {
+    this.modalComp?.openPdfModal(pdfFile);
+  }
+
+  openResume(): void {
+    this.viewFile("Credentials_ZhilongLiang_4664_Azure_Developer_Associate.pdf");
+  }
+
+  getCertificateLink(id: string): CertificateLink | undefined {
+    return certificateLinks[id];
   }
 }

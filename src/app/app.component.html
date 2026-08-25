@@ -1,36 +1,9 @@
-<!-- Scroll Progress Bar -->
-<div class="scroll-progress" id="scrollProgress"></div>
-
-<!-- Atmosphere Background -->
-<div class="atmosphere" aria-hidden="true">
-  <div class="atmosphere-grid"></div>
-  <div class="atmosphere-dot atmosphere-dot-1"></div>
-  <div class="atmosphere-dot atmosphere-dot-2"></div>
-  <div class="atmosphere-dot atmosphere-dot-3"></div>
-  <div class="atmosphere-mouse-glow" id="mouseGlow"></div>
-</div>
-
-<!-- Content Section -->
-<main [attr.data-bs-theme]="theme" class="bg-body d-flex flex-column">
-  <app-navbar class="navbar navbar-expand-md fixed-top"></app-navbar>
-  <div class="overflow-y-auto overflow-x-hidden focus-hidden" style="padding-top: 90px">
-    <div class="h-100">
-      <div class="m-4 h-100 rounded">
-        <main class="container-xl mx-auto">
-          <div [@routeAnimation]="prepareRoute(outlet)">
-            <router-outlet #outlet="outlet" />
-          </div>
-        </main>
-      </div>
+<div class="app-shell">
+  <app-navbar />
+  <main class="app-main">
+    <div class="route-frame" [@routeAnimation]="prepareRoute(outlet)">
+      <router-outlet #outlet="outlet" />
     </div>
-  </div>
-  <app-footer class="mt-auto"></app-footer>
-</main>
-
-@if (loading) {
-  <div class="loading">
-    <span class="loader"></span>
-  </div>
-}
-
-<div id="toast-container" class="toast-container position-fixed top-0 end-0 p-3"></div>
+  </main>
+  <app-footer />
+</div>

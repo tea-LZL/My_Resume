@@ -1,68 +1,113 @@
-// scss-docs-start import-stack
-// Configuration
 @import "../../node_modules/bootstrap/scss/functions";
 
-// Everforest Color Scheme
-// Base colors
-$everforest-bg: rgb(45, 53, 59);
-$everforest-bg-dim: #232a2e;
-$everforest-bg-light: #343f44;
-$everforest-fg: #d3c6aa;
-$everforest-red: #e67e80;
+$everforest-bg: #101312;
+$everforest-bg-dim: #171c1a;
+$everforest-bg-light: #1d2521;
+$everforest-fg: #f0ede4;
+$everforest-red: #e68175;
 $everforest-orange: #e69875;
-$everforest-yellow: #dbbc7f;
-$everforest-green: #a7c080;
-$everforest-aqua: #83c092;
-$everforest-blue: #7fbbb3;
-$everforest-purple: #d699b6;
-$everforest-grey0: #7a8478;
-$everforest-grey1: #859289;
-$everforest-grey2: #9da9a0;
+$everforest-yellow: #e3c879;
+$everforest-green: #b5cc8a;
+$everforest-aqua: #8fc4a3;
+$everforest-blue: #91c6bd;
+$everforest-purple: #d6a4c2;
+$everforest-grey0: #3c4842;
+$everforest-grey1: #829088;
+$everforest-grey2: #b6c0b8;
 
-// Font Configuration
-$font-family-display: 'Space Grotesk', 'Segoe UI', system-ui, sans-serif;
-$font-family-sans-serif: 'Space Grotesk', 'Segoe UI', system-ui, sans-serif;
-$font-family-monospace: 'JetBrains Mono', 'SFMono-Regular', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
+$font-family-display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+$font-family-sans-serif: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+$font-family-serif: "Georgia", "Times New Roman", serif;
+$font-family-monospace: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
 $font-family-base: $font-family-sans-serif;
 
-// Bootstrap variable overrides with Everforest colors
 $primary: $everforest-green;
 $secondary: $everforest-grey1;
 $success: $everforest-aqua;
 $info: $everforest-blue;
 $warning: $everforest-yellow;
 $danger: $everforest-red;
-// $light: $everforest-bg-light;
 $dark: $everforest-bg-dim;
-
-// Body and text colors
 $body-bg: $everforest-bg;
 $body-color: $everforest-fg;
 $text-muted: $everforest-grey1;
-
-// Link colors
-$link-color: $everforest-blue;
-$link-hover-color: $everforest-aqua;
-
-// Border and component colors
+$link-color: $everforest-aqua;
+$link-hover-color: $everforest-fg;
 $border-color: $everforest-grey0;
 $component-active-bg: $everforest-green;
 $component-active-color: $everforest-bg;
-
-// Card and surface colors
 $card-bg: $everforest-bg-light;
 $card-border-color: $everforest-grey0;
-
-// Navbar colors
 $navbar-dark-color: $everforest-fg;
 $navbar-dark-hover-color: $everforest-green;
 $navbar-dark-active-color: $everforest-aqua;
 $navbar-dark-brand-color: $everforest-green;
 $navbar-dark-brand-hover-color: $everforest-aqua;
-
-// Form colors
 $input-bg: $everforest-bg-light;
 $input-border-color: $everforest-grey0;
 $input-color: $everforest-fg;
 $input-focus-border-color: $everforest-green;
-$input-focus-box-shadow: 0 0 0 0.2rem rgba(167, 192, 128, 0.25);
+$input-focus-box-shadow: 0 0 0 0.2rem rgba(181, 204, 138, 0.25);
+
+:root {
+  color-scheme: dark;
+  --site-background: #{$everforest-bg};
+  --site-surface: #{$everforest-bg-light};
+  --site-surface-raised: #263129;
+  --site-foreground: #{$everforest-fg};
+  --site-muted: #{$everforest-grey2};
+  --site-accent: #{$everforest-green};
+  --site-accent-soft: #{$everforest-aqua};
+  --site-danger: #{$everforest-red};
+  --site-line: rgba(240, 237, 228, 0.18);
+  --site-font-display: #{$font-family-display};
+  --site-font-serif: #{$font-family-serif};
+  --site-font-mono: #{$font-family-monospace};
+
+  // Compatibility aliases for existing shared components.
+  --ef-bg: var(--site-background);
+  --ef-bg-dim: #{$everforest-bg-dim};
+  --ef-bg-light: var(--site-surface);
+  --ef-fg: var(--site-foreground);
+  --ef-fg-dim: var(--site-muted);
+  --ef-green: var(--site-accent);
+  --ef-aqua: var(--site-accent-soft);
+  --ef-blue: #{$everforest-blue};
+  --ef-yellow: #{$everforest-yellow};
+  --ef-red: #{$everforest-red};
+  --ef-purple: #{$everforest-purple};
+  --ef-grey0: #{$everforest-grey0};
+  --ef-grey1: #{$everforest-grey1};
+  --ef-grey2: #{$everforest-grey2};
+  --ef-border: var(--site-line);
+  --ef-border-hover: rgba(181, 204, 138, 0.65);
+  --card-bg: var(--site-surface);
+  --card-shadow: rgba(0, 0, 0, 0.16);
+  --card-shadow-heavy: rgba(0, 0, 0, 0.3);
+  --glass-bg: rgba(29, 37, 33, 0.86);
+  --glass-border: var(--site-line);
+  --btn-glow: rgba(181, 204, 138, 0.16);
+}
+
+[data-bs-theme="light"] {
+  color-scheme: light;
+  --site-background: #f5f2e9;
+  --site-surface: #ebe7da;
+  --site-surface-raised: #ffffff;
+  --site-foreground: #1b211e;
+  --site-muted: #5f6c64;
+  --site-accent: #52733f;
+  --site-accent-soft: #2f7860;
+  --site-danger: #a44c46;
+  --site-line: rgba(27, 33, 30, 0.18);
+  --ef-bg: var(--site-background);
+  --ef-bg-dim: #e3dfd1;
+  --ef-bg-light: var(--site-surface);
+  --ef-fg: var(--site-foreground);
+  --ef-fg-dim: var(--site-muted);
+  --ef-green: var(--site-accent);
+  --ef-aqua: var(--site-accent-soft);
+  --ef-border: var(--site-line);
+  --card-bg: var(--site-surface);
+  --glass-bg: rgba(255, 255, 255, 0.76);
+}

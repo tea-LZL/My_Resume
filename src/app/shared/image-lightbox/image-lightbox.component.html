@@ -1,7 +1,23 @@
 <ng-template #imageModal let-modal>
-  <div class="lightbox-body" (click)="modal.dismiss()">
+  <div
+    class="lightbox-body"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="lightbox-title"
+  >
+    <h2 id="lightbox-title" class="visually-hidden">Project artwork preview</h2>
+    <button
+      type="button"
+      class="lightbox-close"
+      aria-label="Close artwork preview"
+      (click)="close(modal)"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
     @if (imageUrl) {
-      <img [src]="imageUrl" alt="Full size preview" class="lightbox-image" (click)="$event.stopPropagation()" />
+      <figure class="lightbox-figure">
+        <img [src]="imageUrl" [alt]="imageAlt" class="lightbox-image" />
+      </figure>
     }
   </div>
 </ng-template>

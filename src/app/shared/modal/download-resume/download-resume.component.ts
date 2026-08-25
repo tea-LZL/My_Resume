@@ -1,6 +1,7 @@
 import {
   Component,
   ElementRef,
+  inject,
   QueryList,
   Renderer2,
   ViewChildren,
@@ -9,7 +10,14 @@ import jsPDF from "jspdf";
 import { PDFDocument } from "pdf-lib";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormsModule } from "@angular/forms";
+import { portfolioProjects } from "../../../data/portfolio.data";
+import type { Project } from "../../../interfaces/project";
 import { StateService } from "../../../services/state.service";
+
+export type ResumeProjectInput = Pick<Project, "title" | "description">;
+
+export const buildResumeProjectInputs = (): readonly ResumeProjectInput[] =>
+  portfolioProjects.map(({ title, description }) => ({ title, description }));
 
 @Component({
   selector: "app-download-resume",
@@ -19,12 +27,11 @@ import { StateService } from "../../../services/state.service";
 })
 export class DownloadResumeComponent {
   @ViewChildren("transGrow") transGrowElems!: QueryList<ElementRef>;
-  constructor(
-    private activeModal: NgbActiveModal,
-    private state: StateService,
-    private renderer: Renderer2,
-  ) {}
-  bIncludeCredential: boolean = false;
+  private readonly activeModal = inject(NgbActiveModal);
+  private readonly state = inject(StateService);
+  private readonly renderer = inject(Renderer2);
+
+  bIncludeCredential = false;
   sTheme = "default";
 
   private getThemeColors() {
@@ -78,13 +85,13 @@ export class DownloadResumeComponent {
       const pageWidth = 210;
       const pageHeight = 297;
       const sidebarWidth = 63.5; // ~300px of 1000px = 30% of page
-      let currentPage = 1;
+
 
       // Helper function to check and add new page
-      const checkNewPage = (yPos: number, requiredSpace: number = 15) => {
+      const checkNewPage = (yPos: number, requiredSpace = 15) => {
         if (yPos + requiredSpace > pageHeight - 15) {
           pdf.addPage();
-          currentPage++;
+
           // Redraw backgrounds for new page
           pdf.setFillColor(...colors.background);
           pdf.rect(0, 0, pageWidth, pageHeight, "F");
@@ -508,7 +515,7 @@ export class DownloadResumeComponent {
         "Optimized database queries and API response times for high-traffic campaigns.",
       ];
 
-      const job2ContentStartY = mainY;
+
       job2Achievements.forEach((achievement) => {
         const lines = pdf.splitTextToSize(`• ${achievement}`, mainWidth - 5);
         lines.forEach((line: string) => {
@@ -536,211 +543,76 @@ export class DownloadResumeComponent {
       pdf.line(mainX, mainY + 1.5, mainX + 13, mainY + 1.5);
       mainY += 9;
 
-      // Project 1
-      mainY = checkNewPage(mainY, 25);
-
-      const proj1TopPadding = 6;
-      const proj1BottomPadding = 4.6; // Reduced by ~1.4mm (4px)
-      const proj1ContentStart = mainY + proj1TopPadding;
-      let proj1ContentY = proj1ContentStart;
-
-      pdf.setFontSize(10);
+      const projectTopPadding = 6;
+      const projectBottomPadding = 4.6;
+      const projectGap = 6;
+      const projectTextWidth = mainWidth - 12;
+      const projectTitleLineHeight = 5;
+      const projectDescriptionLineHeight = 3.5;
       const projectColor =
         this.sTheme === "alternate"
           ? colors.sectionTitle
           : ([219, 188, 127] as [number, number, number]);
-      pdf.setTextColor(...projectColor);
-      pdf.setFont("helvetica", "bold");
 
-      const proj1TitleY = proj1ContentY;
+      buildResumeProjectInputs().forEach((project) => {
+        pdf.setFontSize(10);
+        pdf.setFont("helvetica", "bold");
+        const projectTitleLines = pdf.splitTextToSize(
+          project.title,
+          projectTextWidth,
+        );
 
-      pdf.setFontSize(8);
-      pdf.setTextColor(...colors.textLight);
-      pdf.setFont("helvetica", "normal");
-      const proj1Desc =
-        "An API for weathering with Go, fetching weather of locations from around the world. Written in Go with Gin framework and using the OpenWeatherMap API.";
-      const proj1Lines = pdf.splitTextToSize(proj1Desc, mainWidth - 12);
-      const proj1DescHeight = proj1Lines.length * 3.5;
+        pdf.setFontSize(8);
+        pdf.setTextColor(...colors.textLight);
+        pdf.setFont("helvetica", "normal");
+        const projectDescriptionLines = pdf.splitTextToSize(
+          project.description,
+          projectTextWidth,
+        );
+        const projectTitleHeight =
+          projectTitleLines.length * projectTitleLineHeight;
+        const projectDescriptionHeight =
+          projectDescriptionLines.length * projectDescriptionLineHeight;
+        const projectHeight =
+          projectTopPadding +
+          projectTitleHeight +
+          2 +
+          projectDescriptionHeight +
+          projectBottomPadding;
 
-      // Calculate total card height
-      const proj1Height =
-        proj1TopPadding + 2 + proj1DescHeight + proj1BottomPadding;
+        mainY = checkNewPage(mainY, projectHeight + projectGap);
 
-      // Draw project card background
-      pdf.setFillColor(...colors.projectBg);
-      pdf.roundedRect(mainX, mainY, mainWidth, proj1Height, 2, 2, "F");
+        let projectContentY = mainY + projectTopPadding;
 
-      // Draw project card border
-      pdf.setDrawColor(...colors.border);
-      pdf.setLineWidth(0.2);
-      pdf.roundedRect(mainX, mainY, mainWidth, proj1Height, 2, 2, "S");
+        // Draw project card background
+        pdf.setFillColor(...colors.projectBg);
+        pdf.roundedRect(mainX, mainY, mainWidth, projectHeight, 2, 2, "F");
 
-      // Draw title
-      pdf.setFontSize(10);
-      pdf.setTextColor(...projectColor);
-      pdf.setFont("helvetica", "bold");
-      pdf.text("Weathering with Go API", mainX + 6, proj1TitleY);
-      proj1ContentY += 5;
+        // Draw project card border
+        pdf.setDrawColor(...colors.border);
+        pdf.setLineWidth(0.2);
+        pdf.roundedRect(mainX, mainY, mainWidth, projectHeight, 2, 2, "S");
 
-      // Draw description
-      pdf.setFontSize(8);
-      pdf.setTextColor(...colors.textLight);
-      pdf.setFont("helvetica", "normal");
-      proj1Lines.forEach((line: string) => {
-        pdf.text(line, mainX + 6, proj1ContentY);
-        proj1ContentY += 3.5;
+        // Draw title
+        pdf.setFontSize(10);
+        pdf.setTextColor(...projectColor);
+        pdf.setFont("helvetica", "bold");
+        projectTitleLines.forEach((line: string) => {
+          pdf.text(line, mainX + 6, projectContentY);
+          projectContentY += projectTitleLineHeight;
+        });
+
+        // Draw description
+        pdf.setFontSize(8);
+        pdf.setTextColor(...colors.textLight);
+        pdf.setFont("helvetica", "normal");
+        projectDescriptionLines.forEach((line: string) => {
+          pdf.text(line, mainX + 6, projectContentY);
+          projectContentY += projectDescriptionLineHeight;
+        });
+
+        mainY += projectHeight + projectGap;
       });
-
-      mainY += proj1Height + 6;
-
-      // Project 2
-      mainY = checkNewPage(mainY, 25);
-
-      const proj2TopPadding = 6;
-      const proj2BottomPadding = 4.6; // Reduced by ~1.4mm (4px)
-      const proj2ContentStart = mainY + proj2TopPadding;
-      let proj2ContentY = proj2ContentStart;
-
-      const proj2TitleY = proj2ContentY;
-
-      pdf.setFontSize(8);
-      pdf.setTextColor(...colors.textLight);
-      pdf.setFont("helvetica", "normal");
-      const proj2Desc =
-        "A web application for my resume, built with Angular to display my resume in a modern and responsive way. Option to download resume and Microsoft Certificate.";
-      const proj2Lines = pdf.splitTextToSize(proj2Desc, mainWidth - 12);
-      const proj2DescHeight = proj2Lines.length * 3.5;
-
-      // Calculate total card height
-      const proj2Height =
-        proj2TopPadding + 2 + proj2DescHeight + proj2BottomPadding;
-
-      // Draw project card background
-      pdf.setFillColor(...colors.projectBg);
-      pdf.roundedRect(mainX, mainY, mainWidth, proj2Height, 2, 2, "F");
-
-      // Draw project card border
-      pdf.setDrawColor(...colors.border);
-      pdf.setLineWidth(0.2);
-      pdf.roundedRect(mainX, mainY, mainWidth, proj2Height, 2, 2, "S");
-
-      // Draw title
-      pdf.setFontSize(10);
-      const project2Color =
-        this.sTheme === "alternate"
-          ? colors.sectionTitle
-          : ([219, 188, 127] as [number, number, number]);
-      pdf.setTextColor(...project2Color);
-      pdf.setFont("helvetica", "bold");
-      pdf.text("My Resume Website", mainX + 6, proj2TitleY);
-      proj2ContentY += 5;
-
-      // Draw description
-      pdf.setFontSize(8);
-      pdf.setTextColor(...colors.textLight);
-      pdf.setFont("helvetica", "normal");
-      proj2Lines.forEach((line: string) => {
-        pdf.text(line, mainX + 6, proj2ContentY);
-        proj2ContentY += 3.5;
-      });
-
-      mainY += proj2Height + 6;
-
-      // Project 3
-      mainY = checkNewPage(mainY, 25);
-
-      const proj3TopPadding = 6;
-      const proj3BottomPadding = 4.6;
-      const proj3ContentStart = mainY + proj3TopPadding;
-      let proj3ContentY = proj3ContentStart;
-
-      const proj3TitleY = proj3ContentY;
-
-      pdf.setFontSize(8);
-      pdf.setTextColor(...colors.textLight);
-      pdf.setFont("helvetica", "normal");
-      const proj3Desc =
-        "A frontend UI for Ollama that lets you chat with LLMs, manage models, and browse chat history through a clean, responsive interface.";
-      const proj3Lines = pdf.splitTextToSize(proj3Desc, mainWidth - 12);
-      const proj3DescHeight = proj3Lines.length * 3.5;
-
-      const proj3Height =
-        proj3TopPadding + 2 + proj3DescHeight + proj3BottomPadding;
-
-      pdf.setFillColor(...colors.projectBg);
-      pdf.roundedRect(mainX, mainY, mainWidth, proj3Height, 2, 2, "F");
-
-      pdf.setDrawColor(...colors.border);
-      pdf.setLineWidth(0.2);
-      pdf.roundedRect(mainX, mainY, mainWidth, proj3Height, 2, 2, "S");
-
-      pdf.setFontSize(10);
-      const project3Color =
-        this.sTheme === "alternate"
-          ? colors.sectionTitle
-          : ([219, 188, 127] as [number, number, number]);
-      pdf.setTextColor(...project3Color);
-      pdf.setFont("helvetica", "bold");
-      pdf.text("Convo", mainX + 6, proj3TitleY);
-      proj3ContentY += 5;
-
-      pdf.setFontSize(8);
-      pdf.setTextColor(...colors.textLight);
-      pdf.setFont("helvetica", "normal");
-      proj3Lines.forEach((line: string) => {
-        pdf.text(line, mainX + 6, proj3ContentY);
-        proj3ContentY += 3.5;
-      });
-
-      mainY += proj3Height + 6;
-
-      // Project 4
-      mainY = checkNewPage(mainY, 25);
-
-      const proj4TopPadding = 6;
-      const proj4BottomPadding = 4.6;
-      const proj4ContentStart = mainY + proj4TopPadding;
-      let proj4ContentY = proj4ContentStart;
-
-      const proj4TitleY = proj4ContentY;
-
-      pdf.setFontSize(8);
-      pdf.setTextColor(...colors.textLight);
-      pdf.setFont("helvetica", "normal");
-      const proj4Desc =
-        "A password generator built with Rust and TUI using the Ratatui framework, providing a terminal-based interface for generating secure passwords locally.";
-      const proj4Lines = pdf.splitTextToSize(proj4Desc, mainWidth - 12);
-      const proj4DescHeight = proj4Lines.length * 3.5;
-
-      const proj4Height =
-        proj4TopPadding + 2 + proj4DescHeight + proj4BottomPadding;
-
-      pdf.setFillColor(...colors.projectBg);
-      pdf.roundedRect(mainX, mainY, mainWidth, proj4Height, 2, 2, "F");
-
-      pdf.setDrawColor(...colors.border);
-      pdf.setLineWidth(0.2);
-      pdf.roundedRect(mainX, mainY, mainWidth, proj4Height, 2, 2, "S");
-
-      pdf.setFontSize(10);
-      const project4Color =
-        this.sTheme === "alternate"
-          ? colors.sectionTitle
-          : ([219, 188, 127] as [number, number, number]);
-      pdf.setTextColor(...project4Color);
-      pdf.setFont("helvetica", "bold");
-      pdf.text("GenPass", mainX + 6, proj4TitleY);
-      proj4ContentY += 5;
-
-      pdf.setFontSize(8);
-      pdf.setTextColor(...colors.textLight);
-      pdf.setFont("helvetica", "normal");
-      proj4Lines.forEach((line: string) => {
-        pdf.text(line, mainX + 6, proj4ContentY);
-        proj4ContentY += 3.5;
-      });
-
-      mainY += proj4Height + 6;
 
       // Handle certificate merging
       if (this.bIncludeCredential) {

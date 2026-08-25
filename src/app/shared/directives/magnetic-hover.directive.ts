@@ -1,4 +1,4 @@
-import { Directive, ElementRef, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, inject, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 
 /**
  * Makes elements subtly follow the cursor on hover, creating a "magnetic" effect.
@@ -12,22 +12,29 @@ import { Directive, ElementRef, OnDestroy, OnInit, Renderer2 } from '@angular/co
   standalone: true,
 })
 export class MagneticHoverDirective implements OnInit, OnDestroy {
-  private mouseMoveHandler!: (e: MouseEvent) => void;
-  private mouseLeaveHandler!: () => void;
   private rafId: number | null = null;
+  private readonly listenerDisposers: (() => void)[] = [];
 
-  constructor(
-    private el: ElementRef<HTMLElement>,
-    private renderer: Renderer2,
-  ) {}
+  private readonly el = inject(ElementRef<HTMLElement>);
+  private readonly renderer = inject(Renderer2);
 
   ngOnInit(): void {
+    if (!this.shouldEnable()) {
+      return;
+    }
+
     const nativeEl = this.el.nativeElement;
 
-    this.mouseMoveHandler = (e: MouseEvent) => {
-      if (this.rafId) cancelAnimationFrame(this.rafId);
+    const mouseMoveHandler = (e: MouseEvent): void => {
+      this.cancelPendingFrame();
 
-      this.rafId = requestAnimationFrame(() => {
+      if (typeof window.requestAnimationFrame !== 'function') {
+        return;
+      }
+
+      this.rafId = window.requestAnimationFrame(() => {
+        this.rafId = null;
+
         const rect = nativeEl.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
@@ -43,20 +50,47 @@ export class MagneticHoverDirective implements OnInit, OnDestroy {
       });
     };
 
-    this.mouseLeaveHandler = () => {
-      if (this.rafId) cancelAnimationFrame(this.rafId);
+    const mouseLeaveHandler = (): void => {
+      this.cancelPendingFrame();
 
       nativeEl.style.transform = 'translate(0, 0) scale(1)';
       nativeEl.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
     };
 
-    this.renderer.listen(nativeEl, 'mouseenter', () => {
-      this.renderer.listen(nativeEl, 'mousemove', this.mouseMoveHandler);
-      this.renderer.listen(nativeEl, 'mouseleave', this.mouseLeaveHandler);
-    });
+    this.listenerDisposers.push(
+      this.renderer.listen(nativeEl, 'mousemove', mouseMoveHandler),
+      this.renderer.listen(nativeEl, 'mouseleave', mouseLeaveHandler),
+    );
   }
 
   ngOnDestroy(): void {
-    if (this.rafId) cancelAnimationFrame(this.rafId);
+    this.cancelPendingFrame();
+
+    this.listenerDisposers.forEach((dispose) => dispose());
+    this.listenerDisposers.length = 0;
+  }
+
+  private shouldEnable(): boolean {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+      return false;
+    }
+
+    const canHover = window.matchMedia('(hover: hover)').matches;
+    const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    return canHover && hasFinePointer && !prefersReducedMotion;
+  }
+
+  private cancelPendingFrame(): void {
+    if (this.rafId === null) {
+      return;
+    }
+
+    if (typeof window !== 'undefined' && typeof window.cancelAnimationFrame === 'function') {
+      window.cancelAnimationFrame(this.rafId);
+    }
+
+    this.rafId = null;
   }
 }

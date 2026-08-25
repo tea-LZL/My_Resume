@@ -13,15 +13,10 @@ build:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~ /^(develop|uat|master)$/
   script:
     - bun ci
-    - |
-      case "${CI_COMMIT_REF_NAME}" in
-        develop) build_config=prelive ;;
-        uat) build_config=uat ;;
-        master) build_config=production ;;
-        *) echo "Unsupported branch ${CI_COMMIT_REF_NAME}"; exit 1 ;;
-      esac
+    - bun run test -- --watch=false --browsers=ChromeHeadless
+    - bun run lint
     - sed -i 's/{{OPENWEATHER_API_KEY}}/'"${OPENWEATHER_API_KEY}"'/g' src/environments/environment.ts
-    - bun run build --configuration ${build_config}
+    - bun run build --configuration production
   artifacts:
     paths:
       - dist/
@@ -34,6 +29,7 @@ deploy:
     - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME =~ /^(develop|uat|master)$/
   needs:
     - build
+  when: on_success
   before_script:
     - apt-get update -qq && apt-get install -y -qq git
   script:

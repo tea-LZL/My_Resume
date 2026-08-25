@@ -1,170 +1,21 @@
-<footer
-  style="
-    background: var(--ef-bg-dim);
-    color: var(--ef-fg);
-    border-top: 3px solid rgba(var(--ef-green-rgb), 0.4);
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    flex-shrink: 0;
-    min-height: 200px;
-    position: relative;
-    z-index: 10;
-  ">
-  <div style="max-width: 1320px; margin: 0 auto; padding: 48px 2rem 0">
-    <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 48px; padding-bottom: 48px">
-      <!-- Brand + Quote -->
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="site-footer__mark" aria-hidden="true">ZL</span>
       <div>
-        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px">
-          <svg width="44" height="44" viewBox="0 0 48 48" aria-hidden="true" style="flex-shrink: 0">
-            <rect
-              x="4"
-              y="4"
-              width="40"
-              height="40"
-              rx="10"
-              fill="none"
-              style="stroke: var(--ef-green)"
-              stroke-width="2.5" />
-            <text
-              x="24"
-              y="29"
-              text-anchor="middle"
-              style="fill: var(--ef-green)"
-              font-family="'Space Grotesk', sans-serif"
-              font-weight="700"
-              font-size="18">
-              ZL
-            </text>
-          </svg>
-          <span
-            style="
-              font-family: &quot;Plaster&quot;, &quot;Space Grotesk&quot;, sans-serif;
-              font-size: 20px;
-              color: var(--ef-fg);
-            ">
-            Zhilong Liang
-          </span>
-        </div>
-        <blockquote
-          style="
-            margin: 0;
-            font-size: 15px;
-            font-style: italic;
-            line-height: 1.6;
-            color: var(--ef-fg-muted);
-            max-width: 420px;
-            padding-left: 16px;
-            border-left: 2px solid rgba(var(--ef-green-rgb), 0.3);
-          ">
-          "Every great developer you know got there by solving problems they were unqualified to solve until they
-          actually did it."
-          <cite
-            style="
-              display: block;
-              margin-top: 8px;
-              font-style: normal;
-              font-size: 11px;
-              font-family: &quot;JetBrains Mono&quot;, monospace;
-              color: var(--ef-grey0);
-              letter-spacing: 0.05em;
-              text-transform: uppercase;
-            ">
-            — Patrick McKenzie
-          </cite>
-        </blockquote>
-      </div>
-
-      <!-- Connect -->
-      <div>
-        <h4
-          style="
-            font-family: &quot;JetBrains Mono&quot;, monospace;
-            font-size: 10px;
-            font-weight: 600;
-            color: var(--ef-grey0);
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            margin: 0 0 16px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid rgba(var(--ef-green-rgb), 0.15);
-          ">
-          Connect
-        </h4>
-        <a
-          href="https://github.com/tea-LZL"
-          target="_blank"
-          rel="noopener"
-          style="
-            display: flex;
-            align-items: center;
-            color: var(--ef-fg-muted);
-            text-decoration: none;
-            font-size: 14px;
-            padding: 8px 0;
-            transition:
-              color 0.25s ease,
-              transform 0.25s ease;
-          ">
-          <i class="bi bi-github" style="font-size: 14px; opacity: 0.6; margin-right: 8px"></i>
-          GitHub
-        </a>
-        <a
-          href="https://www.linkedin.com/in/zhilong-liang-748b641a1"
-          target="_blank"
-          rel="noopener"
-          style="
-            display: flex;
-            align-items: center;
-            color: var(--ef-fg-muted);
-            text-decoration: none;
-            font-size: 14px;
-            padding: 8px 0;
-            transition:
-              color 0.25s ease,
-              transform 0.25s ease;
-          ">
-          <i class="bi bi-linkedin" style="font-size: 14px; opacity: 0.6; margin-right: 8px"></i>
-          LinkedIn
-        </a>
-        <a
-          href="https://github.com/tea-LZL/My_Resume"
-          target="_blank"
-          rel="noopener"
-          style="
-            display: flex;
-            align-items: center;
-            color: var(--ef-fg-muted);
-            text-decoration: none;
-            font-size: 14px;
-            padding: 8px 0;
-            transition:
-              color 0.25s ease,
-              transform 0.25s ease;
-          ">
-          <i class="bi bi-code" style="font-size: 14px; opacity: 0.6; margin-right: 8px"></i>
-          Source
-        </a>
+        <strong>Zhilong Liang</strong>
+        <p>Software engineer building useful things from the inside out.</p>
       </div>
     </div>
+    <nav class="site-footer__links" aria-label="Footer navigation">
+      <a routerLink="/projects">Projects</a>
+      <a routerLink="/resume">Resume</a>
+      <a routerLink="/timeline">Timeline</a>
+      <a href="mailto:zhilong.k.liang@gmail.com">Email</a>
+    </nav>
   </div>
-
-  <!-- Bottom Bar -->
-  <div
-    style="
-      max-width: 1320px;
-      margin: 0 auto;
-      padding: 20px 2rem;
-      border-top: 1px solid rgba(var(--ef-green-rgb), 0.12);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-family: &quot;JetBrains Mono&quot;, monospace;
-      font-size: 11px;
-      color: var(--ef-grey0);
-      letter-spacing: 0.04em;
-    ">
-    <span>{{ currentYear }}</span>
-    <span style="opacity: 0.6">v2.0 · Angular {{ angularVersion }}</span>
+  <div class="site-footer__legal">
+    <span>© {{ currentYear }} Zhilong Liang</span>
+    <span>Built with Angular / Bun</span>
   </div>
 </footer>

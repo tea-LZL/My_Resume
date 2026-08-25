@@ -1,19 +1,98 @@
-/* ========================================
-   FOOTER — Editorial, multi-column
-   ======================================== */
-
 :host {
-  display: block !important;
-  background: var(--ef-bg-dim) !important;
-  color: var(--ef-fg);
-  flex-shrink: 0 !important;
-  position: relative;
-  z-index: 10;
+  display: block;
+  flex-shrink: 0;
 }
 
-.footer {
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
-  background: var(--ef-bg-dim);
+.site-footer {
+  width: min(100% - 2rem, 78rem);
+  margin: 0 auto;
+  padding: 3rem 0 1.25rem;
+  border-top: 1px solid var(--site-line);
+}
+
+.site-footer__inner,
+.site-footer__legal {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.site-footer__inner {
+  align-items: start;
+  padding-bottom: 3rem;
+}
+
+.site-footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.site-footer__mark {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  border: 1px solid var(--site-accent);
+  color: var(--site-accent);
+  font-family: var(--site-font-display);
+  font-weight: 700;
+}
+
+.site-footer__brand strong {
+  font-family: var(--site-font-display);
+}
+
+.site-footer__brand p {
+  max-width: 22rem;
+  margin: 0.35rem 0 0;
+  color: var(--site-muted);
+  font-size: 0.85rem;
+}
+
+.site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
+  gap: 0.75rem 1.25rem;
+  font-family: var(--site-font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+}
+
+.site-footer__links a {
+  color: var(--site-muted);
+  text-decoration: none;
+}
+
+.site-footer__links a:hover,
+.site-footer__links a:focus-visible {
+  color: var(--site-accent);
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
+.site-footer__legal {
+  padding-top: 1rem;
+  border-top: 1px solid var(--site-line);
+  color: var(--site-muted);
+  font-family: var(--site-font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+}
+
+@media (max-width: 680px) {
+  .site-footer {
+    width: min(100% - 1.25rem, 78rem);
+  }
+
+  .site-footer__inner,
+  .site-footer__legal {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .site-footer__links {
+    justify-content: start;
+  }
 }

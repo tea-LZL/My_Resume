@@ -1,70 +1,54 @@
-<section class="timeline-section z-1">
-  <div class="timeline-header" appScrollReveal="fade-up">
-    <h1 class="text-primary mb-2">Timeline</h1>
-    <p class="text-muted fs-5">My journey so far</p>
-  </div>
+<section class="timeline-page" aria-labelledby="timeline-title">
+  <header class="timeline-heading" appScrollReveal="fade-up">
+    <p class="eyebrow">Timeline / the through line</p>
+    <h1 id="timeline-title">Learning by making.</h1>
+    <p>
+      A single track through the work, study, and certifications that shaped how I
+      build software.
+    </p>
+  </header>
 
-  <div class="timeline">
-    <!-- Animated vertical line -->
-    <div class="timeline-line" aria-hidden="true"></div>
-
-    <!-- Timeline Items -->
-    <div class="timeline-item timeline-item-left" appScrollReveal="fade-left">
-      <div class="timeline-marker">
-        <i class="bi bi-mortarboard-fill"></i>
-      </div>
-      <div class="timeline-card intro-glass rounded-4 p-4">
-        <span class="timeline-date">2014 – 2018</span>
-        <h3>High School</h3>
-        <h5>Willowridge High School</h5>
-        <p class="text-muted">Matric Certificate</p>
-      </div>
-    </div>
-
-    <div class="timeline-item timeline-item-right" [appScrollReveal]="'fade-right'" [revealDelay]="100">
-      <div class="timeline-marker">
-        <i class="bi bi-book-fill"></i>
-      </div>
-      <div class="timeline-card intro-glass rounded-4 p-4">
-        <span class="timeline-date">2019 – 2023</span>
-        <h3>IT Studies</h3>
-        <h5>CTU Training Solution</h5>
-        <p class="text-muted">Information Technology: System Development</p>
-      </div>
-    </div>
-
-    <div class="timeline-item timeline-item-left" [appScrollReveal]="'fade-left'" [revealDelay]="100">
-      <div class="timeline-marker">
-        <i class="bi bi-briefcase-fill"></i>
-      </div>
-      <div class="timeline-card intro-glass rounded-4 p-4">
-        <span class="timeline-date">08/2022 – Present</span>
-        <h3>Software Developer</h3>
-        <h5>Automate</h5>
-        <ul class="timeline-list">
-          <li>Internal Dealership System & Mobile App</li>
-          <li>Dealership Website</li>
-          <li>2 Admin System Rewrites (AngularJS → Angular 18)</li>
-          <li>API Rewrite (.NET Framework → .NET 8)</li>
-          <li>Training Portal Rewrite (AngularJS → Angular 18)</li>
-          <li>Full Stack Client Supplier Onboarding App</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="timeline-item timeline-item-right" [appScrollReveal]="'fade-right'" [revealDelay]="200">
-      <div class="timeline-marker marker-cert">
-        <i class="bi bi-patch-check-fill"></i>
-      </div>
-      <div class="timeline-card intro-glass rounded-4 p-4">
-        <span class="timeline-date">Certifications</span>
-        <h3>Microsoft Certified</h3>
-        <div class="cert-badges">
-          <span class="cert-badge">Azure DB Admin Associate</span>
-          <span class="cert-badge">DevOps Engineer Expert</span>
-          <span class="cert-badge">Azure Developer Associate</span>
+  <div class="timeline-track">
+    @for (job of timelineWorkExperience; track job.id) {
+      <article class="timeline-entry" appScrollReveal="fade-up">
+        <div class="timeline-entry__marker" aria-hidden="true"></div>
+        <div class="timeline-entry__meta">
+          <span>{{ job.dates }}</span>
+          <span>Experience</span>
         </div>
-      </div>
-    </div>
+        <h2>{{ job.title }}</h2>
+        <p class="timeline-entry__place">{{ job.employer }}</p>
+        <ul>
+          @for (achievement of job.achievements; track achievement) {
+            <li>{{ achievement }}</li>
+          }
+        </ul>
+      </article>
+    }
+
+    @for (entry of timelineEducation; track entry.id) {
+      <article class="timeline-entry" appScrollReveal="fade-up">
+        <div class="timeline-entry__marker" aria-hidden="true"></div>
+        <div class="timeline-entry__meta">
+          <span>{{ entry.dates }}</span>
+          <span>Education</span>
+        </div>
+        <h2>{{ entry.qualification }}</h2>
+        <p class="timeline-entry__place">{{ entry.institution }}</p>
+      </article>
+    }
   </div>
+
+  <section class="certification-strip" aria-labelledby="certification-title" appScrollReveal="fade-up">
+    <p class="eyebrow">The proof points</p>
+    <h2 id="certification-title">Certifications.</h2>
+    <div class="certification-list">
+      @for (certification of certifications; track certification.id) {
+        <div class="certification-item">
+          <span>{{ certification.name }}</span>
+          <small>{{ certification.year }}</small>
+        </div>
+      }
+    </div>
+  </section>
 </section>

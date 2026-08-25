@@ -1,67 +1,80 @@
-<div class="container py-5">
-  <div class="project-spread row g-4">
-    @for (proj of arrProjects; track proj) {
-      <div class="project-spread-slide col-12" [class.col-lg-8]="proj.Featured" [class.offset-lg-2]="proj.Featured">
-        <div class="project-card card" [class.project-card-featured]="proj.Featured"
-             [class.flex-lg-row]="proj.Featured" [class.align-items-stretch]="proj.Featured"
-             [class.overflow-hidden]="proj.Featured" appScrollReveal="fade-up">
-          <div class="project-card-img-wrapper" [class.flex-lg-row]="!proj.Featured">
-            @for (imgUrl of proj.Cover_Image_URLs; track imgUrl; let i = $index) {
-              <div class="project-card-img-container" (click)="openImage(imgUrl)" role="button">
-                <div class="project-card-img-reveal"></div>
-                <img
-                  [src]="imgUrl"
-                  [alt]="proj.Title + ' ' + (i + 1)"
-                  class="project-card-img"
-                />
-              </div>
-            }
-          </div>
-          <div class="project-card-body card-body d-flex flex-column p-4 p-lg-5">
-            @if (proj.Featured) {
-              <span class="featured-badge">⭐ Featured</span>
-            }
-            <h3 class="project-card-title mb-2">{{ proj.Title }}</h3>
-            <p class="project-card-subtitle text-muted mb-3">{{ proj.ShortDescription }}</p>
-            @if (proj.Tags && proj.Tags.length > 0) {
-              <div class="project-tags mb-3">
-                @for (tag of proj.Tags; track tag) {
-                  <span class="project-tag">{{ tag }}</span>
-                }
-              </div>
-            }
-            <p class="project-card-description mb-4">{{ proj.Description }}</p>
-            <div class="mt-auto">
-              <a
-                class="btn btn-primary"
-                [href]="proj.GitHub_Link"
-                target="_blank"
-                rel="noopener noreferrer"
+<section class="projects-page" aria-labelledby="projects-title">
+  <header class="page-heading">
+    <p class="eyebrow">Selected work / 2022—now</p>
+    <h1 id="projects-title">Projects with a point of view.</h1>
+    <p class="page-intro">
+      Small tools, local-first products, and practical APIs built to understand the
+      systems underneath the interface.
+    </p>
+  </header>
+
+  <div class="project-list">
+    @for (project of projects; track project.id) {
+      <article
+        class="project-card"
+        [class.project-card--featured]="project.featured"
+        appScrollReveal="fade-up"
+      >
+        <div class="project-card__art">
+          @for (imageUrl of imagesFor(project); track imageUrl; let imageIndex = $index) {
+            @if (isImageAvailable(project.id)) {
+              <button
+                type="button"
+                class="project-art-button"
+                [attr.aria-label]="'Open ' + project.title + ' artwork ' + (imageIndex + 1)"
+                (click)="openImage(imageUrl, project.title)"
               >
-                <i class="bi bi-github me-2"></i>View on GitHub
-              </a>
+                <img
+                  [src]="imageUrl"
+                  [alt]="project.title + ' project artwork'"
+                  (error)="onImageError(project.id)"
+                />
+              </button>
+            }
+          }
+          @if (!isImageAvailable(project.id)) {
+            <div class="project-art-fallback" role="img" [attr.aria-label]="project.title + ' artwork unavailable'">
+              <span aria-hidden="true">{{ project.title.slice(0, 1) }}</span>
             </div>
-          </div>
+          }
         </div>
-      </div>
+
+        <div class="project-card__content">
+          <div class="project-card__meta">
+            <span>{{ project.featured ? "Featured" : "Archive" }}</span>
+            <span aria-hidden="true">·</span>
+            <span>{{ project.repositoryLabel }}</span>
+          </div>
+          <h2>{{ project.title }}</h2>
+          <p class="project-card__summary">{{ project.summary }}</p>
+          <p>{{ project.description }}</p>
+          <ul class="tag-list" aria-label="Technologies">
+            @for (tag of project.tags; track tag) {
+              <li>{{ tag }}</li>
+            }
+          </ul>
+          <a
+            class="text-link"
+            [href]="project.repositoryUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open {{ project.repositoryLabel }} <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </article>
     }
   </div>
-</div>
 
-<!-- Case Study: Step-by-Step Reveal -->
-<div class="container py-5">
-  <div class="project-spread-slide" appScrollReveal="fade-up">
-    <div class="card p-4 p-lg-5" style="background: var(--card-bg); border-color: var(--ef-border);">
-      <div class="font-mono text-xs uppercase tracking-widest mb-3" style="color: var(--ef-green); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em;">// case study</div>
-      <h2 class="font-display" style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.8rem; letter-spacing: -0.02em; margin-bottom: 0.5rem;">
-        How <span style="color: var(--ef-green);">Weathering With GO API</span> was built
-      </h2>
-      <p style="color: var(--ef-fg-dim); margin-bottom: 1.5rem;">
-        From idea to deployed API — walk through the decisions, the code, and the lessons.
-      </p>
-      <app-step-reveal [steps]="caseStudySteps"></app-step-reveal>
-    </div>
-  </div>
-</div>
+  <section class="case-study" aria-labelledby="case-study-title" appScrollReveal="fade-up">
+    <p class="eyebrow">Case study / Weathering With Go API</p>
+    <h2 id="case-study-title">Learning a language by shipping a small service.</h2>
+    <p>
+      The Weathering With Go API is a compact exercise in Go, Gin, caching, and
+      deployment. Reveal the steps instead of scrolling through a wall of copy.
+    </p>
+    <app-step-reveal [steps]="caseStudySteps" />
+  </section>
+</section>
 
-<app-image-lightbox #imageLightbox></app-image-lightbox>
+<app-image-lightbox #imageLightbox />

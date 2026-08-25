@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
+import { Directive, ElementRef, inject, Input, OnDestroy, OnInit } from '@angular/core';
 
 export type RevealAnimation = 'fade-up' | 'fade-in' | 'scale-in' | 'fade-left' | 'fade-right';
 
@@ -20,25 +20,30 @@ export class ScrollRevealDirective implements OnInit, OnDestroy {
   @Input() revealDelay = 0;
   @Input() revealThreshold = 0.15;
 
-  private observer!: IntersectionObserver;
+  private observer: IntersectionObserver | null = null;
 
-  constructor(private el: ElementRef<HTMLElement>) {}
+  private readonly el = inject(ElementRef<HTMLElement>);
 
   ngOnInit(): void {
     const nativeEl = this.el.nativeElement;
 
-    // Set initial hidden state
     nativeEl.classList.add('reveal-hidden', `reveal-${this.animation}`);
     if (this.revealDelay > 0) {
       nativeEl.style.transitionDelay = `${this.revealDelay}ms`;
     }
 
-    this.observer = new IntersectionObserver(
+    const observerConstructor = this.getIntersectionObserver();
+    if (this.prefersReducedMotion() || observerConstructor === null) {
+      this.revealImmediately(nativeEl);
+      return;
+    }
+
+    this.observer = new observerConstructor(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('reveal-visible');
-            this.observer.unobserve(entry.target);
+            this.observer?.unobserve(entry.target);
           }
         });
       },
@@ -49,8 +54,28 @@ export class ScrollRevealDirective implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.observer) {
-      this.observer.disconnect();
+    this.observer?.disconnect();
+    this.observer = null;
+  }
+
+  private prefersReducedMotion(): boolean {
+    return (
+      typeof window !== 'undefined' &&
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    );
+  }
+
+  private getIntersectionObserver(): typeof IntersectionObserver | null {
+    if (typeof window === 'undefined' || typeof IntersectionObserver === 'undefined') {
+      return null;
     }
+
+    return IntersectionObserver;
+  }
+
+  private revealImmediately(nativeEl: HTMLElement): void {
+    nativeEl.classList.remove('reveal-hidden');
+    nativeEl.classList.add('reveal-visible');
   }
 }

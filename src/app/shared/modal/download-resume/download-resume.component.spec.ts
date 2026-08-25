@@ -1,23 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { portfolioProjects } from "../../../data/portfolio.data";
+import { buildResumeProjectInputs } from "./download-resume.component";
 
-import { DownloadResumeComponent } from './download-resume.component';
+describe("DownloadResumeComponent project inputs", () => {
+  it("keeps PDF project title and description input in portfolio order", () => {
+    const projectInputs = buildResumeProjectInputs();
 
-describe('DownloadResumeComponent', () => {
-  let component: DownloadResumeComponent;
-  let fixture: ComponentFixture<DownloadResumeComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [DownloadResumeComponent]
-    })
-    .compileComponents();
-
-    fixture = TestBed.createComponent(DownloadResumeComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(projectInputs).toHaveSize(portfolioProjects.length);
+    expect(projectInputs.map(({ title }) => title)).toEqual(
+      portfolioProjects.map(({ title }) => title),
+    );
+    expect(projectInputs.map(({ description }) => description)).toEqual(
+      portfolioProjects.map(({ description }) => description),
+    );
   });
 });

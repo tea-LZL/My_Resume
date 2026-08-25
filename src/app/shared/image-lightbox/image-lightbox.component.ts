@@ -1,7 +1,6 @@
 
-import { Component, TemplateRef, ViewChild } from "@angular/core";
-import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { Component, TemplateRef, ViewChild, inject } from "@angular/core";
+import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: "app-image-lightbox",
@@ -10,23 +9,28 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
   styleUrl: "./image-lightbox.component.scss",
 })
 export class ImageLightboxComponent {
-  imageUrl: SafeUrl | null = null;
+  imageUrl: string | null = null;
+  imageAlt = "Project artwork";
+
+  private readonly modalService = inject(NgbModal);
+  private modalRef?: NgbModalRef;
 
   @ViewChild("imageModal", { static: true })
   imageModal!: TemplateRef<unknown>;
 
-  constructor(
-    private modalService: NgbModal,
-    private sanitizer: DomSanitizer,
-  ) {}
-
-  openImageModal(imageUrl: string) {
-    this.imageUrl = this.sanitizer.bypassSecurityTrustResourceUrl(imageUrl);
-    this.modalService.open(this.imageModal, {
+  openImageModal(imageUrl: string, imageAlt = "Project artwork"): void {
+    this.imageUrl = imageUrl;
+    this.imageAlt = imageAlt;
+    this.modalRef = this.modalService.open(this.imageModal, {
       size: "fullscreen",
       windowClass: "image-lightbox-window",
       backdrop: true,
       keyboard: true,
+      ariaLabelledBy: "lightbox-title",
     });
+  }
+
+  close(modal?: NgbModalRef): void {
+    (modal ?? this.modalRef)?.dismiss("close");
   }
 }

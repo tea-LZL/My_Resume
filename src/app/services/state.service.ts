@@ -88,7 +88,4 @@ export class StateService {
     });
   }
 
-  handlePageLoad() {
-
-  }
 }

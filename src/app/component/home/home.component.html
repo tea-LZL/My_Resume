@@ -1,466 +1,188 @@
-<div class="bento-grid">
-  <!-- Intro Panel — Kinetic Typography Hero -->
-  <div class="bento-cell bento-intro intro-glass p-4 rounded-4" appScrollReveal="fade-up">
-    <h1 id="hero-name" class="hero-kinetic">
-      <span class="text-primary kinetic-char">Z</span>
-      <span class="kinetic-char">h</span>
-      <span class="kinetic-char">i</span>
-      <span class="kinetic-char">l</span>
-      <span class="kinetic-char">o</span>
-      <span class="kinetic-char">n</span>
-      <span class="kinetic-char">g</span>
-      <span class="kinetic-char">&nbsp;</span>
-      <span class="text-primary kinetic-char">L</span>
-      <span class="kinetic-char">i</span>
-      <span class="kinetic-char">a</span>
-      <span class="kinetic-char">n</span>
-      <span class="kinetic-char">g</span>
-      <span class="typing-cursor"></span>
-    </h1>
-    <p class="fs-4 fw-semibold hero-subtitle">Software Developer</p>
-    <p class="fs-5 hero-tagline">
-      Just a developer focused on building performant projects and understanding what happens under the hood. I’m big on
-      refining my workflow and finding better ways to craft software that’s efficient, reliable, and actually useful.
-    </p>
-    <!-- Film-Strip Color Palette -->
-    <div class="palette-strip-wrapper mt-3">
-      <div class="palette-scrub-line" id="paletteScrubLine"></div>
-      <div
-        class="palette-strip"
-        id="paletteStrip"
-        (mousemove)="onPaletteScrub($event)"
-        (touchmove)="onPaletteScrub($event)">
-        <div class="palette-swatch" style="background: var(--ef-bg)" data-label="bg"></div>
-        <div class="palette-swatch" style="background: var(--ef-green)" data-label="green"></div>
-        <div class="palette-swatch" style="background: var(--ef-blue)" data-label="blue"></div>
-        <div class="palette-swatch" style="background: var(--ef-yellow)" data-label="yellow"></div>
-        <div class="palette-swatch" style="background: var(--ef-red)" data-label="red"></div>
-        <div class="palette-swatch" style="background: var(--ef-purple)" data-label="purple"></div>
-        <div class="palette-swatch" style="background: var(--ef-aqua)" data-label="aqua"></div>
-        <div class="palette-swatch" style="background: var(--ef-fg)" data-label="fg"></div>
+<section class="home-page" aria-labelledby="home-title">
+  <header class="home-hero" appScrollReveal="fade-up">
+    <div class="home-hero__copy">
+      <p class="eyebrow">Portfolio / {{ profile.contact.location }}</p>
+      <h1 id="home-title">{{ profile.name }}</h1>
+      <p class="home-hero__role">{{ profile.title }}</p>
+      <p class="home-hero__summary">{{ profile.summary }}</p>
+      <div class="home-actions">
+        <a class="button button--accent" routerLink="/projects">View selected work <span aria-hidden="true">↗</span></a>
+        <button type="button" class="button" (click)="openResume()">Open resume PDF <span aria-hidden="true">↓</span></button>
+      </div>
+      <div class="home-contact" aria-label="Contact links">
+        <a [href]="'mailto:' + profile.contact.email">{{ profile.contact.email }}</a>
+        <a [href]="profile.contact.githubUrl" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a [href]="profile.contact.linkedinUrl" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </div>
     </div>
-  </div>
-  <!-- Image Carousel -->
-  <div class="bento-cell bento-carousel" [appScrollReveal]="'fade-left'" [revealDelay]="100">
-    @if (!isImgLoaded) {
-      <div
-        style="height: 100%; min-height: 300px"
-        class="h-100 w-100 rounded-4 intro-glass d-flex justify-content-center align-items-center">
-        <div class="spinner-border" style="width: 4rem; height: 4rem; border-width: 6px" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </div>
-    }
-
-    <div id="carousel" class="carousel slide h-100" data-bs-ride="carousel" [hidden]="!isImgLoaded">
-      <div class="carousel-inner rounded-4 intro-glass h-100">
-        @for (img of arrCarouselImg; track img; let i = $index) {
-          <div class="carousel-item h-100" [ngClass]="{ active: i === 0 }">
-            <img
-              [hidden]="!isImgLoaded"
-              loading="eager"
-              [src]="img"
-              class="d-block w-100 h-100"
-              style="object-fit: cover"
-              alt="carousel{{ i }}"
-              (load)="isImgLoaded = true" />
-          </div>
-        }
-      </div>
+    <div class="home-hero__note" aria-label="Short profile note">
+      <span class="home-hero__index">01</span>
+      <p>Building interfaces, APIs, and local-first tools with an eye for the seam between product and system.</p>
     </div>
-  </div>
+  </header>
 
-  <!-- Weather Widget -->
-  <div class="bento-cell bento-weather intro-glass rounded-4 p-4" [appScrollReveal]="'fade-left'" [revealDelay]="200">
-    <div id="weather" class="h-100">
-      @if (isWeatherLoading) {
-        <div class="d-flex justify-content-center align-items-center" style="min-height: 300px">
-          <div class="spinner-border text-primary" style="width: 3rem; height: 3rem" role="status">
-            <span class="visually-hidden">Loading weather...</span>
+  <section class="home-section home-section--work" aria-labelledby="featured-title">
+    <div class="section-heading">
+      <p class="eyebrow">01 / selected work</p>
+      <h2 id="featured-title">Recent things I’ve made.</h2>
+    </div>
+    <div class="featured-list">
+      @for (project of featuredProjects; track project.id) {
+        <article class="featured-project" appScrollReveal="fade-up">
+          <div class="featured-project__media">
+            @if (!isProjectImageFailed(project.id)) {
+              <img
+                [src]="project.coverImageUrl"
+                [alt]="project.title + ' project artwork'"
+                (error)="onProjectImageError(project.id)"
+              />
+            } @else {
+              <div class="featured-project__fallback" aria-hidden="true">{{ project.title.slice(0, 1) }}</div>
+            }
           </div>
-        </div>
-      } @else if (weatherError) {
-        <div class="weather-error text-center" style="min-height: 300px">
-          <div class="alert alert-danger mb-0" role="alert">
-            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-            {{ weatherError }}
+          <div class="featured-project__copy">
+            <div class="project-kicker">
+              <span>{{ project.repositoryLabel }}</span>
+              <span aria-hidden="true">·</span>
+              <span>{{ project.tags[0] }}</span>
+            </div>
+            <h3>{{ project.title }}</h3>
+            <p>{{ project.summary }}</p>
+            <a class="text-link" [href]="project.repositoryUrl" target="_blank" rel="noopener noreferrer">
+              Read the source <span aria-hidden="true">↗</span>
+            </a>
           </div>
-        </div>
-      } @else if (weatherData) {
-        <div class="weather-tui">
-          <div class="tui-header border-bottom border-primary pb-2 mb-3">
-            <div class="d-flex justify-content-between align-items-center">
-              <h4 class="mb-0 font-monospace">
-                <i class="bi bi-cloud-sun me-2"></i>
-                WEATHER.SYS
-              </h4>
-              <small class="text-muted font-monospace">v2.0</small>
-            </div>
-          </div>
-
-          <div class="tui-body">
-            <div class="location-info mb-3">
-              <div class="font-monospace">
-                <span class="text-primary">&gt;</span>
-                LOCATION:
-                <span class="fw-bold">{{ weatherData.location.name }}, {{ weatherData.location.country }}</span>
-              </div>
-              <div class="font-monospace text-muted small">
-                <span class="text-primary">&gt;</span>
-                COORDS: {{ weatherData.location.latitude | number: "1.4-4" }},
-                {{ weatherData.location.longitude | number: "1.4-4" }}
-              </div>
-            </div>
-
-            <div class="current-weather border border-primary rounded p-3 mb-3">
-              <div class="row align-items-center">
-                <div class="col-4 text-center">
-                  <div class="weather-icon" style="font-size: 4rem">
-                    <i class="bi" [ngClass]="'bi-' + getWeatherIcon(weatherData.current.icon)"></i>
-                  </div>
-                  <div class="font-monospace small text-muted">
-                    {{ weatherData.current.condition }}
-                  </div>
-                </div>
-                <div class="col-8">
-                  <div class="font-monospace mb-2">
-                    <span class="text-primary">&gt;</span>
-                    TEMP:
-                    <span class="fs-3 fw-bold">{{ weatherData.current.temperature | number: "1.0-0" }}°C</span>
-                  </div>
-                  <div class="font-monospace small">
-                    <span class="text-primary">&gt;</span>
-                    FEELS LIKE:
-                    <span class="fw-semibold">{{ weatherData.current.feels_like | number: "1.0-0" }}°C</span>
-                  </div>
-                  <div class="font-monospace small text-muted">
-                    {{ weatherData.current.description }}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="weather-details font-monospace small">
-              <div class="row g-2">
-                <div class="col-6">
-                  <div class="detail-item">
-                    <span class="text-primary">&gt;</span>
-                    HUMIDITY:
-                    <span class="fw-semibold">{{ weatherData.current.humidity }}%</span>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="detail-item">
-                    <span class="text-primary">&gt;</span>
-                    PRESSURE:
-                    <span class="fw-semibold">{{ weatherData.current.pressure }} hPa</span>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="detail-item">
-                    <span class="text-primary">&gt;</span>
-                    WIND:
-                    <span class="fw-semibold">{{ weatherData.current.wind_speed }} m/s</span>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="detail-item">
-                    <span class="text-primary">&gt;</span>
-                    CLOUDS:
-                    <span class="fw-semibold">{{ weatherData.current.cloud_cover }}%</span>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="detail-item">
-                    <span class="text-primary">&gt;</span>
-                    VISIBILITY:
-                    <span class="fw-semibold">{{ weatherData.current.visibility / 1000 }} km</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="tui-footer mt-3 pt-2 border-top border-primary">
-              <div class="font-monospace text-muted small">
-                <span class="text-primary">&gt;</span>
-                LAST UPDATE:
-                {{ weatherData.current.last_updated | date: "dd MMM yyyy, hh:mm a" }}
-              </div>
-            </div>
-          </div>
-        </div>
-      } @else {
-        <div class="text-center text-muted" style="min-height: 300px">
-          <p class="font-monospace">No weather data available</p>
-        </div>
+        </article>
       }
     </div>
-  </div>
+    <a class="section-link" routerLink="/projects">All projects <span aria-hidden="true">→</span></a>
+  </section>
 
-  <!-- Skills — Marquee Strip -->
-  <div
-    class="bento-cell bento-skills monograph-card card p-4 rounded-4 shadow"
-    style="opacity: 98%"
-    [appScrollReveal]="'fade-up'"
-    [revealDelay]="50">
-    <h3 class="text-primary mb-3" #SkillSets>SKILL SETS</h3>
-    <div class="marquee-strip">
-      <div class="marquee-track">
-        <span>C#</span>
-        <span>·</span>
-        <span>Angular</span>
-        <span>·</span>
-        <span>Python</span>
-        <span>·</span>
-        <span>MS SQL</span>
-        <span>·</span>
-        <span>MySQL</span>
-        <span>·</span>
-        <span>Golang</span>
-        <span>·</span>
-        <span>JavaScript</span>
-        <span>·</span>
-        <span>TypeScript</span>
-        <span>·</span>
-        <span>Java</span>
-        <span>·</span>
-        <span>.NET</span>
-        <span>·</span>
-        <span>Rust</span>
-        <span>·</span>
-        <span>Docker</span>
-        <span>·</span>
-        <span>GCP</span>
-        <span>·</span>
-        <span>Azure</span>
-        <span>·</span>
-        <span>Git</span>
-        <span>·</span>
-        <span>CI/CD</span>
-        <span>·</span>
-        <span>Linux</span>
-        <span>·</span>
-        <span>REST API</span>
-        <span>·</span>
-        <span>Agile</span>
-        <span>·</span>
-        <!-- Duplicate for seamless loop -->
-        <span>C#</span>
-        <span>·</span>
-        <span>Angular</span>
-        <span>·</span>
-        <span>Python</span>
-        <span>·</span>
-        <span>MS SQL</span>
-        <span>·</span>
-        <span>MySQL</span>
-        <span>·</span>
-        <span>Golang</span>
-        <span>·</span>
-        <span>JavaScript</span>
-        <span>·</span>
-        <span>TypeScript</span>
-        <span>·</span>
-        <span>Java</span>
-        <span>·</span>
-        <span>.NET</span>
-        <span>·</span>
-        <span>Rust</span>
-        <span>·</span>
-        <span>Docker</span>
-        <span>·</span>
-        <span>GCP</span>
-        <span>·</span>
-        <span>Azure</span>
-        <span>·</span>
-        <span>Git</span>
-        <span>·</span>
-        <span>CI/CD</span>
-        <span>·</span>
-        <span>Linux</span>
-        <span>·</span>
-        <span>REST API</span>
-        <span>·</span>
-        <span>Agile</span>
-        <span>·</span>
-      </div>
+  <section class="home-section home-section--profile" aria-labelledby="profile-title">
+    <div class="section-heading">
+      <p class="eyebrow">02 / the working set</p>
+      <h2 id="profile-title">A practical toolkit.</h2>
     </div>
-  </div>
+    <div class="profile-grid">
+      <article class="profile-block">
+        <p class="block-label">Tools</p>
+        <ul class="skill-list">
+          @for (skill of skills; track skill) {
+            <li>{{ skill }}</li>
+          }
+        </ul>
+      </article>
+      <article class="profile-block">
+        <p class="block-label">Work</p>
+        @for (job of workExperience; track job.id) {
+          <div class="mini-entry">
+            <strong>{{ job.title }}</strong>
+            <span>{{ job.employer }} / {{ job.dates }}</span>
+          </div>
+        }
+      </article>
+      <article class="profile-block">
+        <p class="block-label">Education</p>
+        @for (entry of education; track entry.id) {
+          <div class="mini-entry">
+            <strong>{{ entry.qualification }}</strong>
+            <span>{{ entry.institution }} / {{ entry.dates }}</span>
+          </div>
+        }
+      </article>
+    </div>
+  </section>
 
-  <!-- Education -->
-  <div
-    class="bento-cell bento-education monograph-card card p-4 rounded-4 shadow"
-    style="opacity: 98%"
-    [appScrollReveal]="'fade-up'"
-    [revealDelay]="100">
-    <h3 class="text-primary" #Education>EDUCATION</h3>
-    <div>
-      <div class="mb-3">
-        <h5>Matric Certificate</h5>
-        <span>Willowridge High School</span>
-        <br />
-        <span class="text-secondary-emphasis">01/2014 - 12/2018</span>
-      </div>
-      <div>
-        <h5>Information Technology: System Development</h5>
-        <span>CTU Training Solution</span>
-        <br />
-        <span class="text-secondary-emphasis">01/2019 - 12/2023</span>
-      </div>
+  <section class="home-section home-section--credentials" aria-labelledby="credentials-title">
+    <div class="section-heading">
+      <p class="eyebrow">03 / proof points</p>
+      <h2 id="credentials-title">Credentials, when they’re useful.</h2>
     </div>
-  </div>
-  <!-- Certifications -->
-  <div
-    class="bento-cell bento-certs monograph-card card p-4 rounded-4 shadow"
-    style="opacity: 98%"
-    [appScrollReveal]="'fade-up'"
-    [revealDelay]="150">
-    <h3 class="text-primary" #Certifications>CERTIFICATIONS</h3>
-    <div class="cert-list">
-      <div class="cert-item my-2">
-        <h5>Microsoft Certified: Azure Database Administrator Associate</h5>
-        <div>
-          <button
-            class="btn btn-outline-primary rounded-pill px-3 my-1 me-3"
-            (click)="viewFile('Credentials_ZhilongLiang_4664_AzureDatabaseAdministratorAssociate.pdf')">
-            <i class="bi bi-file-earmark-pdf me-1"></i>
-            View
-          </button>
-          <a
-            class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
-            target="_blank"
-            href="https://learn.microsoft.com/en-gb/users/zhilongliang-4664/credentials/a479ba66473c157">
-            View on Microsoft
-          </a>
+    <div class="credential-list">
+      @for (certification of certifications; track certification.id) {
+        @if (getCertificateLink(certification.id); as link) {
+          <article class="credential-card">
+            <div>
+              <span class="credential-card__year">{{ certification.year }}</span>
+              <h3>{{ certification.name }}</h3>
+            </div>
+            <div class="credential-card__actions">
+              <button type="button" class="text-button" (click)="viewFile(link.pdfFile)">Open PDF</button>
+              <a [href]="link.verificationUrl" target="_blank" rel="noopener noreferrer">Verify ↗</a>
+            </div>
+          </article>
+        }
+      }
+    </div>
+  </section>
+
+  <section class="home-section home-section--signals" aria-labelledby="signals-title">
+    <div class="section-heading">
+      <p class="eyebrow">04 / live signals</p>
+      <h2 id="signals-title">A quiet look at the activity behind the work.</h2>
+    </div>
+    <div class="signal-grid">
+      <article class="signal-card">
+        <div class="signal-card__header">
+          <span class="block-label">Pretoria weather</span>
+          <span class="signal-status" [class.signal-status--error]="weatherError">{{ isWeatherLoading ? "Loading" : weatherError ? "Offline" : "Live" }}</span>
         </div>
-      </div>
-      <div class="cert-item my-2">
-        <h5>Microsoft Certified: DevOps Engineer Expert</h5>
-        <div>
-          <button
-            class="btn btn-outline-primary rounded-pill px-3 my-1 me-3"
-            (click)="viewFile('Credentials_ZhilongLiang_4664_DevOps_Engineer_Expert.pdf')">
-            <i class="bi bi-file-earmark-pdf me-1"></i>
-            View
-          </button>
-          <a
-            class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
-            target="_blank"
-            href="https://learn.microsoft.com/en-gb/users/zhilongliang-4664/credentials/bd2700599055f76f">
-            View on Microsoft
-          </a>
+        @if (isWeatherLoading) {
+          <p class="signal-empty">Checking the forecast…</p>
+        } @else if (weatherData) {
+          <p class="signal-value">{{ weatherData.current.temperature | number: "1.0-0" }}°</p>
+          <p class="signal-detail">{{ weatherData.current.description }} · feels like {{ weatherData.current.feels_like | number: "1.0-0" }}°</p>
+        } @else {
+          <p class="signal-empty">{{ weatherError || "Weather data is unavailable right now." }}</p>
+        }
+      </article>
+
+      <article class="signal-card signal-card--chart">
+        <div class="signal-card__header">
+          <span class="block-label">GitHub contributions</span>
+          <a [href]="profile.contact.githubUrl" target="_blank" rel="noopener noreferrer">@tea-LZL ↗</a>
         </div>
-      </div>
-      <div class="cert-item my-2">
-        <h5>Microsoft Certified: Azure Developer Associate</h5>
-        <div>
-          <button
-            class="btn btn-outline-primary rounded-pill px-3 my-1 me-3"
-            (click)="viewFile('Credentials_ZhilongLiang_4664_Azure_Developer_Associate.pdf')">
-            <i class="bi bi-file-earmark-pdf me-1"></i>
-            View
-          </button>
-          <a
-            class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
-            target="_blank"
-            href="https://learn.microsoft.com/en-gb/users/zhilongliang-4664/credentials/ad9659f137b6be27">
-            View on Microsoft
-          </a>
+        @if (githubChartError) {
+          <p class="signal-empty">{{ githubChartError }}</p>
+        } @else {
+          <img
+            class="github-chart"
+            [src]="githubChartUrl"
+            alt="GitHub contribution activity chart"
+            (load)="onGithubChartLoad()"
+            (error)="onGithubChartError()"
+          />
+        }
+      </article>
+
+      <article class="signal-card signal-card--chart">
+        <div class="signal-card__header">
+          <span class="block-label">GitLab contributions</span>
+          <a href="https://gitlab.com/tea-LZL" target="_blank" rel="noopener noreferrer">@tea-LZL ↗</a>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Work Experience -->
-  <div
-    class="bento-cell bento-experience monograph-card card p-4 rounded-4 shadow"
-    style="opacity: 98%"
-    [appScrollReveal]="'fade-up'"
-    [revealDelay]="200">
-    <h3 class="text-primary" #Experience>Work Experience</h3>
-    <div>
-      <h5>Automate</h5>
-      <span class="text-secondary-emphasis">08/2022 - Current</span>
-      <ul class="list-group list-group-flush w-fit-content">
-        <li class="list-group-item fs-5 fw-bold bg-transparent">Major Projects Involved:</li>
-        <li class="list-group-item bg-transparent">Internal Dealership System, Mobile App</li>
-        <li class="list-group-item bg-transparent">Dealership Website</li>
-        <li class="list-group-item bg-transparent">Internal Admin System</li>
-        <li class="list-group-item bg-transparent">2 Internal Admin System Rewrite (AngularJS => Angular 18)</li>
-        <li class="list-group-item bg-transparent">API Rewrite (.NET Framework 4.7.2 => .NET 8)</li>
-        <li class="list-group-item bg-transparent">
-          Internal Training Portal Application Rewrite (AngularJS => Angular 18)
-        </li>
-        <li class="list-group-item bg-transparent">Full Stack Client Supplier Onboarding Application</li>
-        <li class="list-group-item bg-transparent">
-          Rewrite Client Membership Management and Statistic System (.NET 4 MVC => Angular 20 + .NET 8)
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Contribution Activity -->
-  <div
-    class="bento-cell bento-contributions monograph-card card p-4 rounded-4 shadow"
-    style="opacity: 98%"
-    [appScrollReveal]="'fade-up'"
-    [revealDelay]="250">
-    <h5 class="d-flex align-items-center gap-2 mb-2">
-      <i class="bi bi-github"></i> GitHub Contributions
-      <a href="https://github.com/tea-LZL" target="_blank" class="ms-auto fs-6 fw-normal text-muted text-decoration-none">&#64;tea-LZL <i class="bi bi-box-arrow-up-right ms-1"></i></a>
-    </h5>
-    <div class="contrib-img" [innerHTML]="githubSvg"></div>
-  </div>
-
-  <!-- GitLab Contribution Activity -->
-  <div
-    class="bento-cell bento-gitlab monograph-card card p-4 rounded-4 shadow"
-    style="opacity: 98%"
-    [appScrollReveal]="'fade-up'"
-    [revealDelay]="300">
-    <h5 class="d-flex align-items-center gap-2 mb-2">
-      <i class="bi bi-gitlab" style="color: #fc6d26"></i> GitLab Contributions
-      <a href="https://gitlab.com/tea-LZL" target="_blank" class="ms-auto fs-6 fw-normal text-muted text-decoration-none">&#64;tea-LZL <i class="bi bi-box-arrow-up-right ms-1"></i></a>
-    </h5>
-    @if (gitlabWeeks.length) {
-      <div class="heatmap-wrapper">
-        <div class="heatmap-chart">
-          <!-- y-axis day labels -->
-          <div class="heatmap-y-label" style="grid-row:2">Mon</div>
-          <div class="heatmap-y-label" style="grid-row:4">Wed</div>
-          <div class="heatmap-y-label" style="grid-row:6">Fri</div>
-          <div class="heatmap-grid">
+        @if (isGitlabLoading) {
+          <p class="signal-empty">Loading activity…</p>
+        } @else if (gitlabError || !gitlabWeeks.length) {
+          <p class="signal-empty">{{ gitlabError || "No contribution data available." }}</p>
+        } @else {
+          <div class="gitlab-grid" aria-label="GitLab contribution activity">
             @for (week of gitlabWeeks; track $index) {
-              <div class="heatmap-week">
+              <div class="gitlab-week">
                 @for (day of week; track day.date) {
-                  <div
-                    class="heatmap-day"
-                    [attr.data-level]="day.level"
-                    [title]="day.date + ': ' + day.count + ' contributions'"></div>
+                  <span class="gitlab-day" [class]="'gitlab-day gitlab-day--' + day.level" [attr.title]="day.date + ': ' + day.count + ' contributions'"></span>
                 }
               </div>
             }
           </div>
+        }
+      </article>
+    </div>
+  </section>
 
-        </div>
-        <div class="heatmap-legend">
-          <span class="text-muted small">Less</span>
-          <div class="heatmap-day" data-level="0"></div>
-          <div class="heatmap-day" data-level="1"></div>
-          <div class="heatmap-day" data-level="2"></div>
-          <div class="heatmap-day" data-level="3"></div>
-          <div class="heatmap-day" data-level="4"></div>
-          <span class="text-muted small">More</span>
-        </div>
-      </div>
-    } @else {
-      <div class="text-center text-muted py-3">
-        <div class="spinner-border spinner-border-sm me-2" role="status"></div>
-        Loading contribution data&hellip;
-      </div>
-    }
+  <div class="home-footer-note">
+    <span>Have a project in mind?</span>
+    <a [href]="'mailto:' + profile.contact.email">Start a conversation <span aria-hidden="true">↗</span></a>
   </div>
-</div>
+</section>
 
-<app-modal #modalComp></app-modal>
+<app-modal #modalComp />
