@@ -6,8 +6,14 @@
       <p class="home-hero__role">{{ profile.title }}</p>
       <p class="home-hero__summary">{{ profile.summary }}</p>
       <div class="home-actions">
-        <a class="button button--accent" routerLink="/projects">View selected work <span aria-hidden="true">↗</span></a>
-        <button type="button" class="button" (click)="openResume()">Open resume PDF <span aria-hidden="true">↓</span></button>
+        <a class="button button--accent" routerLink="/projects">
+          View selected work
+          <span aria-hidden="true">↗</span>
+        </a>
+        <button type="button" class="button" (click)="openResume()">
+          Open resume PDF
+          <span aria-hidden="true">↓</span>
+        </button>
       </div>
       <div class="home-contact" aria-label="Contact links">
         <a [href]="'mailto:' + profile.contact.email">{{ profile.contact.email }}</a>
@@ -34,8 +40,7 @@
               <img
                 [src]="project.coverImageUrl"
                 [alt]="project.title + ' project artwork'"
-                (error)="onProjectImageError(project.id)"
-              />
+                (error)="onProjectImageError(project.id)" />
             } @else {
               <div class="featured-project__fallback" aria-hidden="true">{{ project.title.slice(0, 1) }}</div>
             }
@@ -49,13 +54,17 @@
             <h3>{{ project.title }}</h3>
             <p>{{ project.summary }}</p>
             <a class="text-link" [href]="project.repositoryUrl" target="_blank" rel="noopener noreferrer">
-              Read the source <span aria-hidden="true">↗</span>
+              Read the source
+              <span aria-hidden="true">↗</span>
             </a>
           </div>
         </article>
       }
     </div>
-    <a class="section-link" routerLink="/projects">All projects <span aria-hidden="true">→</span></a>
+    <a class="section-link" routerLink="/projects">
+      All projects
+      <span aria-hidden="true">→</span>
+    </a>
   </section>
 
   <section class="home-section home-section--profile" aria-labelledby="profile-title">
@@ -125,13 +134,17 @@
       <article class="signal-card">
         <div class="signal-card__header">
           <span class="block-label">Pretoria weather</span>
-          <span class="signal-status" [class.signal-status--error]="weatherError">{{ isWeatherLoading ? "Loading" : weatherError ? "Offline" : "Live" }}</span>
+          <span class="signal-status" [class.signal-status--error]="weatherError">
+            {{ isWeatherLoading ? "Loading" : weatherError ? "Offline" : "Live" }}
+          </span>
         </div>
         @if (isWeatherLoading) {
           <p class="signal-empty">Checking the forecast…</p>
         } @else if (weatherData) {
           <p class="signal-value">{{ weatherData.current.temperature | number: "1.0-0" }}°</p>
-          <p class="signal-detail">{{ weatherData.current.description }} · feels like {{ weatherData.current.feels_like | number: "1.0-0" }}°</p>
+          <p class="signal-detail">
+            {{ weatherData.current.description }} · feels like {{ weatherData.current.feels_like | number: "1.0-0" }}°
+          </p>
         } @else {
           <p class="signal-empty">{{ weatherError || "Weather data is unavailable right now." }}</p>
         }
@@ -150,8 +163,7 @@
             [src]="githubChartUrl"
             alt="GitHub contribution activity chart"
             (load)="onGithubChartLoad()"
-            (error)="onGithubChartError()"
-          />
+            (error)="onGithubChartError()" />
         }
       </article>
 
@@ -169,7 +181,10 @@
             @for (week of gitlabWeeks; track $index) {
               <div class="gitlab-week">
                 @for (day of week; track day.date) {
-                  <span class="gitlab-day" [class]="'gitlab-day gitlab-day--' + day.level" [attr.title]="day.date + ': ' + day.count + ' contributions'"></span>
+                  <span
+                    class="gitlab-day"
+                    [class]="'gitlab-day gitlab-day--' + day.level"
+                    [attr.title]="day.date + ': ' + day.count + ' contributions'"></span>
                 }
               </div>
             }
@@ -178,11 +193,11 @@
       </article>
     </div>
   </section>
-
-  <div class="home-footer-note">
-    <span>Have a project in mind?</span>
-    <a [href]="'mailto:' + profile.contact.email">Start a conversation <span aria-hidden="true">↗</span></a>
-  </div>
+  <!---->
+  <!-- <div class="home-footer-note"> -->
+  <!--   <span>Have a project in mind?</span> -->
+  <!--   <a [href]="'mailto:' + profile.contact.email">Start a conversation <span aria-hidden="true">↗</span></a> -->
+  <!-- </div> -->
 </section>
 
 <app-modal #modalComp />

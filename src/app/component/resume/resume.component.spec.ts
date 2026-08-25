@@ -1,4 +1,5 @@
 import { TestBed } from "@angular/core/testing";
+import { provideRouter } from "@angular/router";
 
 import { portfolioProjects, profile, workExperience } from "../../data/portfolio.data";
 import { ResumeComponent } from "./resume.component";
@@ -9,6 +10,7 @@ describe("ResumeComponent", () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ResumeComponent],
+      providers: [provideRouter([])],
     }).compileComponents();
     component = TestBed.createComponent(ResumeComponent).componentInstance;
   });

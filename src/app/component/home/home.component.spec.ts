@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClient } from '@angular/common/http';
+import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 
 import { HomeComponent } from './home.component';
@@ -21,6 +22,7 @@ describe('HomeComponent', () => {
       providers: [
         { provide: HttpClient, useValue: httpClientStub },
         { provide: WeatherService, useValue: weatherServiceStub },
+        provideRouter([]),
       ],
     })
     .compileComponents();
@@ -30,10 +32,10 @@ describe('HomeComponent', () => {
     const windowWithBootstrap = window as Window & { bootstrap?: unknown };
     const originalBootstrap = windowWithBootstrap.bootstrap;
     delete windowWithBootstrap.bootstrap;
-    spyOn(document, 'querySelector').and.returnValue(null);
 
     try {
       fixture = TestBed.createComponent(HomeComponent);
+      spyOn(document, 'querySelector').and.returnValue(null);
 
       expect(() => fixture.componentInstance.ngOnInit()).not.toThrow();
       expect(fixture.componentInstance).toBeTruthy();

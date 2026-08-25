@@ -1,5 +1,9 @@
-import { ElementRef, Renderer2 } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import {
+  ElementRef,
+  Injector,
+  Renderer2,
+  runInInjectionContext,
+} from '@angular/core';
 
 import { MagneticHoverDirective } from './magnetic-hover.directive';
 
@@ -13,11 +17,13 @@ describe('MagneticHoverDirective', () => {
   let frameCallbacks: Map<number, FrameRequestCallback>;
   let cancelledFrameIds: number[];
   let nextFrameId: number;
+  let deviceOptions: { hover: boolean; finePointer: boolean; reducedMotion: boolean };
 
   beforeEach(() => {
     frameCallbacks = new Map<number, FrameRequestCallback>();
     cancelledFrameIds = [];
     nextFrameId = 0;
+    deviceOptions = { hover: true, finePointer: true, reducedMotion: false };
 
     spyOn(window, 'requestAnimationFrame').and.callFake((callback: FrameRequestCallback) => {
       const frameId = nextFrameId++;
@@ -28,23 +34,27 @@ describe('MagneticHoverDirective', () => {
       cancelledFrameIds.push(frameId);
       frameCallbacks.delete(frameId);
     });
-  });
-
-  function stubDevice(options: { hover?: boolean; finePointer?: boolean; reducedMotion?: boolean } = {}): void {
-    const { hover = true, finePointer = true, reducedMotion = false } = options;
 
     spyOn(window, 'matchMedia').and.callFake((query: string) => {
       const matches =
         query === '(hover: hover)'
-          ? hover
+          ? deviceOptions.hover
           : query === '(pointer: fine)'
-            ? finePointer
+            ? deviceOptions.finePointer
             : query === '(prefers-reduced-motion: reduce)'
-              ? reducedMotion
+              ? deviceOptions.reducedMotion
               : false;
 
       return { matches, media: query } as MediaQueryList;
     });
+  });
+
+  function stubDevice(options: { hover?: boolean; finePointer?: boolean; reducedMotion?: boolean } = {}): void {
+    deviceOptions = {
+      hover: options.hover ?? true,
+      finePointer: options.finePointer ?? true,
+      reducedMotion: options.reducedMotion ?? false,
+    };
   }
 
   function createRenderer(records: ListenerRecord[]): Renderer2 {
@@ -66,14 +76,14 @@ describe('MagneticHoverDirective', () => {
   }
 
   function createDirective(element: HTMLElement, renderer: Renderer2): MagneticHoverDirective {
-    TestBed.configureTestingModule({
+    const injector = Injector.create({
       providers: [
         { provide: ElementRef, useValue: new ElementRef(element) },
         { provide: Renderer2, useValue: renderer },
       ],
     });
 
-    return TestBed.runInInjectionContext(() => new MagneticHoverDirective());
+    return runInInjectionContext(injector, () => new MagneticHoverDirective());
   }
 
   it('does not attach pointer listeners when reduced motion is requested', () => {
