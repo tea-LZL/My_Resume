@@ -5,6 +5,12 @@
     "pathRewrite": { "^/gitlab-calendar": "/users/tea-LZL/calendar.json" },
     "changeOrigin": true
   },
+  "/github-calendar": {
+    "target": "https://github-contributions-api.jogruber.de",
+    "secure": true,
+    "pathRewrite": { "^/github-calendar": "/v4/tea-LZL" },
+    "changeOrigin": true
+  },
   "/github-chart": {
     "target": "https://ghchart.rshah.org",
     "secure": true,

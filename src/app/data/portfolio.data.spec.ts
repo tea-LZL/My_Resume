@@ -44,6 +44,7 @@ describe("portfolio data", () => {
     expect(ids.has("convo")).toBeFalse();
     expect(ids.has("asterisk")).toBeTrue();
     expect(ids.has("origami")).toBeTrue();
+    expect(ids.has("buoy")).toBeTrue();
   });
 
   it("rejects local and credential-bearing repository URLs", () => {

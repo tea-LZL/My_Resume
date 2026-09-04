@@ -18,6 +18,7 @@ describe("ProjectsComponent", () => {
     expect(component.projects.map((project) => project.title)).toEqual([
       "Asterisk",
       "Origami",
+      "Buoy",
       "Weathering With Go API",
       "GenPass",
     ]);
@@ -35,5 +36,16 @@ describe("ProjectsComponent", () => {
 
     expect(asterisk).toBeDefined();
     expect(component.imagesFor(asterisk!)).toEqual([asterisk!.coverImageUrl]);
+  });
+
+  it("shows the cover before extra gallery images", () => {
+    const buoy = component.projects.find((project) => project.id === "buoy");
+
+    expect(buoy).toBeDefined();
+    expect(buoy!.gallery?.length).toBeGreaterThan(0);
+    expect(component.imagesFor(buoy!)).toEqual([
+      buoy!.coverImageUrl,
+      ...(buoy!.gallery ?? []),
+    ]);
   });
 });

@@ -1,64 +1,103 @@
-.btn-bd-linkedin {
-    --bs-btn-font-weight: 600;
-    --bs-btn-color: var(--bs-white);
-    --bs-btn-bg: var(--bs-light-subtle);
-    --bs-btn-border-color: var(--bs-light-subtle);
-    --bs-btn-hover-color: var(--bs-white);
-    --bs-btn-hover-bg: var(--bs-blue);
-    --bs-btn-hover-border-color: var(--bs-blue);
-    --bs-btn-focus-shadow-rgb: var(--bs-blue);
-    --bs-btn-active-color: var(--bs-blue);
-    --bs-btn-active-bg: #{shade-color(var(--bs-blue), 20%)};
-    --bs-btn-active-border-color: #{shade-color(var(--bs-blue), 20%)};
+:host {
+  display: block;
 }
 
-.btn-bd-github {
-    --bs-btn-font-weight: 600;
-    --bs-btn-color: var(--bs-white);
-    --bs-btn-bg: var(--bs-light-subtle);
-    --bs-btn-border-color: var(--bs-light-subtle);
-    --bs-btn-hover-color: var(--bs-white);
-    --bs-btn-hover-bg: rgb(141 50 171);
-    --bs-btn-hover-border-color: rgb(141 50 171);
-    --bs-btn-focus-shadow-rgb: rgb(141 50 171);
-    --bs-btn-active-color: rgb(141 50 171);
-    --bs-btn-active-bg: #{shade-color(rgb(141 50 171), 20%)};
-    --bs-btn-active-border-color: #{shade-color(rgb(141 50 171), 20%)};
+.nav-menu {
+  width: min(100% - 2rem, 78rem);
+  margin: 0 auto;
+  padding: 0.35rem 0 1.35rem;
 }
 
-.btn-bd-gitlab {
-    --bs-btn-font-weight: 600;
-    --bs-btn-color: var(--bs-white);
-    --bs-btn-bg: var(--bs-light-subtle);
-    --bs-btn-border-color: var(--bs-light-subtle);
-    --bs-btn-hover-color: var(--bs-white);
-    --bs-btn-hover-bg: rgb(252 109 38);
-    --bs-btn-hover-border-color: rgb(252 109 38);
-    --bs-btn-focus-shadow-rgb: 252, 109, 38;
-    --bs-btn-active-color: rgb(252 109 38);
-    --bs-btn-active-bg: #{shade-color(rgb(252 109 38), 20%)};
-    --bs-btn-active-border-color: #{shade-color(rgb(252 109 38), 20%)};
+.nav-menu__eyebrow {
+  margin: 0 0 0.75rem;
+  color: var(--site-accent);
+  font-family: var(--site-font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-.btn-bd-theme {
-    --bs-btn-font-weight: 600;
-    --bs-btn-color: var(--bs-white);
-    --bs-btn-bg: var(--bs-light-subtle);
-    --bs-btn-border-color: var(--bs-light-subtle);
-    --bs-btn-hover-color: var(--bs-white);
-    --bs-btn-hover-bg: var(--bs-primary);
-    --bs-btn-hover-border-color: var(--bs-primary);
-    --bs-btn-focus-shadow-rgb: var(--bs-primary);
-    --bs-btn-active-color: var(--bs-primary);
-    --bs-btn-active-bg: #{shade-color(var(--bs-primary), 0%)};
-    --bs-btn-active-border-color: #{shade-color(var(--bs-primary), 0%)};
+.nav-menu__links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--site-line);
 }
 
-.btn-bd-github:hover,
-.btn-bd-github:active,
-.btn-bd-gitlab:hover,
-.btn-bd-gitlab:active,
-.btn-bd-linkedin:hover,
-.btn-bd-linkedin:active {
-    color: var(--bs-light) !important;
+.nav-menu__links a {
+  display: flex;
+  align-items: center;
+  min-height: 3.25rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--site-line);
+  color: var(--site-foreground);
+  font-family: var(--site-font-display);
+  font-size: clamp(1.85rem, 8vw, 2.6rem);
+  letter-spacing: -0.06em;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.nav-menu__links a:hover,
+.nav-menu__links a:focus-visible,
+.nav-menu__links a.is-active {
+  color: var(--site-accent);
+}
+
+.nav-menu__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1.15rem;
+}
+
+.nav-menu__social,
+.nav-menu__theme {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.nav-menu__icon,
+.nav-menu__theme button {
+  display: inline-flex;
+  min-height: 2.4rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--site-line);
+  background: transparent;
+  color: var(--site-muted);
+  font-family: var(--site-font-mono);
+  font-size: 0.7rem;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.nav-menu__icon {
+  width: 2.4rem;
+  padding-inline: 0;
+  font-size: 1rem;
+  text-transform: none;
+}
+
+.nav-menu__icon:hover,
+.nav-menu__icon:focus-visible,
+.nav-menu__theme button:hover,
+.nav-menu__theme button:focus-visible {
+  border-color: var(--site-accent);
+  color: var(--site-accent);
+}
+
+.nav-menu__theme button {
+  cursor: pointer;
+}
+
+.nav-menu__theme button.is-active {
+  color: var(--site-background);
+  background: var(--site-accent);
+  border-color: var(--site-accent);
 }

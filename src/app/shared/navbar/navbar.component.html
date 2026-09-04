@@ -1,6 +1,15 @@
-<header class="site-nav" [class.site-nav--scrolled]="isScrolled">
+@if (bNav) {
+  <button
+    type="button"
+    class="site-nav__scrim"
+    tabindex="-1"
+    aria-hidden="true"
+    (click)="closeNavMenu()"></button>
+}
+
+<header class="site-nav" [class.site-nav--scrolled]="isScrolled" [class.site-nav--menu-open]="bNav">
   <div class="site-nav__inner">
-    <a class="site-nav__brand" routerLink="/" aria-label="Zhilong Liang home">
+    <a class="site-nav__brand" routerLink="/" aria-label="Zhilong Liang home" (click)="closeNavMenu()">
       <span class="site-nav__mark" aria-hidden="true">ZL</span>
       <span>Zhilong Liang</span>
     </a>
@@ -49,12 +58,19 @@
       class="site-nav__toggle"
       [class.is-open]="bNav"
       [attr.aria-expanded]="bNav"
-      aria-label="Open navigation menu"
-      (click)="openNavModal()"
+      aria-controls="site-mobile-nav"
+      [attr.aria-label]="bNav ? 'Close navigation menu' : 'Open navigation menu'"
+      (click)="toggleNavMenu()"
     >
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
     </button>
   </div>
+
+  @if (bNav) {
+    <div id="site-mobile-nav" class="site-nav__panel">
+      <app-nav-modal (closed)="closeNavMenu()" />
+    </div>
+  }
 </header>

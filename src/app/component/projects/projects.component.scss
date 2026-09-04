@@ -60,8 +60,19 @@
 
 .project-card__art {
   min-height: 12rem;
+  overflow: hidden;
   background: var(--site-surface);
   border: 1px solid var(--site-line);
+}
+
+.project-card__art--gallery {
+  align-self: start;
+  display: grid;
+  gap: 0.65rem;
+  min-height: 0;
+  overflow: visible;
+  background: transparent;
+  border: 0;
 }
 
 .project-art-button {
@@ -76,6 +87,13 @@
   cursor: zoom-in;
 }
 
+.project-card__art--gallery .project-art-button {
+  height: auto;
+  min-height: 0;
+  border: 1px solid var(--site-line);
+  background: var(--site-surface);
+}
+
 .project-art-button img {
   display: block;
   width: 100%;
@@ -86,10 +104,39 @@
   transition: transform 240ms ease, filter 240ms ease;
 }
 
+.project-card__art--gallery .project-art-button img {
+  height: 12rem;
+  min-height: 12rem;
+  max-height: 12rem;
+}
+
+.project-art-button img[src$=".svg"],
+.project-art-button--icon img {
+  object-fit: contain;
+  padding: 1.5rem;
+  background: var(--site-surface);
+  filter: none;
+  max-height: 14rem;
+}
+
+.project-card__art--gallery .project-art-button img[src$=".svg"],
+.project-card__art--gallery .project-art-button--icon img {
+  height: 11rem;
+  min-height: 11rem;
+  max-height: 11rem;
+}
+
 .project-art-button:hover img,
 .project-art-button:focus-visible img {
   filter: saturate(1);
   transform: scale(1.03);
+}
+
+.project-art-button:hover img[src$=".svg"],
+.project-art-button:focus-visible img[src$=".svg"],
+.project-art-button--icon:hover img,
+.project-art-button--icon:focus-visible img {
+  filter: none;
 }
 
 .project-art-fallback {
@@ -189,6 +236,14 @@
   .project-art-button img,
   .project-art-fallback {
     min-height: 10rem;
+  }
+
+  .project-card__art--gallery .project-art-button img,
+  .project-card__art--gallery .project-art-button img[src$=".svg"],
+  .project-card__art--gallery .project-art-button--icon img {
+    height: 10rem;
+    min-height: 10rem;
+    max-height: 10rem;
   }
 }
 

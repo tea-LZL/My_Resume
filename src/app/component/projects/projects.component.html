@@ -15,24 +15,27 @@
         [class.project-card--featured]="project.featured"
         appScrollReveal="fade-up"
       >
-        <div class="project-card__art">
+        <div
+          class="project-card__art"
+          [class.project-card__art--gallery]="imagesFor(project).length > 1"
+        >
           @for (imageUrl of imagesFor(project); track imageUrl; let imageIndex = $index) {
-            @if (isImageAvailable(project.id)) {
+            @if (isImageAvailable(imageUrl)) {
               <button
                 type="button"
                 class="project-art-button"
+                [class.project-art-button--icon]="isIconPreview(imageUrl)"
                 [attr.aria-label]="'Open ' + project.title + ' artwork ' + (imageIndex + 1)"
                 (click)="openImage(imageUrl, project.title)"
               >
                 <img
                   [src]="imageUrl"
                   [alt]="project.title + ' project artwork'"
-                  (error)="onImageError(project.id)"
-                />
+                  (error)="onImageError(imageUrl)" />
               </button>
             }
           }
-          @if (!isImageAvailable(project.id)) {
+          @if (!hasVisibleImage(project)) {
             <div class="project-art-fallback" role="img" [attr.aria-label]="project.title + ' artwork unavailable'">
               <span aria-hidden="true">{{ project.title.slice(0, 1) }}</span>
             </div>

@@ -89,6 +89,20 @@ export const portfolioProjects = [
     featured: true,
   },
   {
+    id: "buoy",
+    title: "Buoy",
+    summary:
+      "A private, minimal Firefox RSS reader that keeps RSS, Atom, and OPML feeds local.",
+    description:
+      "A Firefox desktop extension that reads RSS, Atom, and OPML locally with no account, analytics, or cloud sync. Feeds are stored in IndexedDB, with OPML import and export for migration and a full reader available from the toolbar or Firefox sidebar.",
+    tags: ["Firefox", "TypeScript", "RSS", "IndexedDB"],
+    repositoryUrl: "https://github.com/tea-LZL/buoy",
+    repositoryLabel: "GitHub",
+    coverImageUrl: "assets/projects/buoy-icon.png",
+    gallery: ["assets/projects/buoy.png"],
+    featured: false,
+  },
+  {
     id: "weathering-with-go-api",
     title: "Weathering With Go API",
     summary:

@@ -56,20 +56,32 @@ export class ProjectsComponent {
   ];
 
   imagesFor(project: Project): readonly string[] {
-    return project.gallery?.length
-      ? project.gallery
-      : [project.coverImageUrl];
+    const extras = project.gallery ?? [];
+    if (!extras.length) {
+      return [project.coverImageUrl];
+    }
+    return extras.includes(project.coverImageUrl)
+      ? extras
+      : [project.coverImageUrl, ...extras];
   }
 
   openImage(url: string, projectTitle: string): void {
     this.imageLightbox?.openImageModal(`${url}`, `${projectTitle} project artwork`);
   }
 
-  onImageError(projectId: string): void {
-    this.failedImages.add(projectId);
+  onImageError(imageUrl: string): void {
+    this.failedImages.add(imageUrl);
   }
 
-  isImageAvailable(projectId: string): boolean {
-    return !this.failedImages.has(projectId);
+  isImageAvailable(imageUrl: string): boolean {
+    return !this.failedImages.has(imageUrl);
+  }
+
+  isIconPreview(imageUrl: string): boolean {
+    return imageUrl.includes("-icon.");
+  }
+
+  hasVisibleImage(project: Project): boolean {
+    return this.imagesFor(project).some((imageUrl) => this.isImageAvailable(imageUrl));
   }
 }

@@ -262,6 +262,7 @@
 
 .profile-block,
 .signal-card {
+  min-width: 0;
   min-height: 14rem;
   padding: clamp(1.25rem, 3vw, 2rem);
   border-right: 1px solid var(--site-line);
@@ -403,39 +404,6 @@
   line-height: 1.55;
 }
 
-.github-chart {
-  display: block;
-  width: 100%;
-  margin-top: 2rem;
-  min-height: 7rem;
-  object-fit: contain;
-  object-position: left center;
-}
-
-.gitlab-grid {
-  display: flex;
-  gap: 0.2rem;
-  margin-top: 2rem;
-  overflow: hidden;
-}
-
-.gitlab-week {
-  display: grid;
-  gap: 0.2rem;
-}
-
-.gitlab-day {
-  display: block;
-  width: 0.55rem;
-  height: 0.55rem;
-  background: var(--site-line);
-}
-
-.gitlab-day--1 { background: color-mix(in srgb, var(--site-accent) 30%, var(--site-surface)); }
-.gitlab-day--2 { background: color-mix(in srgb, var(--site-accent) 50%, var(--site-surface)); }
-.gitlab-day--3 { background: color-mix(in srgb, var(--site-accent) 72%, var(--site-surface)); }
-.gitlab-day--4 { background: var(--site-accent); }
-
 .home-footer-note {
   display: flex;
   justify-content: space-between;
@@ -465,7 +433,7 @@
   .featured-project,
   .profile-grid,
   .signal-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .credential-card,

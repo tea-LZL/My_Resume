@@ -19,7 +19,26 @@ describe('NavbarComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
+  });
+
+  it("opens and closes the mobile navigation panel", () => {
+    expect(fixture.nativeElement.querySelector("#site-mobile-nav")).toBeNull();
+
+    component.toggleNavMenu();
+    fixture.detectChanges();
+
+    expect(component.bNav).toBeTrue();
+    expect(fixture.nativeElement.querySelector("#site-mobile-nav")).toBeTruthy();
+    expect(
+      fixture.nativeElement.querySelector(".site-nav__toggle")?.getAttribute("aria-expanded"),
+    ).toBe("true");
+
+    component.closeNavMenu();
+    fixture.detectChanges();
+
+    expect(component.bNav).toBeFalse();
+    expect(fixture.nativeElement.querySelector("#site-mobile-nav")).toBeNull();
   });
 });

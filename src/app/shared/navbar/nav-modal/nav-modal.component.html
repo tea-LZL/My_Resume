@@ -1,40 +1,80 @@
-<div class="modal-body overflow-y-hidden">
-    <div class="mb-2">
-        <button class="border-0 rounded w-100 rounded-pill btn btn-outline-primary" tabindex="3" routerLink="/"
-            routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="activeModal.close()">
-            <i class="bi bi-house-fill me-1"></i>Home</button>
+<nav class="nav-menu" aria-labelledby="nav-menu-title">
+  <p id="nav-menu-title" class="nav-menu__eyebrow">Menu</p>
+
+  <ul class="nav-menu__links">
+    <li>
+      <a
+        routerLink="/"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        (click)="closed.emit()">
+        Home
+      </a>
+    </li>
+    <li>
+      <a routerLink="/projects" routerLinkActive="is-active" (click)="closed.emit()">Projects</a>
+    </li>
+    <li>
+      <a routerLink="/resume" routerLinkActive="is-active" (click)="closed.emit()">Resume</a>
+    </li>
+    <li>
+      <a routerLink="/timeline" routerLinkActive="is-active" (click)="closed.emit()">Timeline</a>
+    </li>
+  </ul>
+
+  <div class="nav-menu__meta">
+    <div class="nav-menu__social">
+      <a
+        class="nav-menu__icon"
+        href="https://github.com/tea-LZL"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="GitHub"
+        title="GitHub">
+        <i class="bi bi-github" aria-hidden="true"></i>
+      </a>
+      <a
+        class="nav-menu__icon"
+        href="https://gitlab.com/tea-LZL"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="GitLab"
+        title="GitLab">
+        <i class="bi bi-gitlab" aria-hidden="true"></i>
+      </a>
+      <a
+        class="nav-menu__icon"
+        href="https://www.linkedin.com/in/zhilong-liang-748b641a1"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="LinkedIn"
+        title="LinkedIn">
+        <i class="bi bi-linkedin" aria-hidden="true"></i>
+      </a>
     </div>
-    <div class="mb-2">
-        <button class="border-0 rounded w-100 rounded-pill btn btn-outline-primary" tabindex="4" routerLink="/projects"
-            routerLinkActive="active" (click)="activeModal.close()">
-            <i class="bi bi-terminal-fill me-1"></i>Projects</button>
+
+    <div class="nav-menu__theme" role="group" aria-label="Color theme">
+      <button
+        type="button"
+        [class.is-active]="theme === 'light'"
+        [attr.aria-pressed]="theme === 'light'"
+        (click)="setTheme('light')">
+        Light
+      </button>
+      <button
+        type="button"
+        [class.is-active]="theme === 'dark'"
+        [attr.aria-pressed]="theme === 'dark'"
+        (click)="setTheme('dark')">
+        Dark
+      </button>
+      <button
+        type="button"
+        [class.is-active]="theme === 'auto'"
+        [attr.aria-pressed]="theme === 'auto'"
+        (click)="setTheme('auto')">
+        Auto
+      </button>
     </div>
-    <div class="mb-2">
-        <button class="border-0 rounded w-100 rounded-pill btn btn-outline-primary" tabindex="4" routerLink="/resume"
-            routerLinkActive="active" (click)="activeModal.close()">
-            <i class="bi bi-file-earmark-person me-1"></i>Resume</button>
-    </div>
-    <div class="mb-2">
-        <button class="border-0 rounded w-100 rounded-pill btn btn-outline-primary" tabindex="5" routerLink="/timeline"
-            routerLinkActive="active" (click)="activeModal.close()">
-            <i class="bi bi-clock-history me-1"></i>Timeline</button>
-    </div>
-    <div class="row mb-2">
-        <div class="col"><a class="border-0 navbar-nav text-light-emphasis rounded-pill btn btn-bd-linkedin"
-                href="https://www.linkedin.com/in/zhilong-liang-748b641a1" target="_blank" rel="noopener noreferrer"
-                aria-label="LinkedIn" title="LinkedIn"><i class="bi bi-linkedin" aria-hidden="true"></i></a></div>
-        <div class="col"><a class="border-0 navbar-nav text-light-emphasis rounded-pill btn btn-bd-github"
-                href="https://github.com/tea-LZL" target="_blank" rel="noopener noreferrer" aria-label="GitHub"
-                title="GitHub"><i class="bi bi-github" aria-hidden="true"></i></a></div>
-        <div class="col"><a class="border-0 navbar-nav text-light-emphasis rounded-pill btn btn-bd-gitlab"
-                href="https://gitlab.com/tea-LZL" target="_blank" rel="noopener noreferrer" aria-label="GitLab"
-                title="GitLab"><i class="bi bi-gitlab" aria-hidden="true"></i></a></div>
-        <div class="col">
-            <button type="button" class="rounded-pill btn btn-outline-primary border-0 text-light-emphasis w-100"
-                id="bd-theme" (click)="changeTheme()">
-                <i class="bi"
-                    [ngClass]="{'bi-circle-half':theme === 'auto','bi-moon-stars-fill':theme === 'dark','bi-sun-fill':theme === 'light'}"></i>
-            </button>
-        </div>
-    </div>
-</div>
+  </div>
+</nav>

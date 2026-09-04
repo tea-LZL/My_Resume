@@ -10,7 +10,10 @@ describe('HomeComponent', () => {
   let fixture: ComponentFixture<HomeComponent>;
 
   const httpClientStub = {
-    get: (url: string) => (url === '/github-chart' ? of('') : of({})),
+    get: (url: string) =>
+      url.startsWith("/github-calendar")
+        ? of({ total: { lastYear: 0 }, contributions: [] })
+        : of({}),
   };
   const weatherServiceStub = {
     getWeather: () => of({ success: false, data: {} }),

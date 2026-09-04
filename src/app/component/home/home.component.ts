@@ -8,8 +8,15 @@ import {
 } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { RouterLink } from "@angular/router";
+import { catchError } from "rxjs";
 import { ModalComponent } from "../../shared/modal/modal.component";
 import { ScrollRevealDirective } from "../../shared/directives/scroll-reveal.directive";
+import { ContributionCalendarComponent } from "../../shared/contribution-calendar/contribution-calendar.component";
+import {
+  ContributionDay,
+  buildContributionWeeks,
+  gitlabLevel,
+} from "../../shared/contribution-calendar/contribution-heatmap";
 import { WeatherService } from "../../services/weather.service";
 import { WeatherData } from "../../interfaces/weather";
 import { Project } from "../../interfaces/project";
@@ -25,11 +32,19 @@ import {
   workExperience as portfolioWorkExperience,
 } from "../../data/portfolio.data";
 
-interface ContributionDay {
-  date: string;
-  count: number;
-  level: number;
+interface GithubCalendarResponse {
+  total?: Record<string, number>;
+  contributions?: {
+    date: string;
+    count: number;
+    level: number;
+  }[];
 }
+
+const GITHUB_CALENDAR_URLS = [
+  "/github-calendar?y=last",
+  "https://github-contributions-api.jogruber.de/v4/tea-LZL?y=last",
+] as const;
 
 interface BootstrapWindow extends Window {
   bootstrap?: {
@@ -45,7 +60,13 @@ interface BootstrapWindow extends Window {
 
 @Component({
   selector: "app-home",
-  imports: [CommonModule, RouterLink, ModalComponent, ScrollRevealDirective],
+  imports: [
+    CommonModule,
+    RouterLink,
+    ModalComponent,
+    ScrollRevealDirective,
+    ContributionCalendarComponent,
+  ],
   templateUrl: "./home.component.html",
   styleUrl: "./home.component.scss",
 })
@@ -86,8 +107,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   isGitlabLoading = false;
   gitlabError: string | null = null;
 
-  githubChartUrl = "/github-chart";
-  isGithubChartLoaded = false;
+  githubWeeks: ContributionDay[][] = [];
+  githubSummary: string | null = null;
+  isGithubLoading = false;
   githubChartError: string | null = null;
 
   ngOnInit(): void {
@@ -120,10 +142,36 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   private fetchGithubContributions(): void {
-    // The chart is requested as an image so its SVG never enters the HTML trust boundary.
-    this.githubChartUrl = "/github-chart";
-    this.isGithubChartLoaded = false;
+    this.isGithubLoading = true;
     this.githubChartError = null;
+
+    this.http.get<GithubCalendarResponse>(GITHUB_CALENDAR_URLS[0]).pipe(
+      catchError(() => this.http.get<GithubCalendarResponse>(GITHUB_CALENDAR_URLS[1])),
+    ).subscribe({
+      next: (data) => {
+        const contributions = data.contributions ?? [];
+        const counts: Record<string, number> = {};
+        const levels: Record<string, number> = {};
+        for (const day of contributions) {
+          counts[day.date] = day.count;
+          levels[day.date] = day.level;
+        }
+        this.githubWeeks = buildContributionWeeks(counts, { levels });
+        const year = String(new Date().getFullYear());
+        const yearTotal = contributions
+          .filter((day) => day.date.startsWith(`${year}-`))
+          .reduce((sum, day) => sum + day.count, 0);
+        this.githubSummary = `${yearTotal} contributions in ${year}`;
+        this.isGithubLoading = false;
+      },
+      error: () => {
+        this.githubWeeks = [];
+        this.githubSummary = null;
+        this.isGithubLoading = false;
+        this.githubChartError =
+          "GitHub contribution activity is unavailable right now.";
+      },
+    });
   }
 
   private fetchGitlabContributions(): void {
@@ -132,7 +180,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     this.http.get<Record<string, number>>("/gitlab-calendar").subscribe({
       next: (data) => {
-        this.gitlabWeeks = this.buildHeatmap(data);
+        this.gitlabWeeks = this.buildHeatmap(data, gitlabLevel);
         this.isGitlabLoading = false;
       },
       error: () => {
@@ -144,36 +192,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
   }
 
-  private buildHeatmap(data: Record<string, number>): ContributionDay[][] {
-    const today = new Date();
-    const weeks: ContributionDay[][] = [];
-    const startDate = new Date(today);
-    startDate.setDate(today.getDate() - 364);
-
-    const cursor = new Date(startDate);
-    cursor.setDate(cursor.getDate() - cursor.getDay());
-
-    let currentWeek: ContributionDay[] = [];
-    let weekCount = 0;
-
-    while (weekCount < 53) {
-      const dateStr = cursor.toISOString().slice(0, 10);
-      const count = data[dateStr] || 0;
-      currentWeek.push({
-        date: dateStr,
-        count,
-        level:
-          count === 0 ? 0 : count <= 2 ? 1 : count <= 5 ? 2 : count <= 10 ? 3 : 4,
-      });
-
-      if (currentWeek.length === 7) {
-        weeks.push(currentWeek);
-        currentWeek = [];
-        weekCount++;
-      }
-      cursor.setDate(cursor.getDate() + 1);
-    }
-    return weeks;
+  private buildHeatmap(
+    data: Record<string, number>,
+    levelForCount = gitlabLevel,
+  ): ContributionDay[][] {
+    return buildContributionWeeks(data, { levelForCount });
   }
 
   private fetchWeather(): void {
@@ -225,17 +248,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
       "50n": "cloud-fog2",
     };
     return iconMap[iconCode] || "cloud";
-  }
-
-  onGithubChartLoad(): void {
-    this.isGithubChartLoaded = true;
-    this.githubChartError = null;
-  }
-
-  onGithubChartError(): void {
-    this.isGithubChartLoaded = false;
-    this.githubChartError =
-      "GitHub contribution activity is unavailable right now.";
   }
 
   onCarouselImageLoad(index: number): void {

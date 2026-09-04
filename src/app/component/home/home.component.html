@@ -157,13 +157,16 @@
         </div>
         @if (githubChartError) {
           <p class="signal-empty">{{ githubChartError }}</p>
+        } @else if (isGithubLoading) {
+          <p class="signal-empty">Loading activity…</p>
+        } @else if (githubWeeks.length) {
+          <app-contribution-calendar
+            variant="github"
+            [weeks]="githubWeeks"
+            [summary]="githubSummary"
+            [ariaLabel]="'GitHub contribution activity'" />
         } @else {
-          <img
-            class="github-chart"
-            [src]="githubChartUrl"
-            alt="GitHub contribution activity chart"
-            (load)="onGithubChartLoad()"
-            (error)="onGithubChartError()" />
+          <p class="signal-empty">No contribution data available.</p>
         }
       </article>
 
@@ -174,21 +177,13 @@
         </div>
         @if (isGitlabLoading) {
           <p class="signal-empty">Loading activity…</p>
-        } @else if (gitlabError || !gitlabWeeks.length) {
-          <p class="signal-empty">{{ gitlabError || "No contribution data available." }}</p>
+        } @else if (gitlabWeeks.length) {
+          <app-contribution-calendar
+            variant="gitlab"
+            [weeks]="gitlabWeeks"
+            [ariaLabel]="'GitLab contribution activity'" />
         } @else {
-          <div class="gitlab-grid" aria-label="GitLab contribution activity">
-            @for (week of gitlabWeeks; track $index) {
-              <div class="gitlab-week">
-                @for (day of week; track day.date) {
-                  <span
-                    class="gitlab-day"
-                    [class]="'gitlab-day gitlab-day--' + day.level"
-                    [attr.title]="day.date + ': ' + day.count + ' contributions'"></span>
-                }
-              </div>
-            }
-          </div>
+          <p class="signal-empty">{{ gitlabError || "No contribution data available." }}</p>
         }
       </article>
     </div>

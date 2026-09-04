@@ -1,6 +1,6 @@
 :host {
   position: fixed;
-  z-index: 1000;
+  z-index: 1100;
   top: 0;
   right: 0;
   left: 0;
@@ -8,16 +8,24 @@
 }
 
 .site-nav {
+  position: relative;
+  z-index: 1;
   padding: 0.75rem 1rem;
   border-bottom: 1px solid transparent;
   background: color-mix(in srgb, var(--site-background) 86%, transparent);
   transition: padding 180ms ease, border-color 180ms ease, background 180ms ease;
 }
 
-.site-nav--scrolled {
+.site-nav--scrolled,
+.site-nav--menu-open {
   padding-block: 0.35rem;
   border-bottom-color: var(--site-line);
   backdrop-filter: blur(14px);
+}
+
+.site-nav--menu-open {
+  background: var(--site-background);
+  backdrop-filter: none;
 }
 
 .site-nav__inner {
@@ -137,20 +145,61 @@
 
 .site-nav__toggle {
   display: none;
-  width: 2.75rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.34rem;
+  width: 2.5rem;
   height: 2.5rem;
-  padding: 0.5rem;
+  padding: 0;
   border: 1px solid var(--site-line);
   background: transparent;
+  color: var(--site-foreground);
+  cursor: pointer;
+}
+
+.site-nav__toggle:hover,
+.site-nav__toggle:focus-visible,
+.site-nav__toggle.is-open {
+  border-color: var(--site-accent);
+  color: var(--site-accent);
 }
 
 .site-nav__toggle span {
   display: block;
-  width: 100%;
+  width: 1rem;
   height: 1px;
-  margin: 0.35rem 0;
-  background: var(--site-foreground);
+  margin: 0;
+  background: currentColor;
+  transform-origin: center;
   transition: transform 180ms ease, opacity 180ms ease;
+}
+
+.site-nav__toggle.is-open span:nth-child(1) {
+  transform: translateY(calc(0.34rem + 1px)) rotate(45deg);
+}
+
+.site-nav__toggle.is-open span:nth-child(2) {
+  opacity: 0;
+}
+
+.site-nav__toggle.is-open span:nth-child(3) {
+  transform: translateY(calc(-0.34rem - 1px)) rotate(-45deg);
+}
+
+.site-nav__scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  padding: 0;
+  border: 0;
+  background: color-mix(in srgb, var(--site-background) 72%, transparent);
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+}
+
+.site-nav__panel {
+  background: var(--site-background);
 }
 
 @media (max-width: 820px) {
@@ -160,8 +209,15 @@
   }
 
   .site-nav__toggle {
-    display: block;
+    display: inline-flex;
     margin-left: auto;
+  }
+}
+
+@media (min-width: 821px) {
+  .site-nav__panel,
+  .site-nav__scrim {
+    display: none;
   }
 }
 

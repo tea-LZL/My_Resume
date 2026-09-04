@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/github-calendar",
+      "destination": "https://github-contributions-api.jogruber.de/v4/tea-LZL?y=last"
+    },
+    {
       "source": "/github-chart",
       "destination": "https://ghchart.rshah.org/tea-LZL"
     },
