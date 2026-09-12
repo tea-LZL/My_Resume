@@ -1,4 +1,12 @@
-import { Component, computed, input, signal } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  afterRenderEffect,
+  computed,
+  input,
+  signal,
+  viewChild,
+} from "@angular/core";
 
 import {
   ContributionDay,
@@ -19,6 +27,19 @@ export class ContributionCalendarComponent {
   readonly ariaLabel = input("Contribution activity");
 
   readonly selected = signal<ContributionDay | null>(null);
+
+  private readonly scrollRef =
+    viewChild<ElementRef<HTMLDivElement>>("scroll");
+
+  constructor() {
+    afterRenderEffect(() => {
+      const element = this.scrollRef()?.nativeElement;
+      if (!element || this.weeks().length === 0) {
+        return;
+      }
+      element.scrollLeft = element.scrollWidth;
+    });
+  }
 
   readonly monthLabels = computed(() => monthLabelsForWeeks(this.weeks()));
   readonly showWeekdays = computed(() => this.variant() === "github");

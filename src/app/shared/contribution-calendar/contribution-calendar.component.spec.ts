@@ -48,6 +48,24 @@ describe("ContributionCalendarComponent", () => {
     expect(compiled.querySelector(".contrib--gitlab")).toBeTruthy();
   });
 
+  it("defaults the horizontal scroll position to the most recent week", () => {
+    const constrained = TestBed.createComponent(ContributionCalendarComponent);
+    constrained.nativeElement.style.display = "block";
+    constrained.nativeElement.style.width = "160px";
+    constrained.componentRef.setInput(
+      "weeks",
+      buildContributionWeeks({ "2026-06-13": 34 }),
+    );
+    constrained.detectChanges();
+    TestBed.tick();
+
+    const scroll = constrained.nativeElement.querySelector(
+      ".contrib__scroll",
+    ) as HTMLElement;
+    expect(scroll.scrollWidth).toBeGreaterThan(scroll.clientWidth);
+    expect(scroll.scrollLeft).toBeGreaterThan(0);
+  });
+
   it("selects a day on click", () => {
     const day = fixture.nativeElement.querySelector(
       "button.contrib__day",
