@@ -279,8 +279,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.modalComp?.openPdfModal(pdfFile);
   }
 
-  openResume(): void {
-    this.viewFile("Credentials_ZhilongLiang_4664_Azure_Developer_Associate.pdf");
+  async openResume(): Promise<void> {
+    const { createResumePdf, resolveResumePdfTheme } = await import(
+      "../../shared/modal/download-resume/resume-pdf"
+    );
+    const pdfUrl = createResumePdf(resolveResumePdfTheme())
+      .output("bloburl")
+      .toString();
+    this.modalComp?.openPdfResource(pdfUrl, () =>
+      URL.revokeObjectURL(pdfUrl),
+    );
   }
 
   getCertificateLink(id: string): CertificateLink | undefined {

@@ -50,4 +50,14 @@ describe('HomeComponent', () => {
       }
     }
   });
+
+  it('opens the generated resume in the PDF viewer', async () => {
+    fixture = TestBed.createComponent(HomeComponent);
+    fixture.detectChanges();
+
+    await fixture.componentInstance.openResume();
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.modalComp?.pdfUrl).toBeTruthy();
+  });
 });

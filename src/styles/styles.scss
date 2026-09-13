@@ -108,6 +108,14 @@ a {
   width: 100%;
 }
 
+.modal {
+  z-index: 1200;
+}
+
+.modal-backdrop {
+  z-index: 1190;
+}
+
 .pdf-viewer-window {
   .modal-content {
     background: var(--site-background);
