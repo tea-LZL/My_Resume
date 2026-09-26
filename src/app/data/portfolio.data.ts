@@ -53,11 +53,12 @@ export const contact = {
   sourceUrl: "https://github.com/tea-LZL/My_Resume",
 } as const satisfies ContactSummary;
 
+const currentYear: number = new Date().getFullYear();
+
 export const profile = {
   name: "Zhilong Liang",
   title: "Software Engineer",
-  summary:
-    "Innovative and detail-oriented Software Engineer with 3+ years of experience in building scalable web applications, backend API integrations and Database Management. Proficient in modern JavaScript frameworks and cloud-native architectures. Dedicated to effective workflow and user experience.",
+  summary: `Innovative and detail-oriented Software Engineer with ${currentYear - 2022} years of experience in building scalable web applications, backend API integrations and Database Management. Proficient in modern JavaScript frameworks and cloud-native architectures. Dedicated to effective workflow and user experience.`,
   contact,
 } as const satisfies ProfileSummary;
 
@@ -110,7 +111,8 @@ export const portfolioProjects = [
     description:
       "A project for exploring Go with the Gin framework while building a small API around OpenWeatherMap weather data for locations around the world.",
     tags: ["Go", "Gin", "REST API", "OpenWeatherMap"],
-    repositoryUrl: "https://github.com/tea-steeping-studio/weathering-with-go-api",
+    repositoryUrl:
+      "https://github.com/tea-steeping-studio/weathering-with-go-api",
     repositoryLabel: "GitHub",
     coverImageUrl: "assets/weathering_with_go_api_cover_image.png",
     featured: false,
@@ -118,7 +120,8 @@ export const portfolioProjects = [
   {
     id: "genpass",
     title: "GenPass",
-    summary: "A password generator built with Rust and a Ratatui terminal interface.",
+    summary:
+      "A password generator built with Rust and a Ratatui terminal interface.",
     description:
       "A local password generator TUI built with Rust and Ratatui, providing a terminal-based alternative to using a password-generator website.",
     tags: ["Rust", "TUI", "Ratatui"],
