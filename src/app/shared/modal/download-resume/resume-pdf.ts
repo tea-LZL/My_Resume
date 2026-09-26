@@ -1,6 +1,7 @@
 import jsPDF from "jspdf";
 
 import {
+  additionalSkills,
   certificateLinks,
   certifications,
   education,
@@ -165,7 +166,7 @@ function drawFirstPageHeader(pdf: jsPDF, theme: ResumePdfTheme): number {
   pdf.setFont("helvetica", "normal");
   pdf.setFontSize(9.2);
   pdf.setTextColor(...theme.foreground);
-  y = drawLines(pdf, splitText(pdf, profile.summary, 142), PAGE_MARGIN, y, 4.5);
+  y = drawLines(pdf, splitText(pdf, profile.pdfSummary, 142), PAGE_MARGIN, y, 4.5);
 
   y += 3;
   pdf.setFontSize(7.4);
@@ -285,6 +286,7 @@ function drawSkillTags(
   x: number,
   y: number,
   width: number,
+  skillsToDraw: readonly string[],
 ): number {
   const tagHeight = 5.2;
   const tagGap = 1.1;
@@ -296,7 +298,7 @@ function drawSkillTags(
   pdf.setFont("helvetica", "normal");
   pdf.setFontSize(6.1);
 
-  skills.forEach((skill) => {
+  skillsToDraw.forEach((skill) => {
     const tagWidth = pdf.getTextWidth(skill) + horizontalPadding * 2;
 
     if (cursorX + tagWidth > rightEdge && cursorX !== x) {
@@ -315,6 +317,21 @@ function drawSkillTags(
   });
 
   return baselineY + 7;
+}
+
+function drawSkillGroupLabel(
+  pdf: jsPDF,
+  theme: ResumePdfTheme,
+  label: string,
+  x: number,
+  y: number,
+): number {
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(5.7);
+  pdf.setTextColor(...theme.muted);
+  pdf.text(label.toUpperCase(), x, y);
+
+  return y + 4.5;
 }
 
 function drawEducationEntry(
@@ -379,19 +396,10 @@ function drawSidebar(pdf: jsPDF, theme: ResumePdfTheme, startY: number): void {
     "FD",
   );
 
-  y = drawSidebarHeading(pdf, theme, "03 / Toolkit", "Skills.", contentX, y, contentWidth);
-  y = drawSkillTags(pdf, theme, contentX, y, contentWidth) + 3;
-
-  y = drawSidebarHeading(pdf, theme, "04 / Education", "Learning.", contentX, y, contentWidth);
-  education.forEach((entry) => {
-    y = drawEducationEntry(pdf, theme, entry, contentX, y, contentWidth);
-  });
-  y += 1;
-
   y = drawSidebarHeading(
     pdf,
     theme,
-    "05 / Certifications",
+    "03 / Certifications",
     "Credentials.",
     contentX,
     y,
@@ -399,6 +407,18 @@ function drawSidebar(pdf: jsPDF, theme: ResumePdfTheme, startY: number): void {
   );
   certifications.forEach((entry) => {
     y = drawCertificationEntry(pdf, theme, entry, contentX, y, contentWidth);
+  });
+  y += 1;
+
+  y = drawSidebarHeading(pdf, theme, "04 / Toolkit", "Skills.", contentX, y, contentWidth);
+  y = drawSkillGroupLabel(pdf, theme, "Core skills", contentX, y);
+  y = drawSkillTags(pdf, theme, contentX, y, contentWidth, skills) + 2;
+  y = drawSkillGroupLabel(pdf, theme, "Also used", contentX, y);
+  y = drawSkillTags(pdf, theme, contentX, y, contentWidth, additionalSkills) + 3;
+
+  y = drawSidebarHeading(pdf, theme, "05 / Education", "Learning.", contentX, y, contentWidth);
+  education.forEach((entry) => {
+    y = drawEducationEntry(pdf, theme, entry, contentX, y, contentWidth);
   });
 }
 

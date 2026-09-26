@@ -3,6 +3,7 @@ import { RouterLink } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 import {
+  additionalSkills,
   CertificateLink,
   certificateLinks,
   certifications,
@@ -24,6 +25,7 @@ export class ResumeComponent {
 
   readonly profile = profile;
   readonly skills = skills;
+  readonly additionalSkills = additionalSkills;
   readonly education = education;
   readonly certifications = certifications;
   readonly workExperience = workExperience;

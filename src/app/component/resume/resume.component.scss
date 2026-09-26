@@ -172,6 +172,18 @@
   font-size: 0.7rem;
 }
 
+.skill-group-label {
+  margin: 0 0 0.6rem;
+  color: var(--site-muted);
+  font-family: var(--site-font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+}
+
+.skill-group-label + .skill-list + .skill-group-label {
+  margin-top: 1.25rem;
+}
+
 .compact-entry {
   padding: 0.8rem 0;
 }

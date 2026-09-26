@@ -74,9 +74,15 @@
     </div>
     <div class="profile-grid">
       <article class="profile-block">
-        <p class="block-label">Tools</p>
+        <p class="block-label">Core skills</p>
         <ul class="skill-list">
           @for (skill of skills; track skill) {
+            <li>{{ skill }}</li>
+          }
+        </ul>
+        <p class="block-label block-label--secondary">Also used</p>
+        <ul class="skill-list">
+          @for (skill of additionalSkills; track skill) {
             <li>{{ skill }}</li>
           }
         </ul>

@@ -21,6 +21,7 @@ import { WeatherService } from "../../services/weather.service";
 import { WeatherData } from "../../interfaces/weather";
 import { Project } from "../../interfaces/project";
 import {
+  additionalSkills as portfolioAdditionalSkills,
   CertificateLink,
   certificateLinks,
   certifications as portfolioCertifications,
@@ -79,6 +80,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   readonly profile = portfolioProfile;
   readonly featuredProjects = portfolioFeaturedProjects;
   readonly skills = portfolioSkills;
+  readonly additionalSkills = portfolioAdditionalSkills;
   readonly education = portfolioEducation;
   readonly certifications = portfolioCertifications;
   readonly workExperience = portfolioWorkExperience;

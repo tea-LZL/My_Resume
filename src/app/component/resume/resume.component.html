@@ -60,30 +60,8 @@
     </div>
 
     <aside class="resume-sidebar">
-      <section class="resume-section" aria-labelledby="skills-title">
-        <p class="eyebrow">03 / toolkit</p>
-        <h2 id="skills-title">Skills.</h2>
-        <ul class="skill-list">
-          @for (skill of skills; track skill) {
-            <li>{{ skill }}</li>
-          }
-        </ul>
-      </section>
-
-      <section class="resume-section" aria-labelledby="education-title">
-        <p class="eyebrow">04 / education</p>
-        <h2 id="education-title">Learning.</h2>
-        @for (entry of education; track entry.id) {
-          <article class="compact-entry">
-            <h3>{{ entry.qualification }}</h3>
-            <p>{{ entry.institution }}</p>
-            <span>{{ entry.dates }}</span>
-          </article>
-        }
-      </section>
-
       <section class="resume-section" aria-labelledby="certifications-title">
-        <p class="eyebrow">05 / certifications</p>
+        <p class="eyebrow">03 / certifications</p>
         <h2 id="certifications-title">Credentials.</h2>
         @for (certification of certifications; track certification.id) {
           @if (getCertificateLink(certification.id); as link) {
@@ -92,6 +70,35 @@
               <small>{{ certification.year }} · verify ↗</small>
             </a>
           }
+        }
+      </section>
+
+      <section class="resume-section" aria-labelledby="skills-title">
+        <p class="eyebrow">04 / toolkit</p>
+        <h2 id="skills-title">Skills.</h2>
+        <p class="skill-group-label">Core skills</p>
+        <ul class="skill-list">
+          @for (skill of skills; track skill) {
+            <li>{{ skill }}</li>
+          }
+        </ul>
+        <p class="skill-group-label">Also used</p>
+        <ul class="skill-list">
+          @for (skill of additionalSkills; track skill) {
+            <li>{{ skill }}</li>
+          }
+        </ul>
+      </section>
+
+      <section class="resume-section" aria-labelledby="education-title">
+        <p class="eyebrow">05 / education</p>
+        <h2 id="education-title">Learning.</h2>
+        @for (entry of education; track entry.id) {
+          <article class="compact-entry">
+            <h3>{{ entry.qualification }}</h3>
+            <p>{{ entry.institution }}</p>
+            <span>{{ entry.dates }}</span>
+          </article>
         }
       </section>
     </aside>

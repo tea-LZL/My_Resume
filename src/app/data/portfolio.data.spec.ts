@@ -1,6 +1,10 @@
 import {
+  additionalSkills,
+  certifications,
   featuredProjects,
   portfolioProjects,
+  profile,
+  skills,
 } from "./portfolio.data";
 
 describe("portfolio data", () => {
@@ -8,6 +12,39 @@ describe("portfolio data", () => {
     const ids = portfolioProjects.map((project) => project.id);
 
     expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it("prioritizes core production skills over secondary tools", () => {
+    expect(skills.slice(0, 7)).toEqual([
+      "Angular",
+      "TypeScript",
+      "C#",
+      ".NET",
+      "SQL Server",
+      "Azure",
+      "CI/CD",
+    ]);
+
+    expect(additionalSkills.slice(0, 4)).toEqual([
+      "React",
+      "Rust",
+      "Go",
+      "Svelte",
+    ]);
+  });
+
+  it("keeps the site and PDF summaries tailored to their audiences", () => {
+    expect(profile.summary).toContain("4 years’ experience");
+    expect(profile.summary).toContain("Based in Pretoria.");
+    expect(profile.pdfSummary).toContain("Mid-level Software Engineer with 4 years");
+  });
+
+  it("prioritizes Azure certifications in resume order", () => {
+    expect(certifications.map(({ id }) => id)).toEqual([
+      "devops-engineer-expert",
+      "azure-developer-associate",
+      "azure-database-administrator-associate",
+    ]);
   });
 
   it("provides the required fields for every project", () => {

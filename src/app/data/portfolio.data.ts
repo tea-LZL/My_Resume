@@ -14,6 +14,7 @@ export interface ProfileSummary {
   readonly name: string;
   readonly title: string;
   readonly summary: string;
+  readonly pdfSummary: string;
   readonly contact: ContactSummary;
 }
 
@@ -53,12 +54,13 @@ export const contact = {
   sourceUrl: "https://github.com/tea-LZL/My_Resume",
 } as const satisfies ContactSummary;
 
-const currentYear: number = new Date().getFullYear();
-
 export const profile = {
   name: "Zhilong Liang",
   title: "Software Engineer",
-  summary: `Innovative and detail-oriented Software Engineer with ${currentYear - 2022} years of experience in building scalable web applications, backend API integrations and Database Management. Proficient in modern JavaScript frameworks and cloud-native architectures. Dedicated to effective workflow and user experience.`,
+  summary:
+    "Software Engineer with 4 years’ experience building and modernising production web systems in Angular and .NET. Led AngularJS-to-Angular migrations, shipped full-stack Angular / .NET 8 / SQL Server applications, and own CI/CD, code reviews, and junior mentoring.",
+  pdfSummary:
+    "Mid-level Software Engineer with 4 years delivering Angular and .NET systems for enterprise clients. Led legacy portal rewrites from AngularJS to Angular 19/20, designed .NET 8 APIs and SQL Server data layers, and improved query performance through indexing and caching. Comfortable owning a feature from API to UI, reviewing code, mentoring juniors, and running CI/CD on Github, IIS and Azure.",
   contact,
 } as const satisfies ProfileSummary;
 
@@ -137,32 +139,27 @@ export const featuredProjects: readonly Project[] = Object.freeze(
 );
 
 export const skills = [
-  "JavaScript (ES6+)",
-  "TypeScript",
   "Angular",
-  "Node.js",
-  "HTML5 & SCSS",
-  "Azure",
-  "Docker",
-  "Git",
-  "SQL Server",
-  "SQLite",
+  "TypeScript",
   "C#",
   ".NET",
-  "Golang",
-  "Rust",
-  "Tauri",
-  "React",
-  "Tailwind CSS",
-  "Svelte",
-  "Go",
-  "Gin",
-  "REST API",
-  "OpenWeatherMap",
-  "Ratatui",
-  "GCP",
+  "SQL Server",
+  "Azure",
   "CI/CD",
-  "Linux",
+  "IIS",
+] as const satisfies readonly string[];
+
+export const additionalSkills = [
+  "React",
+  "Rust",
+  "Go",
+  "Svelte",
+  "JavaScript (ES6+)",
+  "HTML5 & SCSS",
+  "Node.js",
+  "REST API",
+  "Docker",
+  "Git",
 ] as const satisfies readonly string[];
 
 export const education = [
@@ -182,6 +179,11 @@ export const education = [
 
 export const certifications = [
   {
+    id: "devops-engineer-expert",
+    name: "Microsoft Certified: DevOps Engineer Expert",
+    year: "2021",
+  },
+  {
     id: "azure-developer-associate",
     name: "Microsoft Certified: Azure Developer Associate",
     year: "2021",
@@ -190,11 +192,6 @@ export const certifications = [
     id: "azure-database-administrator-associate",
     name: "Microsoft Certified: Azure Database Administrator Associate",
     year: "2022",
-  },
-  {
-    id: "devops-engineer-expert",
-    name: "Microsoft Certified: DevOps Engineer Expert",
-    year: "2021",
   },
 ] as const satisfies readonly CertificationEntry[];
 
@@ -221,24 +218,24 @@ export const workExperience = [
   {
     id: "automate-software-engineer",
     title: "Software Engineer",
-    employer: "Automate - Volaris group",
-    dates: "2024 - Present",
+    employer: "Automate — Volaris Group",
+    dates: "2024 – Present",
     achievements: [
-      "Led rewrites of legacy customer portals from AngularJS to Angular 19, improving responsiveness and closing security vulnerabilities in outdated libraries and legacy code.",
-      "Architected and deployed a full-stack application using Angular 20, a .NET 8 backend API, and SQL Server for a review and approval workflow that onboards customers into the client's system.",
-      "Participated in the rewrite of a legacy MVC membership system to Angular 20 with a .NET Core API and SQL Server database, investigating indexing and caching strategies to improve query performance.",
-      "Mentored junior developers, conducted code reviews, and managed CI/CD pipelines and IIS Server configuration.",
+      "Led the rewrite of legacy customer portals from AngularJS to Angular 19, replacing outdated libraries and closing known security gaps in the old stack.",
+      "Designed and shipped a full-stack onboarding workflow in Angular 20, .NET 8, and SQL Server, covering review, approval, and customer intake into the client system.",
+      "Migrated a legacy MVC membership system to Angular 20 with a .NET Core API and SQL Server; improved query performance through indexing and caching.",
+      "Mentored junior developers, ran code reviews, and maintained CI/CD pipelines plus IIS configuration for releases.",
     ],
   },
   {
     id: "britehouse-associate-engineer",
     title: "Associate Software Application Development Engineer",
-    employer: "Britehouse Automotive - Dimension Data",
-    dates: "2022 - 2024",
+    employer: "Britehouse Automotive — Dimension Data",
+    dates: "2022 – 2024",
     achievements: [
-      "Developed internal management websites for automotive dealerships using HTML, SCSS, Angular, and a .NET Core API backend.",
-      "Collaborated closely with the Quality Assurance team to ensure robust and reliable implementation of features.",
-      "Optimized database queries and API response times for high-traffic campaigns.",
+      "Built internal dealership management sites in Angular, HTML/SCSS, and .NET Core APIs used by automotive operations teams.",
+      "Tightened API and SQL Server performance for high-traffic campaign periods, reducing slow queries and improving response times.",
+      "Worked with QA to take features from implementation through test and release with fewer production defects.",
     ],
   },
 ] as const satisfies readonly WorkExperienceEntry[];
