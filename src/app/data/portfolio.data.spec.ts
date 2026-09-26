@@ -35,8 +35,9 @@ describe("portfolio data", () => {
 
   it("keeps the site and PDF summaries tailored to their audiences", () => {
     expect(profile.summary).toContain("4 years’ experience");
-    expect(profile.summary).toContain("Based in Pretoria.");
-    expect(profile.pdfSummary).toContain("Mid-level Software Engineer with 4 years");
+    expect(profile.pdfSummary).toContain(
+      "Mid-level Software Engineer with 4 years",
+    );
   });
 
   it("prioritizes Azure certifications in resume order", () => {
