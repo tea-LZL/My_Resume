@@ -382,12 +382,6 @@
   margin: 0;
 }
 
-.signal-card__meta {
-  display: flex;
-  align-items: baseline;
-  gap: 0.9rem;
-}
-
 .signal-card__more {
   padding: 0;
   border: 0;
@@ -408,6 +402,68 @@
 .signal-card__more:disabled {
   color: var(--site-muted);
   cursor: not-allowed;
+}
+
+.signal-card--weather {
+  display: flex;
+  flex-direction: column;
+}
+
+.signal-reading {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.signal-icon {
+  color: var(--site-muted);
+  font-size: 2.25rem;
+  line-height: 1;
+}
+
+.signal-footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 0.6rem 1rem;
+  margin-top: auto;
+  padding-top: 1.1rem;
+  border-top: 1px solid
+    color-mix(in srgb, var(--site-line) 65%, transparent);
+}
+
+.signal-footer .signal-status {
+  white-space: nowrap;
+}
+
+.signal-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  min-width: 0;
+  margin: 0;
+}
+
+.signal-stats > div {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+
+.signal-stats dt {
+  color: var(--site-muted);
+  font-family: var(--site-font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.signal-stats dd {
+  margin: 0;
+  font-family: var(--site-font-mono);
+  font-size: 0.76rem;
+  font-variant-numeric: tabular-nums;
 }
 
 .signal-status {

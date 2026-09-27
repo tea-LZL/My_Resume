@@ -137,34 +137,51 @@
       <h2 id="signals-title">A quiet look at the activity behind the work.</h2>
     </div>
     <div class="signal-grid">
-      <article class="signal-card">
+      <article class="signal-card signal-card--weather">
         <div class="signal-card__header">
           <span class="block-label">Pretoria weather</span>
-          <div class="signal-card__meta">
-            <span class="signal-status" [class.signal-status--error]="weatherError">
-              {{ isWeatherLoading ? "Loading" : weatherError ? "Offline" : "Live" }}
-            </span>
-            <button
-              type="button"
-              class="signal-card__more"
-              aria-haspopup="dialog"
-              (click)="openForecast()"
-              [disabled]="!!weatherError"
-            >
-              Forecast <span aria-hidden="true">↗</span>
-            </button>
-          </div>
+          <button
+            type="button"
+            class="signal-card__more"
+            aria-haspopup="dialog"
+            (click)="openForecast()"
+            [disabled]="!!weatherError"
+          >
+            Forecast <span aria-hidden="true">↗</span>
+          </button>
         </div>
         @if (isWeatherLoading) {
           <p class="signal-empty">Checking the forecast…</p>
         } @else if (weatherData) {
-          <p class="signal-value">{{ weatherData.current.temperature | number: "1.0-0" }}°</p>
-          <p class="signal-detail">
-            {{ weatherData.current.description }} · feels like {{ weatherData.current.feels_like | number: "1.0-0" }}°
-          </p>
+          <div class="signal-reading">
+            <p class="signal-value">{{ weatherData.current.temperature | number: "1.0-0" }}°</p>
+            <i class="bi bi-{{ currentWeatherIcon }} signal-icon" aria-hidden="true"></i>
+          </div>
+          <p class="signal-detail">{{ weatherData.current.description }}</p>
         } @else {
           <p class="signal-empty">{{ weatherError || "Weather data is unavailable right now." }}</p>
         }
+        <div class="signal-footer">
+          <dl class="signal-stats">
+            @if (weatherData) {
+              <div>
+                <dt>Feels</dt>
+                <dd>{{ weatherData.current.feels_like | number: "1.0-0" }}°</dd>
+              </div>
+              <div>
+                <dt>Humidity</dt>
+                <dd>{{ weatherData.current.humidity | number: "1.0-0" }}%</dd>
+              </div>
+              <div>
+                <dt>Wind</dt>
+                <dd>{{ weatherData.current.wind_speed | number: "1.0-0" }} m/s</dd>
+              </div>
+            }
+          </dl>
+          <span class="signal-status" [class.signal-status--error]="weatherError">
+            {{ isWeatherLoading ? "Loading" : weatherError ? "Offline" : "Live" }}
+          </span>
+        </div>
       </article>
 
       <article class="signal-card signal-card--chart">

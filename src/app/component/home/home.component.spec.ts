@@ -5,9 +5,34 @@ import { of, throwError } from 'rxjs';
 
 import { HomeComponent } from './home.component';
 import { WeatherService } from '../../services/weather.service';
+import { WeatherData } from '../../interfaces/weather';
+import { WEATHER_ICON_FALLBACK } from '../../shared/weather-forecast/weather-forecast-modal.component';
+
+function currentWeather(icon = '02d'): WeatherData {
+  return {
+    location: { name: 'Pretoria', country: 'ZA', latitude: -25.7, longitude: 28.2 },
+    current: {
+      temperature: 25.4,
+      feels_like: 24.1,
+      humidity: 42,
+      pressure: 1014,
+      visibility: 10000,
+      wind_speed: 5,
+      wind_direction: 180,
+      condition: 'Clouds',
+      description: 'Scattered Clouds',
+      icon,
+      uv_index: 0,
+      cloud_cover: 40,
+      last_updated: '2026-09-27T18:00:00Z',
+    },
+    request_time: '2026-09-27T18:00:00Z',
+  };
+}
 
 describe('HomeComponent', () => {
   let fixture: ComponentFixture<HomeComponent>;
+  let getWeather: jasmine.Spy;
   let getSevenDayForecast: jasmine.Spy;
   let getForecast: jasmine.Spy;
 
@@ -22,13 +47,16 @@ describe('HomeComponent', () => {
     data: { location: { name: 'Pretoria' }, forecast: [] },
   };
   const weatherServiceStub = {
-    getWeather: () => of({ success: false, data: {} }),
+    getWeather: (params: Record<string, string>) => getWeather(params),
     getForecast: (params: Record<string, string>) => getForecast(params),
     getSevenDayForecast: (params: Record<string, string>) =>
       getSevenDayForecast(params),
   };
 
   beforeEach(async () => {
+    getWeather = jasmine
+      .createSpy('getWeather')
+      .and.returnValue(of({ success: true, data: currentWeather() }));
     getSevenDayForecast = jasmine
       .createSpy('getSevenDayForecast')
       .and.returnValue(of(forecastPayload));
@@ -124,5 +152,63 @@ describe('HomeComponent', () => {
     expect(getSevenDayForecast).toHaveBeenCalledTimes(1);
 
     fixture.componentInstance.forecastModal?.close();
+  });
+
+  it('renders the reading, the extra stats, and the live status in the weather card', () => {
+    fixture = TestBed.createComponent(HomeComponent);
+    fixture.detectChanges();
+
+    const card = (fixture.nativeElement as HTMLElement).querySelector(
+      '.signal-card--weather',
+    ) as HTMLElement;
+
+    expect(card.querySelector('.signal-value')?.textContent).toContain('25');
+    expect(card.querySelector('.signal-detail')?.textContent?.trim()).toBe(
+      'Scattered Clouds',
+    );
+    expect(card.querySelector('.signal-icon')?.classList.contains('bi-cloud-sun-fill')).toBeTrue();
+
+    const stats = card.querySelectorAll('.signal-stats > div');
+    expect(stats.length).toBe(3);
+    expect(stats[0].textContent).toContain('24');
+    expect(stats[1].textContent).toContain('42');
+    expect(stats[2].textContent).toContain('5 m/s');
+
+    const footer = card.querySelector('.signal-footer') as HTMLElement;
+    expect(footer.querySelector('.signal-status')?.textContent?.trim()).toBe('Live');
+  });
+
+  it('keeps the status in the footer and hides the stats when the card is offline', () => {
+    getWeather.and.returnValue(of({ success: false, data: {} }));
+
+    fixture = TestBed.createComponent(HomeComponent);
+    fixture.detectChanges();
+
+    const card = (fixture.nativeElement as HTMLElement).querySelector(
+      '.signal-card--weather',
+    ) as HTMLElement;
+
+    expect(card.querySelectorAll('.signal-stats > div').length).toBe(0);
+    expect(
+      card.querySelector('.signal-footer .signal-status')?.textContent?.trim(),
+    ).toBe('Offline');
+    expect(card.querySelector('.signal-footer .signal-status--error')).toBeTruthy();
+  });
+
+  it('maps the current condition icon and falls back for unknown codes', () => {
+    fixture = TestBed.createComponent(HomeComponent);
+    const component = fixture.componentInstance;
+
+    component.weatherData = currentWeather('01d');
+    expect(component.currentWeatherIcon).toBe('sun-fill');
+
+    component.weatherData = currentWeather('10n');
+    expect(component.currentWeatherIcon).toBe('cloud-rain');
+
+    component.weatherData = currentWeather('nope');
+    expect(component.currentWeatherIcon).toBe(WEATHER_ICON_FALLBACK);
+
+    component.weatherData = null;
+    expect(component.currentWeatherIcon).toBe(WEATHER_ICON_FALLBACK);
   });
 });

@@ -10,7 +10,11 @@ import { HttpClient } from "@angular/common/http";
 import { RouterLink } from "@angular/router";
 import { catchError } from "rxjs";
 import { ModalComponent } from "../../shared/modal/modal.component";
-import { WeatherForecastModalComponent } from "../../shared/weather-forecast/weather-forecast-modal.component";
+import {
+  WEATHER_ICON_FALLBACK,
+  WEATHER_ICON_MAP,
+  WeatherForecastModalComponent,
+} from "../../shared/weather-forecast/weather-forecast-modal.component";
 import { ScrollRevealDirective } from "../../shared/directives/scroll-reveal.directive";
 import { ContributionCalendarComponent } from "../../shared/contribution-calendar/contribution-calendar.component";
 import {
@@ -299,6 +303,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
   private forecastLocationName(): string {
     const name = this.weatherData?.location.name;
     return name ? name : "Pretoria";
+  }
+
+  get currentWeatherIcon(): string {
+    const icon = this.weatherData?.current.icon ?? "";
+    return WEATHER_ICON_MAP[icon] ?? WEATHER_ICON_FALLBACK;
   }
 
   onCarouselImageLoad(index: number): void {
