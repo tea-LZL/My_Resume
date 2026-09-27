@@ -140,9 +140,20 @@
       <article class="signal-card">
         <div class="signal-card__header">
           <span class="block-label">Pretoria weather</span>
-          <span class="signal-status" [class.signal-status--error]="weatherError">
-            {{ isWeatherLoading ? "Loading" : weatherError ? "Offline" : "Live" }}
-          </span>
+          <div class="signal-card__meta">
+            <span class="signal-status" [class.signal-status--error]="weatherError">
+              {{ isWeatherLoading ? "Loading" : weatherError ? "Offline" : "Live" }}
+            </span>
+            <button
+              type="button"
+              class="signal-card__more"
+              (click)="openForecast()"
+              [disabled]="!!weatherError"
+              aria-label="View the 5 day forecast"
+            >
+              <i class="bi bi-calendar3-week" aria-hidden="true"></i>
+            </button>
+          </div>
         </div>
         @if (isWeatherLoading) {
           <p class="signal-empty">Checking the forecast…</p>
@@ -202,3 +213,6 @@
 </section>
 
 <app-modal #modalComp />
+<app-weather-forecast-modal
+  #forecastModal
+  (retry)="loadForecast()" />

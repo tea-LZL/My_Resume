@@ -10,6 +10,7 @@ import { HttpClient } from "@angular/common/http";
 import { RouterLink } from "@angular/router";
 import { catchError } from "rxjs";
 import { ModalComponent } from "../../shared/modal/modal.component";
+import { WeatherForecastModalComponent } from "../../shared/weather-forecast/weather-forecast-modal.component";
 import { ScrollRevealDirective } from "../../shared/directives/scroll-reveal.directive";
 import { ContributionCalendarComponent } from "../../shared/contribution-calendar/contribution-calendar.component";
 import {
@@ -18,7 +19,7 @@ import {
   gitlabLevel,
 } from "../../shared/contribution-calendar/contribution-heatmap";
 import { WeatherService } from "../../services/weather.service";
-import { WeatherData } from "../../interfaces/weather";
+import { DailyForecast, WeatherData } from "../../interfaces/weather";
 import { Project } from "../../interfaces/project";
 import {
   additionalSkills as portfolioAdditionalSkills,
@@ -59,12 +60,15 @@ interface BootstrapWindow extends Window {
   };
 }
 
+const WEATHER_LOCATION = "pretoria";
+
 @Component({
   selector: "app-home",
   imports: [
     CommonModule,
     RouterLink,
     ModalComponent,
+    WeatherForecastModalComponent,
     ScrollRevealDirective,
     ContributionCalendarComponent,
   ],
@@ -73,6 +77,7 @@ interface BootstrapWindow extends Window {
 })
 export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild("modalComp") modalComp?: ModalComponent;
+  @ViewChild("forecastModal") forecastModal?: WeatherForecastModalComponent;
 
   private readonly weatherService = inject(WeatherService);
   private readonly http = inject(HttpClient);
@@ -104,6 +109,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   weatherData: WeatherData | null = null;
   isWeatherLoading = false;
   weatherError: string | null = null;
+
+  forecastDays: DailyForecast[] | null = null;
+  isForecastLoading = false;
+  forecastError: string | null = null;
 
   gitlabWeeks: ContributionDay[][] = [];
   isGitlabLoading = false;
@@ -207,7 +216,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     this.weatherService
       .getWeather({
-        location: "pretoria",
+        location: WEATHER_LOCATION,
         units: "metric",
       })
       .subscribe({
@@ -228,28 +237,62 @@ export class HomeComponent implements OnInit, AfterViewInit {
       });
   }
 
-  getWeatherIcon(iconCode: string): string {
-    const iconMap: Record<string, string> = {
-      "01d": "sun-fill",
-      "01n": "moon-stars-fill",
-      "02d": "cloud-sun-fill",
-      "02n": "cloud-moon",
-      "03d": "cloud-sun-fill",
-      "03n": "cloud-moon",
-      "04d": "clouds-fill",
-      "04n": "clouds",
-      "09d": "cloud-drizzle-fill",
-      "09n": "cloud-drizzle",
-      "10d": "cloud-rain-fill",
-      "10n": "cloud-rain",
-      "11d": "cloud-lightning-rain-fill",
-      "11n": "cloud-lightning-rain",
-      "13d": "cloud-snow-fill",
-      "13n": "cloud-snow",
-      "50d": "cloud-fog2-fill",
-      "50n": "cloud-fog2",
-    };
-    return iconMap[iconCode] || "cloud";
+  openForecast(): void {
+    const cached = this.forecastDays !== null;
+    this.forecastModal?.open({
+      locationName: this.forecastLocationName(),
+      rows: this.forecastModal?.buildRows(this.forecastDays) ?? [],
+      isLoading: !cached,
+      error: this.forecastError,
+    });
+
+    if (!cached) {
+      this.loadForecast();
+    }
+  }
+
+  loadForecast(): void {
+    this.isForecastLoading = true;
+    this.forecastError = null;
+
+    this.weatherService
+      .getForecast({
+        location: WEATHER_LOCATION,
+        units: "metric",
+        days: "5",
+      })
+      .subscribe({
+        next: (response) => {
+          this.forecastDays = response.success
+            ? (response.data?.forecast ?? null)
+            : null;
+          this.forecastError = response.success
+            ? null
+            : "The forecast is unavailable right now.";
+          this.isForecastLoading = false;
+          this.syncForecastModal();
+        },
+        error: () => {
+          this.forecastDays = null;
+          this.forecastError = "The forecast is unavailable right now.";
+          this.isForecastLoading = false;
+          this.syncForecastModal();
+        },
+      });
+  }
+
+  private syncForecastModal(): void {
+    this.forecastModal?.setState({
+      locationName: this.forecastLocationName(),
+      rows: this.forecastModal.buildRows(this.forecastDays),
+      isLoading: this.isForecastLoading,
+      error: this.forecastError,
+    });
+  }
+
+  private forecastLocationName(): string {
+    const name = this.weatherData?.location.name;
+    return name ? name : "Pretoria";
   }
 
   onCarouselImageLoad(index: number): void {

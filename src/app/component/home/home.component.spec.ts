@@ -8,6 +8,7 @@ import { WeatherService } from '../../services/weather.service';
 
 describe('HomeComponent', () => {
   let fixture: ComponentFixture<HomeComponent>;
+  let getForecast: jasmine.Spy;
 
   const httpClientStub = {
     get: (url: string) =>
@@ -17,9 +18,19 @@ describe('HomeComponent', () => {
   };
   const weatherServiceStub = {
     getWeather: () => of({ success: false, data: {} }),
+    getForecast: (params: Record<string, string>) => getForecast(params),
   };
 
   beforeEach(async () => {
+    getForecast = jasmine
+      .createSpy('getForecast')
+      .and.returnValue(
+        of({
+          success: true,
+          data: { location: { name: 'Pretoria' }, forecast: [] },
+        }),
+      );
+
     await TestBed.configureTestingModule({
       imports: [HomeComponent],
       providers: [
@@ -59,5 +70,35 @@ describe('HomeComponent', () => {
     fixture.detectChanges();
 
     expect(fixture.componentInstance.modalComp?.pdfUrl).toBeTruthy();
+  });
+
+  it('fetches the forecast lazily the first time the modal is opened', () => {
+    fixture = TestBed.createComponent(HomeComponent);
+    fixture.detectChanges();
+
+    expect(getForecast).not.toHaveBeenCalled();
+
+    fixture.componentInstance.openForecast();
+
+    expect(getForecast).toHaveBeenCalledTimes(1);
+    expect(getForecast).toHaveBeenCalledWith({
+      location: 'pretoria',
+      units: 'metric',
+      days: '5',
+    });
+
+    fixture.componentInstance.forecastModal?.close();
+  });
+
+  it('reuses the cached forecast when the modal is reopened', () => {
+    fixture = TestBed.createComponent(HomeComponent);
+    fixture.detectChanges();
+
+    fixture.componentInstance.openForecast();
+    fixture.componentInstance.openForecast();
+
+    expect(getForecast).toHaveBeenCalledTimes(1);
+
+    fixture.componentInstance.forecastModal?.close();
   });
 });

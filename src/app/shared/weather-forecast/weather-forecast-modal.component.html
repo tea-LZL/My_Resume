@@ -1,0 +1,65 @@
+<ng-template #forecastModal let-modal>
+  <div class="modal-header forecast-header">
+    <div>
+      <p class="forecast-eyebrow">Live forecast</p>
+      <h2 class="modal-title forecast-title" id="weather-forecast-title">
+        5 day forecast
+        @if (locationName) {
+          <span class="forecast-location">· {{ locationName }}</span>
+        }
+      </h2>
+    </div>
+    <button
+      type="button"
+      class="btn-close forecast-close"
+      aria-label="Close forecast"
+      (click)="close(modal)"
+    ></button>
+  </div>
+
+  <div class="modal-body forecast-body">
+    @if (isLoading) {
+      <p class="forecast-empty">Loading the forecast…</p>
+    } @else if (error) {
+      <div class="forecast-error">
+        <p class="forecast-empty">{{ error }}</p>
+        <button type="button" class="forecast-retry" (click)="retry.emit()">
+          Try again
+        </button>
+      </div>
+    } @else if (rows.length) {
+      <ul class="forecast-list">
+        @for (row of rows; track row.date) {
+          <li class="forecast-day">
+            <span class="forecast-day__label">
+              @if (row.isToday) {
+                Today
+              } @else {
+                {{ row.date | date: "EEE d MMM" }}
+              }
+            </span>
+            <i class="bi bi-{{ row.icon }} forecast-day__icon" aria-hidden="true"></i>
+            <span class="forecast-day__description">{{ row.description }}</span>
+            <span class="forecast-day__temps">
+              <span class="forecast-day__min">{{ row.minTemperature | number: "1.0-0" }}°</span>
+              <span class="forecast-day__max">{{ row.maxTemperature | number: "1.0-0" }}°</span>
+            </span>
+            <span class="forecast-day__facts">
+              <span>Humidity {{ row.humidity | number: "1.0-0" }}%</span>
+              <span>Wind {{ row.windSpeed | number: "1.0-0" }} m/s</span>
+              <span>
+                @if (row.precipitation > 0) {
+                  Rain {{ row.precipitation | number: "1.0-1" }} mm
+                } @else {
+                  Dry
+                }
+              </span>
+            </span>
+          </li>
+        }
+      </ul>
+    } @else {
+      <p class="forecast-empty">No forecast data available.</p>
+    }
+  </div>
+</ng-template>
