@@ -1,7 +1,21 @@
 import { TestBed } from "@angular/core/testing";
 
-import { WeatherForecastModalComponent } from "./weather-forecast-modal.component";
+import {
+  FORECAST_TRIGGER_ICON,
+  WEATHER_ICON_FALLBACK,
+  WEATHER_ICON_MAP,
+  WeatherForecastModalComponent,
+} from "./weather-forecast-modal.component";
 import { DailyForecast } from "../../interfaces/weather";
+
+function iconContent(name: string): string {
+  const probe = document.createElement("i");
+  probe.className = `bi bi-${name}`;
+  document.body.appendChild(probe);
+  const content = getComputedStyle(probe, "::before").content;
+  probe.remove();
+  return content;
+}
 
 function forecastDay(overrides: Partial<DailyForecast> = {}): DailyForecast {
   return {
@@ -43,14 +57,31 @@ describe("WeatherForecastModalComponent", () => {
     expect(rows[2].icon).toBe("cloud-rain-fill");
   });
 
-  it("returns no rows for empty input and falls back to a cloud icon", () => {
+  it("returns no rows for empty input and falls back to a drawn icon", () => {
     const fixture = TestBed.createComponent(WeatherForecastModalComponent);
 
     expect(fixture.componentInstance.buildRows(null)).toEqual([]);
     expect(fixture.componentInstance.buildRows([])).toEqual([]);
-    expect(fixture.componentInstance.buildRows([forecastDay({ icon: "99z" })])[0].icon).toBe(
-      "cloud",
-    );
+    expect(
+      fixture.componentInstance.buildRows([forecastDay({ icon: "99z" })])[0].icon,
+    ).toBe(WEATHER_ICON_FALLBACK);
+  });
+
+  it("only uses icons the bootstrap-icons subset font actually draws", () => {
+    const names = [
+      ...new Set([
+        ...Object.values(WEATHER_ICON_MAP),
+        WEATHER_ICON_FALLBACK,
+        FORECAST_TRIGGER_ICON,
+      ]),
+    ];
+
+    const undrawn = names.filter((name) => {
+      const content = iconContent(name);
+      return content === "normal" || content === "none" || content === "";
+    });
+
+    expect(undrawn).toEqual([]);
   });
 
   it("caps the rendered rows at five days", () => {

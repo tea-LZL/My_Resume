@@ -39,7 +39,7 @@
 
 .forecast-day {
   display: grid;
-  grid-template-columns: 6.5rem 1.4rem minmax(0, 1fr) 5rem auto;
+  grid-template-columns: 7rem 1.4rem minmax(0, 1fr) 5.5rem 21.5rem;
   gap: 0.5rem 1rem;
   align-items: center;
   padding: 1rem 0;
@@ -70,22 +70,21 @@
 
 .forecast-day__description {
   min-width: 0;
-  overflow: hidden;
   color: var(--site-muted);
   font-size: 0.9rem;
-  line-height: 1.4;
-  text-overflow: ellipsis;
+  line-height: 1.35;
   text-transform: capitalize;
-  white-space: nowrap;
 }
 
 .forecast-day__temps {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.6rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 0.4rem;
   font-family: var(--site-font-display);
   font-size: 1.15rem;
+  font-variant-numeric: tabular-nums;
   letter-spacing: -0.04em;
+  text-align: right;
 }
 
 .forecast-day__min {
@@ -93,14 +92,16 @@
 }
 
 .forecast-day__facts {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 0.35rem 1.5rem;
+  display: grid;
+  grid-template-columns: 7rem 7rem 6.5rem;
+  gap: 0 0.6rem;
   color: var(--site-muted);
   font-family: var(--site-font-mono);
   font-size: 0.68rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.6;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .forecast-empty {
@@ -133,7 +134,7 @@
   color: var(--site-foreground);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .forecast-day {
     grid-template-columns: minmax(0, 1fr) auto;
     row-gap: 0.6rem;
@@ -162,6 +163,6 @@
   .forecast-day__facts {
     grid-column: 1 / -1;
     grid-row: 3;
-    justify-content: flex-start;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }

@@ -30,7 +30,7 @@ export interface WeatherForecastState {
 
 const FORECAST_DAY_COUNT = 5;
 
-const WEATHER_ICON_MAP: Record<string, string> = {
+export const WEATHER_ICON_MAP: Record<string, string> = {
   "01d": "sun-fill",
   "01n": "moon-stars-fill",
   "02d": "cloud-sun-fill",
@@ -50,6 +50,9 @@ const WEATHER_ICON_MAP: Record<string, string> = {
   "50d": "cloud-fog2-fill",
   "50n": "cloud-fog2",
 };
+
+export const WEATHER_ICON_FALLBACK = "cloudy-fill";
+export const FORECAST_TRIGGER_ICON = "calendar3-week";
 
 @Component({
   selector: "app-weather-forecast-modal",
@@ -102,7 +105,7 @@ export class WeatherForecastModalComponent {
       .map((day, index) => ({
         date: this.toDate(day.date),
         isToday: index === 0,
-        icon: WEATHER_ICON_MAP[day.icon] ?? "cloud",
+        icon: WEATHER_ICON_MAP[day.icon] ?? WEATHER_ICON_FALLBACK,
         description: day.description,
         minTemperature: day.min_temperature,
         maxTemperature: day.max_temperature,
