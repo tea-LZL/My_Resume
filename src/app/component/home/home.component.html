@@ -147,11 +147,11 @@
             <button
               type="button"
               class="signal-card__more"
+              aria-haspopup="dialog"
               (click)="openForecast()"
               [disabled]="!!weatherError"
-              aria-label="View the 6 day forecast"
             >
-              <i class="bi bi-{{ forecastTriggerIcon }}" aria-hidden="true"></i>
+              Forecast <span aria-hidden="true">↗</span>
             </button>
           </div>
         </div>

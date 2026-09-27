@@ -10,10 +10,7 @@ import { HttpClient } from "@angular/common/http";
 import { RouterLink } from "@angular/router";
 import { catchError } from "rxjs";
 import { ModalComponent } from "../../shared/modal/modal.component";
-import {
-  FORECAST_TRIGGER_ICON,
-  WeatherForecastModalComponent,
-} from "../../shared/weather-forecast/weather-forecast-modal.component";
+import { WeatherForecastModalComponent } from "../../shared/weather-forecast/weather-forecast-modal.component";
 import { ScrollRevealDirective } from "../../shared/directives/scroll-reveal.directive";
 import { ContributionCalendarComponent } from "../../shared/contribution-calendar/contribution-calendar.component";
 import {
@@ -98,7 +95,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   readonly certifications = portfolioCertifications;
   readonly workExperience = portfolioWorkExperience;
   readonly certificateLinks = certificateLinks;
-  readonly forecastTriggerIcon = FORECAST_TRIGGER_ICON;
   readonly weatheringProject: Project | undefined = portfolioProjects.find(
     (project) => project.id === "weathering-with-go-api",
   );

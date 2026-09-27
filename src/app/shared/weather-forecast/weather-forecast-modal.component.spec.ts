@@ -1,7 +1,6 @@
 import { TestBed } from "@angular/core/testing";
 
 import {
-  FORECAST_TRIGGER_ICON,
   WEATHER_ICON_FALLBACK,
   WEATHER_ICON_MAP,
   WeatherForecastModalComponent,
@@ -122,11 +121,7 @@ describe("WeatherForecastModalComponent", () => {
 
   it("only uses icons the bootstrap-icons subset font actually draws", () => {
     const names = [
-      ...new Set([
-        ...Object.values(WEATHER_ICON_MAP),
-        WEATHER_ICON_FALLBACK,
-        FORECAST_TRIGGER_ICON,
-      ]),
+      ...new Set([...Object.values(WEATHER_ICON_MAP), WEATHER_ICON_FALLBACK]),
     ];
 
     const undrawn = names.filter((name) => {

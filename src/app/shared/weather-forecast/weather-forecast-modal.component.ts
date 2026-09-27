@@ -53,7 +53,6 @@ export const WEATHER_ICON_MAP: Record<string, string> = {
 };
 
 export const WEATHER_ICON_FALLBACK = "cloudy-fill";
-export const FORECAST_TRIGGER_ICON = "calendar3-week";
 
 @Component({
   selector: "app-weather-forecast-modal",
