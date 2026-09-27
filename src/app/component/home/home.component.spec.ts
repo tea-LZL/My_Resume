@@ -1,13 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 import { HomeComponent } from './home.component';
 import { WeatherService } from '../../services/weather.service';
 
 describe('HomeComponent', () => {
   let fixture: ComponentFixture<HomeComponent>;
+  let getSevenDayForecast: jasmine.Spy;
   let getForecast: jasmine.Spy;
 
   const httpClientStub = {
@@ -16,20 +17,24 @@ describe('HomeComponent', () => {
         ? of({ total: { lastYear: 0 }, contributions: [] })
         : of({}),
   };
+  const forecastPayload = {
+    success: true,
+    data: { location: { name: 'Pretoria' }, forecast: [] },
+  };
   const weatherServiceStub = {
     getWeather: () => of({ success: false, data: {} }),
     getForecast: (params: Record<string, string>) => getForecast(params),
+    getSevenDayForecast: (params: Record<string, string>) =>
+      getSevenDayForecast(params),
   };
 
   beforeEach(async () => {
+    getSevenDayForecast = jasmine
+      .createSpy('getSevenDayForecast')
+      .and.returnValue(of(forecastPayload));
     getForecast = jasmine
       .createSpy('getForecast')
-      .and.returnValue(
-        of({
-          success: true,
-          data: { location: { name: 'Pretoria' }, forecast: [] },
-        }),
-      );
+      .and.returnValue(of(forecastPayload));
 
     await TestBed.configureTestingModule({
       imports: [HomeComponent],
@@ -76,7 +81,25 @@ describe('HomeComponent', () => {
     fixture = TestBed.createComponent(HomeComponent);
     fixture.detectChanges();
 
+    expect(getSevenDayForecast).not.toHaveBeenCalled();
+
+    fixture.componentInstance.openForecast();
+
+    expect(getSevenDayForecast).toHaveBeenCalledTimes(1);
+    expect(getSevenDayForecast).toHaveBeenCalledWith({
+      location: 'pretoria',
+      units: 'metric',
+    });
     expect(getForecast).not.toHaveBeenCalled();
+
+    fixture.componentInstance.forecastModal?.close();
+  });
+
+  it('falls back to the five day endpoint when the seven day call fails', () => {
+    getSevenDayForecast.and.returnValue(throwError(() => new Error('no access')));
+
+    fixture = TestBed.createComponent(HomeComponent);
+    fixture.detectChanges();
 
     fixture.componentInstance.openForecast();
 
@@ -86,6 +109,7 @@ describe('HomeComponent', () => {
       units: 'metric',
       days: '5',
     });
+    expect(fixture.componentInstance.forecastError).toBeNull();
 
     fixture.componentInstance.forecastModal?.close();
   });
@@ -97,7 +121,7 @@ describe('HomeComponent', () => {
     fixture.componentInstance.openForecast();
     fixture.componentInstance.openForecast();
 
-    expect(getForecast).toHaveBeenCalledTimes(1);
+    expect(getSevenDayForecast).toHaveBeenCalledTimes(1);
 
     fixture.componentInstance.forecastModal?.close();
   });

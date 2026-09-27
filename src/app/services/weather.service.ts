@@ -14,6 +14,7 @@ export class WeatherService {
   private readonly http = inject(HttpClient);
   private apiUrl = environment.OPENWEATHER_API_URL; // To be set by user
   private forecastUrl = environment.OPENWEATHER_FORECAST_URL;
+  private forecast7DayUrl = environment.OPENWEATHER_FORECAST_7DAY_URL;
   private key: string = environment.OPENWEATHER_API_KEY;
 
   getWeather(params?: Record<string, string>): Observable<WeatherResponse> {
@@ -24,6 +25,12 @@ export class WeatherService {
     params?: Record<string, string>,
   ): Observable<WeatherForecastResponse> {
     return this.request<WeatherForecastResponse>(this.forecastUrl, params);
+  }
+
+  getSevenDayForecast(
+    params?: Record<string, string>,
+  ): Observable<WeatherForecastResponse> {
+    return this.request<WeatherForecastResponse>(this.forecast7DayUrl, params);
   }
 
   private request<T>(

@@ -4,4 +4,6 @@ export const environment = {
     "https://weathering-with-go-api-324269546067.europe-west1.run.app/api/v1/weather/current",
   OPENWEATHER_FORECAST_URL:
     "https://weathering-with-go-api-324269546067.europe-west1.run.app/api/v1/weather/forecast",
+  OPENWEATHER_FORECAST_7DAY_URL:
+    "https://weathering-with-go-api-324269546067.europe-west1.run.app/api/v1/weather/forecast/7day",
 };

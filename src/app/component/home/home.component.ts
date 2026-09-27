@@ -64,6 +64,11 @@ interface BootstrapWindow extends Window {
 }
 
 const WEATHER_LOCATION = "pretoria";
+const WEATHER_FORECAST_PARAMS = { location: WEATHER_LOCATION, units: "metric" };
+const WEATHER_FORECAST_FALLBACK_PARAMS = {
+  ...WEATHER_FORECAST_PARAMS,
+  days: "5",
+};
 
 @Component({
   selector: "app-home",
@@ -260,11 +265,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.forecastError = null;
 
     this.weatherService
-      .getForecast({
-        location: WEATHER_LOCATION,
-        units: "metric",
-        days: "5",
-      })
+      .getSevenDayForecast(WEATHER_FORECAST_PARAMS)
+      .pipe(
+        catchError(() =>
+          this.weatherService.getForecast(WEATHER_FORECAST_FALLBACK_PARAMS),
+        ),
+      )
       .subscribe({
         next: (response) => {
           this.forecastDays = response.success

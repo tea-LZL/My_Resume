@@ -12,6 +12,7 @@ import { DailyForecast } from "../../interfaces/weather";
 export interface ForecastRow {
   date: Date;
   isToday: boolean;
+  isTomorrow: boolean;
   icon: string;
   description: string;
   minTemperature: number;
@@ -28,7 +29,7 @@ export interface WeatherForecastState {
   error: string | null;
 }
 
-const FORECAST_DAY_COUNT = 5;
+const FORECAST_DAY_COUNT = 6;
 
 export const WEATHER_ICON_MAP: Record<string, string> = {
   "01d": "sun-fill",
@@ -99,12 +100,19 @@ export class WeatherForecastModalComponent {
       return [];
     }
 
-    return [...days]
-      .sort((a, b) => this.toDate(a.date).getTime() - this.toDate(b.date).getTime())
+    const today = this.todayAnchor();
+    const tomorrow = new Date(today);
+    tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
+
+    return days
+      .map((day) => ({ day, date: this.toDate(day.date) }))
+      .filter(({ date }) => date >= today)
+      .sort((a, b) => a.date.getTime() - b.date.getTime())
       .slice(0, FORECAST_DAY_COUNT)
-      .map((day, index) => ({
-        date: this.toDate(day.date),
-        isToday: index === 0,
+      .map(({ day, date }) => ({
+        date,
+        isToday: date.getTime() === today.getTime(),
+        isTomorrow: date.getTime() === tomorrow.getTime(),
         icon: WEATHER_ICON_MAP[day.icon] ?? WEATHER_ICON_FALLBACK,
         description: day.description,
         minTemperature: day.min_temperature,
@@ -121,6 +129,15 @@ export class WeatherForecastModalComponent {
 
   private toDate(value: string): Date {
     const [year, month, day] = value.slice(0, 10).split("-").map(Number);
-    return new Date(Date.UTC(year, month - 1, day, 12));
+    return this.atNoon(year, month - 1, day);
+  }
+
+  private todayAnchor(): Date {
+    const now = new Date();
+    return this.atNoon(now.getFullYear(), now.getMonth(), now.getDate());
+  }
+
+  private atNoon(year: number, month: number, day: number): Date {
+    return new Date(Date.UTC(year, month, day, 12));
   }
 }

@@ -3,7 +3,7 @@
     <div>
       <p class="forecast-eyebrow">Live forecast</p>
       <h2 class="modal-title forecast-title" id="weather-forecast-title">
-        5 day forecast
+        Today and the next 5 days
         @if (locationName) {
           <span class="forecast-location">· {{ locationName }}</span>
         }
@@ -34,6 +34,8 @@
             <span class="forecast-day__label">
               @if (row.isToday) {
                 Today
+              } @else if (row.isTomorrow) {
+                Tomorrow
               } @else {
                 {{ row.date | date: "EEE d MMM" }}
               }
