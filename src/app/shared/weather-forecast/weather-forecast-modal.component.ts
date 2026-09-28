@@ -23,8 +23,6 @@ export interface ForecastRow {
   cloudCover: number;
   rainMillimetres: number | null;
   rainChance: number;
-  feelsLikeDay: number | null;
-  feelsLikeNight: number | null;
   pressure: number;
   visibility: number;
 }
@@ -105,14 +103,6 @@ export class WeatherForecastModalComponent {
     return Math.max(this.rows.length - 1, 0);
   }
 
-  feelsLikeText(row: ForecastRow): string {
-    if (row.feelsLikeDay === null && row.feelsLikeNight === null) {
-      return "—";
-    }
-
-    return `${this.degree(row.feelsLikeDay)}/${this.degree(row.feelsLikeNight)}`;
-  }
-
   buildRows(days: DailyForecast[] | null): ForecastRow[] {
     if (!days?.length) {
       return [];
@@ -141,8 +131,6 @@ export class WeatherForecastModalComponent {
         cloudCover: day.clouds,
         rainMillimetres: day.precipitation,
         rainChance: day.chance_of_rain,
-        feelsLikeDay: day.feels_like.day,
-        feelsLikeNight: day.feels_like.night,
         pressure: day.pressure,
         visibility: day.visibility,
       }));
@@ -155,10 +143,6 @@ export class WeatherForecastModalComponent {
   private toDate(value: string): Date {
     const [year, month, day] = value.slice(0, 10).split("-").map(Number);
     return this.atNoon(year, month - 1, day);
-  }
-
-  private degree(value: number | null): string {
-    return value === null ? "—" : `${Math.round(value)}°`;
   }
 
   private todayAnchor(): Date {

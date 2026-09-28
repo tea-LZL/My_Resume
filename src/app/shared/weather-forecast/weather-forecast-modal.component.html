@@ -48,11 +48,8 @@
             </span>
             <span class="forecast-day__facts">
               <span>Humidity {{ row.humidity | number: "1.0-0" }}%</span>
-              <span>
-                Wind {{ row.windSpeed | number: "1.0-0" }} m/s
-                <br />
-                Gust {{ row.windGust | number: "1.0-0" }} m/s
-              </span>
+              <span>Wind {{ row.windSpeed | number: "1.0-0" }} m/s</span>
+              <span>Gust {{ row.windGust | number: "1.0-0" }} m/s</span>
               <span>Clouds {{ row.cloudCover | number: "1.0-0" }}%</span>
               <span>
                 @if (row.rainMillimetres !== null && row.rainMillimetres > 0) {
@@ -63,7 +60,6 @@
                   Dry
                 }
               </span>
-              <span>Feels {{ feelsLikeText(row) }}</span>
               <span>Pressure {{ row.pressure | number: "1.0-0" }} hPa</span>
               <span>Visibility {{ (row.visibility / 1000) | number: "1.0-1" }} km</span>
             </span>

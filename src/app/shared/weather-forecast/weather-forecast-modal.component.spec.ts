@@ -183,7 +183,6 @@ describe("WeatherForecastModalComponent", () => {
         precipitation: null,
         pressure: 1025,
         visibility: 8620,
-        feels_like: { day: 14.2, night: 11.1, morn: null, eve: null },
       }),
     ]);
 
@@ -193,8 +192,18 @@ describe("WeatherForecastModalComponent", () => {
     expect(row.rainMillimetres).toBeNull();
     expect(row.pressure).toBe(1025);
     expect(row.visibility).toBe(8620);
-    expect(row.feelsLikeDay).toBe(14.2);
-    expect(row.feelsLikeNight).toBe(11.1);
+  });
+
+  it("never carries the dead daily feels-like values onto a row", () => {
+    const fixture = TestBed.createComponent(WeatherForecastModalComponent);
+    const [row] = fixture.componentInstance.buildRows([
+      forecastDay({
+        feels_like: { day: 14.2, night: 11.1, morn: null, eve: null },
+      }),
+    ]);
+
+    expect("feelsLikeDay" in row).toBeFalse();
+    expect("feelsLikeNight" in row).toBeFalse();
   });
 
   it("reports a millimetre total when the API supplies one", async () => {
@@ -223,10 +232,48 @@ describe("WeatherForecastModalComponent", () => {
     expect(text).toContain("Dry");
   });
 
-  it("renders a dash when the API omits the feels-like values", async () => {
-    const text = await renderForecast([forecastDay()]);
+  it("renders every daily fact on its own line, and never a dead feels-like", async () => {
+    const text = await renderForecast([
+      forecastDay({ precipitation: 9.57, chance_of_rain: 100 }),
+    ]);
 
-    expect(text).toContain("Feels —");
+    expect(text).toContain("Humidity 30%");
+    expect(text).toContain("Wind 4 m/s");
+    expect(text).toContain("Gust 7 m/s");
+    expect(text).toContain("Clouds 5%");
+    expect(text).toContain("Rain 9.6 mm");
+    expect(text).toContain("Pressure 1,020 hPa");
+    expect(text).toContain("Visibility 10 km");
+    expect(text).not.toContain("Feels");
+  });
+
+  it("gives the daily facts the full row width instead of squeezing them beside the temps", async () => {
+    const fixture = TestBed.createComponent(WeatherForecastModalComponent);
+    const component = fixture.componentInstance;
+    fixture.detectChanges();
+
+    const modalRef = component.open({
+      locationName: "Pretoria",
+      rows: component.buildRows([forecastDay({ description: "Light Rain" })]),
+      isLoading: false,
+      error: null,
+    });
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const box = (selector: string) =>
+      (document.querySelector(selector) as HTMLElement).getBoundingClientRect();
+    const description = box(".forecast-day__description");
+    const temps = box(".forecast-day__temps");
+    const facts = box(".forecast-day__facts");
+
+    expect(description.right).toBeLessThanOrEqual(temps.left);
+    expect(Math.abs(facts.left - description.left)).toBeLessThan(2);
+    expect(facts.width).toBeGreaterThan(description.width);
+    expect(facts.top).toBeGreaterThan(description.bottom);
+
+    modalRef.dismiss("test-close");
+    await modalRef.result.catch(() => undefined);
   });
 
   it("titles the modal with the number of days actually returned", async () => {
