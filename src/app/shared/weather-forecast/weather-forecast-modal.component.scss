@@ -39,7 +39,7 @@
 
 .forecast-day {
   display: grid;
-  grid-template-columns: 7rem 1.4rem minmax(0, 1fr) 5.5rem 21.5rem;
+  grid-template-columns: 7rem 1.4rem minmax(0, 1fr) 5.5rem 30rem;
   gap: 0.5rem 1rem;
   align-items: center;
   padding: 1rem 0;
@@ -93,7 +93,7 @@
 
 .forecast-day__facts {
   display: grid;
-  grid-template-columns: 7rem 7rem 6.5rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0 0.6rem;
   color: var(--site-muted);
   font-family: var(--site-font-mono);
@@ -163,6 +163,6 @@
   .forecast-day__facts {
     grid-column: 1 / -1;
     grid-row: 3;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

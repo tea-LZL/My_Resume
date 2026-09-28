@@ -5,7 +5,7 @@ import {
   WEATHER_ICON_MAP,
   WeatherForecastModalComponent,
 } from "./weather-forecast-modal.component";
-import { DailyForecast } from "../../interfaces/weather";
+import { DailyForecast, HourlyForecast } from "../../interfaces/weather";
 
 const FORECAST_ROW_COUNT = 6;
 
@@ -26,6 +26,33 @@ function isoDate(offsetDays: number): string {
   return `${date.getFullYear()}-${month}-${day}T00:00:00Z`;
 }
 
+function hourlyForecast(overrides: Partial<HourlyForecast> = {}): HourlyForecast {
+  return {
+    dt: 1790888400,
+    main: {
+      temp: 12.37,
+      feels_like: 11.46,
+      temp_min: 12.37,
+      temp_max: 12.37,
+      pressure: 1025,
+      humidity: 69,
+      sea_level: 1025,
+      grnd_level: 876,
+      temp_kf: 0,
+    },
+    weather: [{ id: 800, main: "Clear", description: "clear sky", icon: "01n" }],
+    clouds: { all: 2 },
+    wind: { speed: 2.84, deg: 44, gust: 3.93 },
+    visibility: 10000,
+    pop: 0,
+    rain: null,
+    snow: null,
+    sys: { pod: "n" },
+    dt_txt: "2026-10-01 21:00:00",
+    ...overrides,
+  };
+}
+
 function forecastDay(overrides: Partial<DailyForecast> = {}): DailyForecast {
   return {
     date: isoDate(0),
@@ -39,13 +66,50 @@ function forecastDay(overrides: Partial<DailyForecast> = {}): DailyForecast {
     wind_speed: 4,
     precipitation: 0,
     chance_of_rain: 0,
-    uv_index: 0,
+    uv_index: null,
+    pop: 0,
+    pop_min: 0,
+    pop_mean: 0,
+    temp: { day: null, min: 12, max: 28, night: null, morn: null, eve: null },
+    feels_like: { day: null, night: null, morn: null, eve: null },
+    wind_deg: 180,
+    wind_gust: 7,
+    clouds: 5,
+    visibility: 10000,
+    pressure: 1020,
+    rain: null,
+    snow: null,
+    uvi: null,
+    weather: [{ id: 800, main: "Clear", description: "clear sky", icon: "01d" }],
+    hourly: [hourlyForecast()],
     ...overrides,
   };
 }
 
 function dayFromToday(offsetDays: number, overrides: Partial<DailyForecast> = {}) {
   return forecastDay({ date: isoDate(offsetDays), ...overrides });
+}
+
+async function renderForecast(days: DailyForecast[]): Promise<string> {
+  const fixture = TestBed.createComponent(WeatherForecastModalComponent);
+  const component = fixture.componentInstance;
+  fixture.detectChanges();
+
+  const modalRef = component.open({
+    locationName: "Pretoria",
+    rows: component.buildRows(days),
+    isLoading: false,
+    error: null,
+  });
+  fixture.detectChanges();
+  await fixture.whenStable();
+
+  const text = document.body.textContent ?? "";
+
+  modalRef.dismiss("test-close");
+  await modalRef.result.catch(() => undefined);
+
+  return text;
 }
 
 describe("WeatherForecastModalComponent", () => {
@@ -107,6 +171,68 @@ describe("WeatherForecastModalComponent", () => {
     expect(rows[0].isToday).toBeTrue();
     expect(rows[1].isTomorrow).toBeTrue();
     expect(rows[5].date.getTime()).toBeGreaterThan(rows[0].date.getTime());
+  });
+
+  it("carries the newly exposed daily facts onto each row", () => {
+    const fixture = TestBed.createComponent(WeatherForecastModalComponent);
+    const [row] = fixture.componentInstance.buildRows([
+      forecastDay({
+        wind_gust: 13,
+        clouds: 95,
+        chance_of_rain: 16,
+        precipitation: null,
+        pressure: 1025,
+        visibility: 8620,
+        feels_like: { day: 14.2, night: 11.1, morn: null, eve: null },
+      }),
+    ]);
+
+    expect(row.windGust).toBe(13);
+    expect(row.cloudCover).toBe(95);
+    expect(row.rainChance).toBe(16);
+    expect(row.rainMillimetres).toBeNull();
+    expect(row.pressure).toBe(1025);
+    expect(row.visibility).toBe(8620);
+    expect(row.feelsLikeDay).toBe(14.2);
+    expect(row.feelsLikeNight).toBe(11.1);
+  });
+
+  it("reports a millimetre total when the API supplies one", async () => {
+    const text = await renderForecast([
+      forecastDay({ precipitation: 9.57, chance_of_rain: 100 }),
+    ]);
+
+    expect(text).toContain("Rain 9.6 mm");
+    expect(text).not.toContain("100%");
+  });
+
+  it("falls back to the rain chance when the API omits the precipitation total", async () => {
+    const text = await renderForecast([
+      forecastDay({ precipitation: null, chance_of_rain: 16 }),
+    ]);
+
+    expect(text).toContain("Rain 16%");
+    expect(text).not.toContain("Dry");
+  });
+
+  it("calls a day dry only when it has neither rain nor a rain chance", async () => {
+    const text = await renderForecast([
+      forecastDay({ precipitation: 0, chance_of_rain: 0 }),
+    ]);
+
+    expect(text).toContain("Dry");
+  });
+
+  it("renders a dash when the API omits the feels-like values", async () => {
+    const text = await renderForecast([forecastDay()]);
+
+    expect(text).toContain("Feels —");
+  });
+
+  it("titles the modal with the number of days actually returned", async () => {
+    const text = await renderForecast([forecastDay()]);
+
+    expect(text).toContain("Today and the next 0 days");
   });
 
   it("returns no rows for empty input and falls back to a drawn icon", () => {

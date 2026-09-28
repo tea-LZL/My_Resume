@@ -3,7 +3,7 @@
     <div>
       <p class="forecast-eyebrow">Live forecast</p>
       <h2 class="modal-title forecast-title" id="weather-forecast-title">
-        Today and the next 5 days
+        Today and the next {{ upcomingDayCount }} days
         @if (locationName) {
           <span class="forecast-location">· {{ locationName }}</span>
         }
@@ -48,14 +48,24 @@
             </span>
             <span class="forecast-day__facts">
               <span>Humidity {{ row.humidity | number: "1.0-0" }}%</span>
-              <span>Wind {{ row.windSpeed | number: "1.0-0" }} m/s</span>
               <span>
-                @if (row.precipitation > 0) {
-                  Rain {{ row.precipitation | number: "1.0-1" }} mm
+                Wind {{ row.windSpeed | number: "1.0-0" }} m/s
+                <br />
+                Gust {{ row.windGust | number: "1.0-0" }} m/s
+              </span>
+              <span>Clouds {{ row.cloudCover | number: "1.0-0" }}%</span>
+              <span>
+                @if (row.rainMillimetres !== null && row.rainMillimetres > 0) {
+                  Rain {{ row.rainMillimetres | number: "1.0-1" }} mm
+                } @else if (row.rainChance > 0) {
+                  Rain {{ row.rainChance | number: "1.0-0" }}%
                 } @else {
                   Dry
                 }
               </span>
+              <span>Feels {{ feelsLikeText(row) }}</span>
+              <span>Pressure {{ row.pressure | number: "1.0-0" }} hPa</span>
+              <span>Visibility {{ (row.visibility / 1000) | number: "1.0-1" }} km</span>
             </span>
           </li>
         }
