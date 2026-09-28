@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
-import { of, throwError } from 'rxjs';
+import { of } from 'rxjs';
 
 import { HomeComponent } from './home.component';
 import { WeatherService } from '../../services/weather.service';
@@ -35,12 +35,11 @@ function currentWeather(icon = '02d'): WeatherData {
 describe('HomeComponent', () => {
   let fixture: ComponentFixture<HomeComponent>;
   let getWeather: jasmine.Spy;
-  let getSevenDayForecast: jasmine.Spy;
   let getForecast: jasmine.Spy;
 
   const httpClientStub = {
     get: (url: string) =>
-      url.startsWith("/github-calendar")
+      url.startsWith('/github-calendar')
         ? of({ total: { lastYear: 0 }, contributions: [] })
         : of({}),
   };
@@ -51,16 +50,14 @@ describe('HomeComponent', () => {
   const weatherServiceStub = {
     getWeather: (params: Record<string, string>) => getWeather(params),
     getForecast: (params: Record<string, string>) => getForecast(params),
-    getSevenDayForecast: (params: Record<string, string>) =>
-      getSevenDayForecast(params),
   };
 
   beforeEach(async () => {
     getWeather = jasmine
       .createSpy('getWeather')
       .and.returnValue(of({ success: true, data: currentWeather() }));
-    getSevenDayForecast = jasmine
-      .createSpy('getSevenDayForecast')
+    getForecast = jasmine
+      .createSpy('getForecast')
       .and.returnValue(of(forecastPayload));
     getForecast = jasmine
       .createSpy('getForecast')
@@ -111,25 +108,7 @@ describe('HomeComponent', () => {
     fixture = TestBed.createComponent(HomeComponent);
     fixture.detectChanges();
 
-    expect(getSevenDayForecast).not.toHaveBeenCalled();
-
-    fixture.componentInstance.openForecast();
-
-    expect(getSevenDayForecast).toHaveBeenCalledTimes(1);
-    expect(getSevenDayForecast).toHaveBeenCalledWith({
-      location: 'pretoria',
-      units: 'metric',
-    });
     expect(getForecast).not.toHaveBeenCalled();
-
-    fixture.componentInstance.forecastModal?.close();
-  });
-
-  it('falls back to the five day endpoint when the seven day call fails', () => {
-    getSevenDayForecast.and.returnValue(throwError(() => new Error('no access')));
-
-    fixture = TestBed.createComponent(HomeComponent);
-    fixture.detectChanges();
 
     fixture.componentInstance.openForecast();
 
@@ -139,9 +118,13 @@ describe('HomeComponent', () => {
       units: 'metric',
       days: '5',
     });
-    expect(fixture.componentInstance.forecastError).toBeNull();
 
     fixture.componentInstance.forecastModal?.close();
+  });
+
+  it('no longer exposes a seven day forecast endpoint', () => {
+    expect('getSevenDayForecast' in WeatherService.prototype).toBeFalse();
+    expect('getForecast' in WeatherService.prototype).toBeTrue();
   });
 
   it('reuses the cached forecast when the modal is reopened', () => {
@@ -151,7 +134,7 @@ describe('HomeComponent', () => {
     fixture.componentInstance.openForecast();
     fixture.componentInstance.openForecast();
 
-    expect(getSevenDayForecast).toHaveBeenCalledTimes(1);
+    expect(getForecast).toHaveBeenCalledTimes(1);
 
     fixture.componentInstance.forecastModal?.close();
   });

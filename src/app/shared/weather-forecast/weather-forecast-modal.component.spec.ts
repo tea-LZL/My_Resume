@@ -1,13 +1,12 @@
 import { TestBed } from "@angular/core/testing";
 
 import {
+  FORECAST_DAY_COUNT,
   WEATHER_ICON_FALLBACK,
   WEATHER_ICON_MAP,
   WeatherForecastModalComponent,
 } from "./weather-forecast-modal.component";
 import { DailyForecast, HourlyForecast } from "../../interfaces/weather";
-
-const FORECAST_ROW_COUNT = 6;
 
 function iconContent(name: string): string {
   const probe = document.createElement("i");
@@ -162,15 +161,17 @@ describe("WeatherForecastModalComponent", () => {
     expect(rows[0].isTomorrow).toBeTrue();
   });
 
-  it("drops days already past and keeps today plus the next five", () => {
+  it("drops days already past and keeps at most the forecast day cap", () => {
     const fixture = TestBed.createComponent(WeatherForecastModalComponent);
     const days = Array.from({ length: 10 }, (_, index) => dayFromToday(index - 3));
     const rows = fixture.componentInstance.buildRows(days);
 
-    expect(rows.length).toBe(FORECAST_ROW_COUNT);
+    expect(rows.length).toBe(FORECAST_DAY_COUNT);
     expect(rows[0].isToday).toBeTrue();
     expect(rows[1].isTomorrow).toBeTrue();
-    expect(rows[5].date.getTime()).toBeGreaterThan(rows[0].date.getTime());
+    expect(
+      rows[FORECAST_DAY_COUNT - 1].date.getTime(),
+    ).toBeGreaterThan(rows[0].date.getTime());
   });
 
   it("carries the newly exposed daily facts onto each row", () => {
@@ -276,10 +277,11 @@ describe("WeatherForecastModalComponent", () => {
     await modalRef.result.catch(() => undefined);
   });
 
-  it("titles the modal with the number of days actually returned", async () => {
+  it("titles the modal from the row cap so the two can never disagree", async () => {
     const text = await renderForecast([forecastDay()]);
 
-    expect(text).toContain("Today and the next 0 days");
+    expect(text).toContain(`${FORECAST_DAY_COUNT}-day forecast`);
+    expect(text).not.toContain("Today and the next");
   });
 
   it("returns no rows for empty input and falls back to a drawn icon", () => {
@@ -305,7 +307,7 @@ describe("WeatherForecastModalComponent", () => {
     expect(undrawn).toEqual([]);
   });
 
-  it("renders six days, the location, and temperatures when opened", async () => {
+  it("renders the capped days, the location, and temperatures when opened", async () => {
     const fixture = TestBed.createComponent(WeatherForecastModalComponent);
     const component = fixture.componentInstance;
     fixture.detectChanges();
@@ -326,13 +328,15 @@ describe("WeatherForecastModalComponent", () => {
     await fixture.whenStable();
 
     const dayRows = document.querySelectorAll(".forecast-day");
-    expect(dayRows.length).toBe(FORECAST_ROW_COUNT);
+    expect(dayRows.length).toBe(FORECAST_DAY_COUNT);
     expect(dayRows[0].textContent).toContain("Today");
     expect(dayRows[1].textContent).toContain("Tomorrow");
     expect(dayRows[0].textContent).toContain("clear sky");
     expect(dayRows[0].textContent).toContain("10°");
     expect(dayRows[0].textContent).toContain("20°");
-    expect(document.body.textContent).toContain("Today and the next 5 days");
+    expect(document.body.textContent).toContain(
+      `${FORECAST_DAY_COUNT}-day forecast`,
+    );
     expect(document.body.textContent).toContain("Pretoria");
 
     modalRef.dismiss("test-close");

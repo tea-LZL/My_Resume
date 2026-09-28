@@ -34,7 +34,7 @@ export interface WeatherForecastState {
   error: string | null;
 }
 
-const FORECAST_DAY_COUNT = 6;
+export const FORECAST_DAY_COUNT = 5;
 
 export const WEATHER_ICON_MAP: Record<string, string> = {
   "01d": "sun-fill",
@@ -67,6 +67,7 @@ export const WEATHER_ICON_FALLBACK = "cloudy-fill";
 })
 export class WeatherForecastModalComponent {
   readonly retry = output<void>();
+  readonly forecastDayCount = FORECAST_DAY_COUNT;
 
   locationName = "";
   rows: ForecastRow[] = [];
@@ -97,10 +98,6 @@ export class WeatherForecastModalComponent {
     this.rows = state.rows;
     this.isLoading = state.isLoading;
     this.error = state.error;
-  }
-
-  get upcomingDayCount(): number {
-    return Math.max(this.rows.length - 1, 0);
   }
 
   buildRows(days: DailyForecast[] | null): ForecastRow[] {

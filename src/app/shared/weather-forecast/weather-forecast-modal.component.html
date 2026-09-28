@@ -3,7 +3,7 @@
     <div>
       <p class="forecast-eyebrow">Live forecast</p>
       <h2 class="modal-title forecast-title" id="weather-forecast-title">
-        Today and the next {{ upcomingDayCount }} days
+        {{ forecastDayCount }}-day forecast
         @if (locationName) {
           <span class="forecast-location">· {{ locationName }}</span>
         }
