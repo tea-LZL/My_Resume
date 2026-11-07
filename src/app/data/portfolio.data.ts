@@ -86,8 +86,8 @@ export const portfolioProjects = [
     description:
       "An offline-first desktop email client for Arch Linux with a Wayland and Hyprland-first workflow. Its Rust workspace includes a Tauri shell, local store, sync engine, and a Svelte 5, Vite, and TypeScript UI.",
     tags: ["Rust", "Tauri", "Svelte 5", "TypeScript", "Arch Linux", "Wayland"],
-    repositoryUrl: "https://gitlab.com/tea-LZL/origami",
-    repositoryLabel: "GitLab",
+    repositoryUrl: "https://github.com/tea-LZL/origami",
+    repositoryLabel: "GitHub",
     coverImageUrl: "assets/projects/origami.png",
     featured: true,
   },
