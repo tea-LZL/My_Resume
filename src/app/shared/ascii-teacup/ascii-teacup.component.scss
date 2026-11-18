@@ -1,0 +1,43 @@
+:host {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: var(--site-accent);
+  opacity: var(--teacup-opacity);
+  pointer-events: none;
+  user-select: none;
+}
+
+pre {
+  margin: 0;
+  padding: 0;
+  font-family: var(--site-font-mono);
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: pre;
+  /* Bootstrap reboot sets `overflow: auto`; 64 lines round to 705px inside a
+     704px box and Chrome then paints a scrollbar over the page edge. */
+  overflow: hidden;
+}
+
+@media (max-width: 767px) {
+  :host {
+    opacity: calc(var(--teacup-opacity) - 0.06);
+  }
+}
+
+@media print {
+  :host {
+    display: none;
+  }
+}
+
+@media (forced-colors: active) {
+  :host {
+    display: none;
+  }
+}

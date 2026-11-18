@@ -1,0 +1,45 @@
+:host {
+  display: contents;
+}
+
+.hover-spot {
+  --spot-size: clamp(120px, 12vw, 190px);
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1250;
+  width: var(--spot-size);
+  height: var(--spot-size);
+  margin: calc(var(--spot-size) / -2) 0 0 calc(var(--spot-size) / -2);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  background: #fff;
+  mix-blend-mode: difference;
+  opacity: 0;
+  pointer-events: none;
+  /* Position is instant (a pointermove must not drag the disc across the page);
+     only scale and opacity animate. */
+  translate: -999px -999px;
+  scale: 0.3;
+  transition:
+    opacity 160ms ease,
+    scale 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: translate, scale, opacity;
+}
+
+.hover-spot.is-active {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hover-spot {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .hover-spot {
+    display: none;
+  }
+}

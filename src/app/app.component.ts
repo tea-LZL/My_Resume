@@ -3,11 +3,13 @@ import { RouterOutlet } from "@angular/router";
 
 import { NavbarComponent } from "./shared/navbar/navbar.component";
 import { FooterComponent } from "./shared/footer/footer.component";
+import { AsciiTeacupComponent } from "./shared/ascii-teacup/ascii-teacup.component";
+import { HoverInvertComponent } from "./shared/hover-invert/hover-invert.component";
 import { routeAnimation } from "./animations/route-animations";
 
 @Component({
   selector: "app-root",
-  imports: [RouterOutlet, NavbarComponent, FooterComponent],
+  imports: [RouterOutlet, NavbarComponent, FooterComponent, AsciiTeacupComponent, HoverInvertComponent],
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.scss",
   animations: [routeAnimation],
