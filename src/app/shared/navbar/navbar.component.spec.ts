@@ -41,4 +41,17 @@ describe('NavbarComponent', () => {
     expect(component.bNav).toBeFalse();
     expect(fixture.nativeElement.querySelector("#site-mobile-nav")).toBeNull();
   });
+
+  it("tracks the scrolled state from its own passive scroll listener", () => {
+    let scrollY = 0;
+    spyOnProperty(window, "scrollY", "get").and.callFake(() => scrollY);
+
+    scrollY = 240;
+    window.dispatchEvent(new Event("scroll"));
+    expect(component.isScrolled).toBeTrue();
+
+    scrollY = 0;
+    window.dispatchEvent(new Event("scroll"));
+    expect(component.isScrolled).toBeFalse();
+  });
 });

@@ -1,4 +1,4 @@
-import { Directive, ElementRef, inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { Directive, ElementRef, inject, Input, NgZone, OnDestroy, OnInit } from '@angular/core';
 
 export type RevealAnimation = 'fade-up' | 'fade-in' | 'scale-in' | 'fade-left' | 'fade-right';
 
@@ -23,6 +23,7 @@ export class ScrollRevealDirective implements OnInit, OnDestroy {
   private observer: IntersectionObserver | null = null;
 
   private readonly el = inject(ElementRef<HTMLElement>);
+  private readonly zone = inject(NgZone);
 
   ngOnInit(): void {
     const nativeEl = this.el.nativeElement;
@@ -38,19 +39,24 @@ export class ScrollRevealDirective implements OnInit, OnDestroy {
       return;
     }
 
-    this.observer = new observerConstructor(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('reveal-visible');
-            this.observer?.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: this.revealThreshold, rootMargin: '0px 0px -40px 0px' },
-    );
+    // Reveal callbacks only toggle CSS classes on the host element. Creating the
+    // observer inside the zone makes every reveal run an application-wide tick,
+    // which is the home page's scroll stall on large templates.
+    this.zone.runOutsideAngular(() => {
+      this.observer = new observerConstructor(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('reveal-visible');
+              this.observer?.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: this.revealThreshold, rootMargin: '0px 0px -40px 0px' },
+      );
 
-    this.observer.observe(nativeEl);
+      this.observer.observe(nativeEl);
+    });
   }
 
   ngOnDestroy(): void {
